@@ -33,21 +33,26 @@ export const categorys = [
 	{
 		id: 1,
 		categoryName: '생각 정리',
+    icon: 'https://blog.kakaocdn.net/dn/bU93Z6/btrdgRxbH4T/zoVrVxIBGM7yKSqEAQDSck/img.png',
 	},
 	{
 		id: 2,
 		categoryName: 'Back-End',
+    icon: 'https://www.codewithvlad.com/assets/svg/nest-logo.svg',
 	},
 	{
 		id: 3,
 		categoryName: 'Front-End',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png',
 	},
 	{
 		id: 4,
 		categoryName: 'DevOps',
+    icon: 'https://blog.kakaocdn.net/dn/bU93Z6/btrdgRxbH4T/zoVrVxIBGM7yKSqEAQDSck/img.png',
 	},
 	{
 		id: 5,
 		categoryName: 'Database',
+    icon: 'https://blog.kakaocdn.net/dn/bU93Z6/btrdgRxbH4T/zoVrVxIBGM7yKSqEAQDSck/img.png',
 	},
 ]

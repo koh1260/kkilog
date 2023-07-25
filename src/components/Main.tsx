@@ -1,23 +1,19 @@
 import { styled } from "styled-components";
 import PostList from "./PostList";
+import CategoryBar from "./CategoryBar";
 
 const Container = styled.main`
-  padding-top: 7rem;
   display: flex;
-`;
-
-const Contents = styled.section`
-  display: flex;
-  padding: 0 1.4rem;
+  height: 100%;
   width: 100%;
+  padding-left: 20px;
 `;
 
 const Main = () => {
   return (
     <Container>
-      <Contents>
+        <CategoryBar />
         <PostList />
-      </Contents>
     </Container>
   );
 };
