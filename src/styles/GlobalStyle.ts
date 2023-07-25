@@ -1,6 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
   p {
     margin: 0;
   }
@@ -12,11 +17,12 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0%;
-    height: 100vh;
+    height: 100%;
   }
 
   html {
     box-sizing: border-box;
+    height: 100vh;
   }
 
   *, *::before, *::after {
