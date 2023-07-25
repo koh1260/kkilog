@@ -1,6 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  p {
+    margin: 0;
+  }
+  
   ul {
     list-style: none;
     padding: 0;
@@ -8,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0%;
+    height: 100vh;
   }
 
   html {
