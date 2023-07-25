@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
   pre,
   iframe,
   hr,
-  h1,
+  
   h2,
   h3,
   h4,
@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  h1,
+  
   h2,
   h3,
   h4,
