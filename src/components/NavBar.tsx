@@ -3,13 +3,12 @@ import githubIcon from "../assets/img/github.png";
 
 const Container = styled.header`
   display: flex;
-  border-bottom: 0.5px solid lightgray;
+  padding: 0 1.4rem;
+  border-bottom: 0.5px solid black;
 `;
 
 const NavContent = styled.div`
-  margin: 0 auto;
   width: 100%;
-  max-width: 1020px;
   display: flex;
   justify-content: space-between;
 `;
@@ -48,4 +47,5 @@ const NavBar = () => {
     </Container>
   );
 };
+
 export default NavBar;
