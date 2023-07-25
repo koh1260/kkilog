@@ -9,6 +9,7 @@ const Container = styled.li`
   padding: 0.5rem 0;
   margin-bottom: 8px;
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   gap: 8px;

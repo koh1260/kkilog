@@ -8,13 +8,19 @@ interface CategoryProps {
 }
 
 const Container = styled.section`
+  position: sticky;
+  top: 4rem;
+  display: flex;
+  flex-direction: column;
   width: 14rem;
-  height: 100%;
+  height: 100vh;
   padding-right: 20px;
   border-right: 0.5px solid black;
 `;
 
 const Content = styled.ul`
+  flex: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;
