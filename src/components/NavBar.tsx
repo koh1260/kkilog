@@ -3,7 +3,7 @@ import githubIcon from "../assets/img/github.png";
 
 const Container = styled.header`
   display: flex;
-  padding: 0 1.4rem;
+  padding: 0 24px;
   border-bottom: 0.5px solid black;
 `;
 
