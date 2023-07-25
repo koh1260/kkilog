@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   ul {
     list-style: none;
+    padding: 0;
   }
 
   body {
