@@ -1,52 +1,12 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-      /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
-  html,
-  body,
-  p,
-  ol,
-  ul,
-  li,
-  dl,
-  dt,
-  dd,
-  blockquote,
-  figure,
-  fieldset,
-  legend,
-  textarea,
-  pre,
-  iframe,
-  hr,
-  
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-    padding: 0;
-  }
-
-  
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: 100%;
-    font-weight: normal;
-  }
-
   ul {
     list-style: none;
   }
 
-  button,
-  input,
-  select {
-    margin: 0;
+  body {
+    margin: 0%;
   }
 
   html {
@@ -57,7 +17,6 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
-  img,
   video {
     max-width: 100%;
     height: auto;
@@ -72,7 +31,6 @@ const GlobalStyle = createGlobalStyle`
     border-collapse: collapse;
   }
 
-  td,
   th {
     padding: 0;
   }
