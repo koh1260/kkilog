@@ -4,8 +4,17 @@ import { posts } from "../data/mockData";
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
   width: 100%;
-  max-width: 640px;
+  flex: 1;
+  padding-left: 10px;
+`;
+
+const PostOuter = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  height: min-content;
   flex-wrap: wrap;
   gap: 10px;
 `;
@@ -13,15 +22,17 @@ const Container = styled.div`
 const PostList = () => {
   return (
     <Container>
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          title={post.title}
-          thumbnail={post.thumbnail}
-          introduction={post.introduction}
-          createAt={post.createAt}
-        />
-      ))}
+      <PostOuter>
+        {posts.map((post) => (
+          <Post
+            key={post.id}
+            title={post.title}
+            thumbnail={post.thumbnail}
+            introduction={post.introduction}
+            createAt={post.createAt}
+          />
+        ))}
+      </PostOuter>
     </Container>
   );
 };
