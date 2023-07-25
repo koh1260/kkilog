@@ -23,13 +23,32 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h2`
+const Title = styled.h3`
   margin: 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const Introduction = styled.p`
   margin: 0.2rem;
 `;
+
+const Bottom = styled.div`
+  display: flex;
+`;
+
+const CommentCount = styled.p`
+  margin: 0.2rem;
+  font-size: 0.8rem;
+  color: lightslategray;
+`;
+
+const Dash = styled.div`
+margin: 0.2rem;
+  font-size: 0.8rem;
+  color: lightslategray;
+`
 
 const CreateAt = styled.p`
   margin: 0.2rem;
@@ -44,7 +63,11 @@ const Post = ({ title, thumbnail, introduction, createAt }: PostProps) => {
       <Content>
         <Title>{title}</Title>
         <Introduction>{introduction}</Introduction>
-        <CreateAt>{`${createAt.getFullYear()}.${createAt.getMonth()}.${createAt.getDate()}`}</CreateAt>
+        <Bottom>
+          <CreateAt>{`${createAt.getFullYear()}.${createAt.getMonth()}.${createAt.getDate()}`}</CreateAt>
+          <Dash>·</Dash>
+          <CommentCount>댓글 3개</CommentCount>
+        </Bottom>
       </Content>
     </Container>
   );
