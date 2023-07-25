@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { categorys } from "../data/mockData";
 import Category from "./Category";
+import { NavLink } from "react-router-dom";
 
 interface CategoryProps {
   categoryName: string;
@@ -23,11 +24,13 @@ const CategoryBar = () => {
     <Container>
       <Content>
         {categorys.map((category) => (
-          <Category
-            key={category.id}
-            categoryName={category.categoryName}
-            icon={category.icon}
-          />
+          <NavLink to={`/category/${category.id}`}>
+            <Category
+              key={category.id}
+              categoryName={category.categoryName}
+              icon={category.icon}
+            />
+          </NavLink>
         ))}
       </Content>
     </Container>
