@@ -1,18 +1,16 @@
 import { styled } from "styled-components";
 import { categorys } from "../data/mockData";
 import Category from "./Category";
-import { NavLink } from "react-router-dom";
-
-interface CategoryProps {
-  categoryName: string;
-}
 
 const Container = styled.section`
+  @media screen and (max-width: 1285px) {
+    display: none;
+  }
   position: sticky;
   top: 4rem;
   display: flex;
   flex-direction: column;
-  width: 14rem;
+  width: 18rem;
   height: 100vh;
   padding-right: 20px;
   border-right: 0.5px solid black;
@@ -30,13 +28,12 @@ const CategoryBar = () => {
     <Container>
       <Content>
         {categorys.map((category) => (
-          <NavLink to={`/category/${category.id}`}>
-            <Category
-              key={category.id}
-              categoryName={category.categoryName}
-              icon={category.icon}
-            />
-          </NavLink>
+          <Category
+            key={category.id}
+            to={`/category/${category.id}`}
+            categoryName={category.categoryName}
+            icon={category.icon}
+          />
         ))}
       </Content>
     </Container>
