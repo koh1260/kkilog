@@ -55,6 +55,7 @@ const PostList = ({categoryName, posts}: PostListProps) => {
           {posts.map((post) => (
             <Post
               key={post.id}
+              id={post.id}
               title={post.title}
               thumbnail={post.thumbnail}
               introduction={post.introduction}

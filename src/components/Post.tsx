@@ -1,6 +1,8 @@
+import { useNavigate, useNavigation } from "react-router-dom";
 import { styled } from "styled-components";
 
 interface PostProps {
+  id: number;
   title: string;
   thumbnail: string;
   introduction: string;
@@ -13,6 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   width: calc(33.33% - 10px);
   border: 0.5px solid lightgray;
+  cursor: pointer;
 `;
 
 const ThubnailImage = styled.img`
@@ -57,9 +60,11 @@ const CreateAt = styled.p`
   color: lightslategray;
 `;
 
-const Post = ({ title, thumbnail, introduction, createAt, commentCount }: PostProps) => {
+const Post = ({ id, title, thumbnail, introduction, createAt, commentCount }: PostProps) => {
+  const navigate = useNavigate();
+
   return (
-    <Container>
+    <Container onClick={() => navigate(`/${id}`)}>
       <ThubnailImage src={thumbnail} />
       <Content>
         <Title>{title}</Title>
