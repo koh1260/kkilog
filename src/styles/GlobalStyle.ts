@@ -46,7 +46,11 @@ const GlobalStyle = createGlobalStyle`
   th {
     padding: 0;
   }
-  
+
+  h3 {
+    margin: 0;
+  }
+
   h4 {
     margin: 0;
   }
