@@ -46,5 +46,9 @@ const GlobalStyle = createGlobalStyle`
   th {
     padding: 0;
   }
+  
+  h4 {
+    margin: 0;
+  }
 `;
 export default GlobalStyle;
