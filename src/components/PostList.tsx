@@ -2,13 +2,33 @@ import { styled } from "styled-components";
 import Post from "./Post";
 import { posts } from "../data/mockData";
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
+const Container = styled.section`
   width: 100%;
-  flex: 1;
-  padding-left: 10px;
+  width: 1020px;
+  margin: 0 auto;
 `;
+
+const PostCountBlock = styled.div`
+  display: flex;
+  gap: 5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  border-bottom: 0.5px solid black;
+`
+
+const PostCountText = styled.h3`
+  
+`
+
+const PostCountNumber = styled.h3`
+  color: red;
+`
+
+const PostContainer = styled.div`
+  /* display: flex;
+  justify-content: center;
+  width: 100%; */
+  `;
 
 const PostOuter = styled.div`
   display: flex;
@@ -22,17 +42,23 @@ const PostOuter = styled.div`
 const PostList = () => {
   return (
     <Container>
-      <PostOuter>
-        {posts.map((post) => (
-          <Post
-            key={post.id}
-            title={post.title}
-            thumbnail={post.thumbnail}
-            introduction={post.introduction}
-            createAt={post.createAt}
-          />
-        ))}
-      </PostOuter>
+      <PostCountBlock>
+        <PostCountText>Total </PostCountText>
+        <PostCountNumber>4</PostCountNumber>
+      </PostCountBlock>
+      <PostContainer>
+        <PostOuter>
+          {posts.map((post) => (
+            <Post
+              key={post.id}
+              title={post.title}
+              thumbnail={post.thumbnail}
+              introduction={post.introduction}
+              createAt={post.createAt}
+            />
+          ))}
+        </PostOuter>
+      </PostContainer>
     </Container>
   );
 };
