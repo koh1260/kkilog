@@ -50,5 +50,9 @@ const GlobalStyle = createGlobalStyle`
   h4 {
     margin: 0;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
 export default GlobalStyle;
