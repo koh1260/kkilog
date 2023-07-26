@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import Main from "../components/Main";
 import NavBar from "../components/NavBar";
 import CategoryBar from "../components/CategoryBar";
+import Footer from "../components/Footer";
 
 const Container = styled.article`
   display: flex;
@@ -24,6 +25,7 @@ const Home = () => {
         <CategoryBar />
         <Main />
       </BodyContainer>
+      <Footer />
     </Container>
   );
 };
