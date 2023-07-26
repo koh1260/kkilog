@@ -3,6 +3,8 @@ import Main from "../components/Main";
 import NavBar from "../components/NavBar";
 import CategoryBar from "../components/CategoryBar";
 import Footer from "../components/Footer";
+import PostList from "../components/PostList";
+import {posts} from '../data/mockData'
 
 const Container = styled.article`
   display: flex;
@@ -23,7 +25,9 @@ const Home = () => {
       <NavBar />
       <BodyContainer>
         <CategoryBar />
-        <Main />
+        <Main>
+          <PostList categoryName="Total" posts={posts}/>
+        </Main>
       </BodyContainer>
       <Footer />
     </Container>

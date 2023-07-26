@@ -1,17 +1,27 @@
 import { styled } from "styled-components";
-import PostList from "./PostList";
+interface MainProps {
+  children: JSX.Element;
+}
 
 const Container = styled.main`
   margin: 4rem 0;
   display: flex;
+  justify-content: center;
   height: 100%;
-  width: 100%;
+  flex: 1;
 `;
 
-const Main = () => {
+const PositionCenterBox = styled.div`
+  max-width: 980px;
+  margin: 0 auto;
+`;
+
+const Main = ({children}: MainProps) => {
   return (
     <Container>
-      <PostList />
+      <PositionCenterBox>
+        {children}
+      </PositionCenterBox>
     </Container>
   );
 };

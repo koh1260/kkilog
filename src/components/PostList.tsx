@@ -1,10 +1,14 @@
 import { styled } from "styled-components";
 import Post from "./Post";
-import { posts } from "../data/mockData";
+import { Post as IPost } from "../type";
+
+interface PostListProps {
+  categoryName: string;
+  posts: IPost[];
+}
 
 const Container = styled.section`
   width: 100%;
-  width: 1020px;
   margin: 0 auto;
 `;
 
@@ -39,12 +43,12 @@ const PostOuter = styled.div`
   gap: 10px;
 `;
 
-const PostList = () => {
+const PostList = ({categoryName, posts}: PostListProps) => {
   return (
     <Container>
       <PostCountBlock>
-        <PostCountText>Total </PostCountText>
-        <PostCountNumber>4</PostCountNumber>
+        <PostCountText>{categoryName}</PostCountText>
+        <PostCountNumber>{posts.length}</PostCountNumber>
       </PostCountBlock>
       <PostContainer>
         <PostOuter>
@@ -55,6 +59,7 @@ const PostList = () => {
               thumbnail={post.thumbnail}
               introduction={post.introduction}
               createAt={post.createAt}
+              commentCount={post.commentCount}
             />
           ))}
         </PostOuter>

@@ -5,6 +5,7 @@ interface PostProps {
   thumbnail: string;
   introduction: string;
   createAt: Date;
+  commentCount: number;
 }
 
 const Container = styled.div`
@@ -56,7 +57,7 @@ const CreateAt = styled.p`
   color: lightslategray;
 `;
 
-const Post = ({ title, thumbnail, introduction, createAt }: PostProps) => {
+const Post = ({ title, thumbnail, introduction, createAt, commentCount }: PostProps) => {
   return (
     <Container>
       <ThubnailImage src={thumbnail} />
@@ -66,7 +67,7 @@ const Post = ({ title, thumbnail, introduction, createAt }: PostProps) => {
         <Bottom>
           <CreateAt>{`${createAt.getFullYear()}.${createAt.getMonth()}.${createAt.getDate()}`}</CreateAt>
           <Dash>·</Dash>
-          <CommentCount>댓글 3개</CommentCount>
+          <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
         </Bottom>
       </Content>
     </Container>
