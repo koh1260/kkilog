@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import githubIcon from "../assets/img/github.png";
-import { NavLink } from "react-router-dom";
+import Logo from "./Logo";
 
 const Container = styled.header`
   z-index: 1;
@@ -21,7 +21,7 @@ const NavContent = styled.div`
 `;
 
 const BlogTitle = styled.h2`
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const ContactIconBlock = styled.div`
@@ -46,9 +46,7 @@ const NavBar = () => {
   return (
     <Container>
       <NavContent>
-        <NavLink to={"/"}>
-          <BlogTitle>해성 블로그</BlogTitle>
-        </NavLink>
+          <Logo />
         <ContactIconBlock>
           <Icon src={githubIcon} onClick={handleContactIconClick} />
         </ContactIconBlock>
