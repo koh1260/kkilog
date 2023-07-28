@@ -6,6 +6,7 @@ import previousArrow from '../assets/img/previous-arrow.png';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 48px;
 `;
 
 const NavigationBlock = styled.div`
@@ -13,6 +14,10 @@ const NavigationBlock = styled.div`
   border-radius: 12px;
   display: flex;
   padding: 12px 14px;
+  width: 45%;
+   &.next {
+    justify-content: end;
+   }
 `;
 
 const StyledButton = styled.button`
@@ -65,7 +70,7 @@ const OtherPostNavigation = () => {
         </OtherPost>
       </NavigationBlock>
 
-      <NavigationBlock>
+      <NavigationBlock className="next">
         <OtherPost>
           <NextPostText>다음 글</NextPostText>
           <OtherPostTitle>React 너무 어렵군!!</OtherPostTitle>

@@ -58,5 +58,9 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  textarea {
+    resize: none;
+  }
 `;
 export default GlobalStyle;
