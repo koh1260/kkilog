@@ -1,6 +1,8 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import CommentWriting from './CommentWriting';
+import Comment from './Comment';
+import CommentList from './CommentList';
 
 const Container = styled.section`
   display: flex;
@@ -18,6 +20,7 @@ const CommentBlock = () => {
     <Container>
       <CommentCount>12 개의 댓글</CommentCount>
       <CommentWriting />
+      <CommentList />
     </Container>
   );
 };
