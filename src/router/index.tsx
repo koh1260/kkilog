@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import PostDetail from "../pages/PostDetail";
+import WritePostPage from "../pages/WritePostPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: '/:id',
     element: <PostDetail />
+  },
+  {
+    path: '/write',
+    element: <WritePostPage />
   }
 ]);
 
