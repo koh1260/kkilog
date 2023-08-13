@@ -1,8 +1,12 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import CommentWriting from './CommentWriting';
-import Comment from './Comment';
 import CommentList from './CommentList';
+import { Comment } from '../type';
+
+interface CommentBlockProps {
+  comments: Comment[];
+}
 
 const Container = styled.section`
   display: flex;
@@ -15,14 +19,12 @@ const CommentCount = styled.div`
   margin-bottom: 7px;
 `
 
-const CommentBlock = () => {
-  return (
+const CommentBlock = ({comments}: CommentBlockProps) => (
     <Container>
-      <CommentCount>12 개의 댓글</CommentCount>
+      <CommentCount>{`${comments.length}개의 댓글`}</CommentCount>
       <CommentWriting />
-      <CommentList />
+      <CommentList comments={comments}/>
     </Container>
-  );
-};
+  )
 
 export default CommentBlock;

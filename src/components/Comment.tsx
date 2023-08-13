@@ -1,12 +1,13 @@
-import React from "react";
-import { styled } from "styled-components";
-import { AiOutlineHeart } from "react-icons/ai";
+import React from 'react';
+import { styled } from 'styled-components';
+import { AiOutlineHeart } from 'react-icons/ai';
 // import {AiFillHeart} from 'react-icons/ai';
 
 interface CommentProps {
   id: number;
   nickname: string;
   content: string;
+  profileImage: string;
   createAt: Date;
 }
 
@@ -49,21 +50,22 @@ const LikeBlock = styled.div`
   gap: 14px;
 `;
 
-const Comment = ({ id, nickname, content, createAt }: CommentProps) => {
+const Comment = ({ id, nickname, content, createAt, profileImage }: CommentProps) => {
+  console.log(profileImage);
   return (
     <Container>
-      <WriterInfo>
-        <Profileimage src="https://velog.velcdn.com/images/a001206/post/4c94f9f8-40d7-4d12-b07e-0ca6053556a5/image.png" />
-        <p className="nickname">{nickname}</p>
-        <p className="create-at">{`${createAt.getFullYear()}.${createAt.getMonth()}.${createAt.getDate()}`}</p>
+      <WriterInfo key={id}>
+        <Profileimage src={profileImage} />
+        <p className='nickname'>{nickname}</p>
+        <p className='create-at'>{createAt.toString()}</p>
       </WriterInfo>
       <Content>{content}</Content>
       <LikeBlock>
-        <p className="like-count">좋아요 1개</p>
-        <AiOutlineHeart size={"21px"} />
+        <p className='like-count'>좋아요 1개</p>
+        <AiOutlineHeart size='21px' />
       </LikeBlock>
     </Container>
   );
-};
+}
 
 export default Comment;
