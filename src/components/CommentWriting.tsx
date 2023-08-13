@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
+  margin-bottom: 24px;
 `;
 
 const CommentInput = styled.textarea`
@@ -15,6 +16,7 @@ const CommentInput = styled.textarea`
   font-size: 1rem;
   outline: none;
   border: 2px solid #F8F9FA;
+  border-radius: 12px;
 `;
 
 const SubmitButton = styled.button`
@@ -29,13 +31,16 @@ const SubmitButton = styled.button`
 `;
 
 const CommentWriting = () => {
+  const [value, setValue] = useState('');
   return (
     <Container>
-      <CommentInput placeholder='댓글을 입력해주세요' />
+      <CommentInput value={value} placeholder='댓글을 입력해주세요' onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setValue(e.target.value);
+      }}/>
       <SubmitButton>등록</SubmitButton>
     </Container>
   );
-};
+}
 
 
 
