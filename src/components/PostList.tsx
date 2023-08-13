@@ -1,15 +1,19 @@
-import { styled } from "styled-components";
-import Post from "./Post";
-import { Post as IPost } from "../type";
+import { styled } from 'styled-components';
+import Post from './Post';
+import { PostPreview } from '../type';
 
 interface PostListProps {
   categoryName: string;
-  posts: IPost[];
+  posts: PostPreview[];
 }
 
 const Container = styled.section`
   width: 100%;
   margin: 0 auto;
+
+  @media screen and (max-width: 1000px) {
+    margin: 0;
+  }
 `;
 
 const PostCountBlock = styled.div`
@@ -41,10 +45,13 @@ const PostOuter = styled.div`
   height: min-content;
   flex-wrap: wrap;
   gap: 10px;
+
+  @media screen and (max-width: 1000px) {
+    gap: 0;
+  }
 `;
 
-const PostList = ({categoryName, posts}: PostListProps) => {
-  return (
+const PostList = ({categoryName, posts}: PostListProps) => (
     <Container>
       <PostCountBlock>
         <PostCountText>{categoryName}</PostCountText>
@@ -66,6 +73,5 @@ const PostList = ({categoryName, posts}: PostListProps) => {
         </PostOuter>
       </PostContainer>
     </Container>
-  );
-};
+  )
 export default PostList;

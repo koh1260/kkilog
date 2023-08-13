@@ -1,5 +1,5 @@
-import { useNavigate, useNavigation } from "react-router-dom";
-import { styled } from "styled-components";
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 interface PostProps {
   id: number;
@@ -16,26 +16,32 @@ const Container = styled.div`
   width: calc(33.33% - 10px);
   border: 0.5px solid lightgray;
   cursor: pointer;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 `;
 
 const ThubnailImage = styled.img`
   width: 100%;
+  margin-bottom: 0.2rem;
 `;
 
 const Content = styled.div`
+  margin: 0.4rem;
   display: flex;
   flex-direction: column;
 `;
 
 const Title = styled.h3`
-  margin: 0.5rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
 const Introduction = styled.p`
-  margin: 0.2rem;
+  margin: 0.5rem 0;
 `;
 
 const Bottom = styled.div`
@@ -43,24 +49,29 @@ const Bottom = styled.div`
 `;
 
 const CommentCount = styled.p`
-  margin: 0.2rem;
   font-size: 0.8rem;
   color: lightslategray;
 `;
 
 const Dash = styled.div`
-margin: 0.2rem;
-  font-size: 0.8rem;
-  color: lightslategray;
-`
-
-const CreateAt = styled.p`
   margin: 0.2rem;
   font-size: 0.8rem;
   color: lightslategray;
 `;
 
-const Post = ({ id, title, thumbnail, introduction, createAt, commentCount }: PostProps) => {
+const CreateAt = styled.p`
+  font-size: 0.8rem;
+  color: lightslategray;
+`;
+
+const Post = ({
+  id,
+  title,
+  thumbnail,
+  introduction,
+  createAt,
+  commentCount
+}: PostProps) => {
   const navigate = useNavigate();
 
   return (
@@ -70,13 +81,13 @@ const Post = ({ id, title, thumbnail, introduction, createAt, commentCount }: Po
         <Title>{title}</Title>
         <Introduction>{introduction}</Introduction>
         <Bottom>
-          <CreateAt>{`${createAt.getFullYear()}.${createAt.getMonth()}.${createAt.getDate()}`}</CreateAt>
+          <CreateAt>{createAt.toString()}</CreateAt>
           <Dash>·</Dash>
           <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
         </Bottom>
       </Content>
     </Container>
   );
-};
+}
 
 export default Post;
