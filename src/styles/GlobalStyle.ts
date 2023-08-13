@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   a {
@@ -17,12 +17,16 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0%;
+    width: 100%;
     height: 100%;
+    overflow-x: hidden;
   }
 
   html {
     box-sizing: border-box;
+    width: 100%;
     height: 100vh;
+    overflow-x: hidden;
   }
 
   *, *::before, *::after {
@@ -47,12 +51,24 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  h1 {
+    font-size: 2rem;
+    margin: 0
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin: 0
+  }
+
   h3 {
+    font-size: 1.5rem;
     margin: 0;
   }
 
   h4 {
     margin: 0;
+    font-size: 1rem;
   }
 
   button {
