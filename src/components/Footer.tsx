@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 import elephant from '../assets/img/elephant.png';
 
 const Container = styled.section`
@@ -20,14 +20,12 @@ const Icon = styled.img`
   color: white;
 `
 
-const Footer = () => {
-  return (
+const Footer = () => (
     <Container>
       <Icon src={elephant} />
       <Email>koh1260@naver.com</Email>
       <Icon src={elephant} />
     </Container>
-  );
-};
+  )
 
 export default Footer;

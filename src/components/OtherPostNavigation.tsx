@@ -1,5 +1,5 @@
-import React from "react";
-import { styled } from "styled-components";
+import React from 'react';
+import { styled } from 'styled-components';
 import nextArrow from '../assets/img/next-arrow.png';
 import previousArrow from '../assets/img/previous-arrow.png';
 
@@ -57,8 +57,7 @@ const OtherPostTitle = styled.h3`
   text-overflow: ellipsis;
 `;
 
-const OtherPostNavigation = () => {
-  return (
+const OtherPostNavigation = () => (
     <Container>
       <NavigationBlock>
         <StyledButton>
@@ -80,7 +79,6 @@ const OtherPostNavigation = () => {
         </StyledButton>
       </NavigationBlock>
     </Container>
-  );
-};
+  )
 
 export default OtherPostNavigation;

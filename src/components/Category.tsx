@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom";
-import { styled } from "styled-components";
+import { NavLink } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 interface CategoryProps {
   to: string;
@@ -36,13 +36,11 @@ font-weight: 600;
   flex: 1;
 `;
 
-const Category = ({to , categoryName, icon }: CategoryProps) => {
-  return (
+const Category = ({to , categoryName, icon }: CategoryProps) => (
     <Container to={to}>
       <Icon src={icon} />
       <CategoryName>{categoryName}</CategoryName>
     </Container>
-  );
-};
+  )
 
 export default Category;

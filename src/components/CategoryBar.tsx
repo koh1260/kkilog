@@ -1,6 +1,6 @@
-import { styled } from "styled-components";
-import { categorys } from "../data/mockData";
-import Category from "./Category";
+import { styled } from 'styled-components';
+import { categorys } from '../data/mockData';
+import Category from './Category';
 
 const Container = styled.section`
   @media screen and (max-width: 1285px) {
@@ -23,8 +23,7 @@ const Content = styled.ul`
   flex-direction: column;
 `;
 
-const CategoryBar = () => {
-  return (
+const CategoryBar = () => (
     <Container>
       <Content>
         {categorys.map((category) => (
@@ -37,7 +36,6 @@ const CategoryBar = () => {
         ))}
       </Content>
     </Container>
-  );
-};
+  )
 
 export default CategoryBar;
