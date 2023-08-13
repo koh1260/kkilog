@@ -1,33 +1,51 @@
-import { styled } from "styled-components";
-import Main from "../components/Main";
-import NavBar from "../components/NavBar";
-import CategoryBar from "../components/CategoryBar";
-import Footer from "../components/Footer";
-import PostList from "../components/PostList";
-import {posts} from '../data/mockData'
+import { styled } from 'styled-components';
+import { useEffect, useState } from 'react';
+import Main from '../components/Main';
+import NavBar from '../components/NavBar';
+import CategoryBar from '../components/CategoryBar';
+import Footer from '../components/Footer';
+import PostList from '../components/PostList';
+import { PostPreview } from '../type';
+import PostApi from '../api/post-api';
+import BodyContainer from '../components/BodyContainer';
 
 const Container = styled.article`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100vw;
   flex: 1;
 `;
 
-const BodyContainer = styled.section`
+const BodyBlock = styled.div`
   display: flex;
-  padding-left: 20px;
   height: 100%;
 `;
 
 const Home = () => {
+  const [posts, setPosts] = useState<PostPreview[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await PostApi.getPosts();
+        setPosts([...response.data.result]);
+      } catch (e: unknown) {
+        console.log(`Error: ${e}`);
+      }
+    })();
+  }, []);
+
   return (
     <Container>
       <NavBar />
       <BodyContainer>
-        <CategoryBar />
-        <Main>
-          <PostList categoryName="Total" posts={posts}/>
-        </Main>
+        <BodyBlock>
+          <CategoryBar />
+          <Main>
+            <PostList categoryName='Total' posts={posts} />
+          </Main>
+        </BodyBlock>
       </BodyContainer>
       <Footer />
     </Container>

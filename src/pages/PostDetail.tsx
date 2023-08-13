@@ -1,36 +1,67 @@
-import { styled } from "styled-components";
-import Main from "../components/Main";
-import NavBar from "../components/NavBar";
-import CategoryBar from "../components/CategoryBar";
-import Footer from "../components/Footer";
-import Detail from "../components/Detail";
+import { styled } from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Main from '../components/Main';
+import NavBar from '../components/NavBar';
+import CategoryBar from '../components/CategoryBar';
+import Footer from '../components/Footer';
+import Detail from '../components/Detail';
+import PostApi from '../api/post-api';
+import { Post } from '../type';
+import BodyContainer from '../components/BodyContainer';
 
 const Container = styled.article`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   flex: 1;
 `;
 
-const BodyContainer = styled.section`
+const BodyBlock = styled.div`
   display: flex;
-  padding-left: 20px;
+  width: 100%;
   height: 100%;
 `;
 
 const PostDetail = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [post, setPost] = useState<Post>();
+  const postId = useParams()?.postId;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await PostApi.getPost(Number(postId));
+        console.log(response);
+        setPost(response.data.result);
+      } catch (e) {
+        console.log(e);
+        setError(true);
+      }
+      setLoading(false);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error...</div>;
+
   return (
     <Container>
       <NavBar />
       <BodyContainer>
-        <CategoryBar />
-        <Main>
-          <Detail />
-        </Main>
+        <BodyBlock>
+          <CategoryBar />
+          <Main>
+            <Detail post={post!} />
+          </Main>
+        </BodyBlock>
       </BodyContainer>
       <Footer />
     </Container>
   );
-};
+}
 
 export default PostDetail;
