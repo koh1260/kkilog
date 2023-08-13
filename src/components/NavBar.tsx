@@ -1,7 +1,7 @@
-import { styled } from "styled-components";
-import githubIcon from "../assets/img/github.png";
-import Logo from "./Logo";
-import { useNavigate } from "react-router-dom";
+import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import githubIcon from '../assets/img/github.png';
+import Logo from './Logo';
 
 const Container = styled.header`
   z-index: 1;
@@ -53,7 +53,7 @@ const WriteButton = styled.button`
 const NavBar = () => {
   const navigate = useNavigate();
   const handleContactIconClick = () => {
-    window.open("https://github.com/koh1260", "_blank");
+    window.open('https://github.com/koh1260', '_blank');
   };
 
   return (
@@ -67,6 +67,6 @@ const NavBar = () => {
       </NavContent>
     </Container>
   );
-};
+}
 
 export default NavBar;
