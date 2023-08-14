@@ -22,6 +22,10 @@ const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 24px;
+/* 
+  @media screen and (max-width: 768px) {
+    justify-content: start;
+  } */
 `;
 
 const ContactIconBlock = styled.div`
@@ -40,18 +44,29 @@ const Icon = styled.img`
 
 const WriteButton = styled.button`
   background-color: powderblue;
+  color: white;
   border: none;
   font-size: 1rem;
   font-weight: 600;
-  color: white;
   height: 32px;
   padding: 4px 10px;
-  border-radius: 12px;
+  height: fit-content;
+  width: fit-content;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const LoginButton = styled.button`
-  width: 10rem;
-  height: 2rem;
+  background-color: powderblue;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  height: fit-content;
+  width: fit-content;
 `;
 
 const NavBar = () => {
