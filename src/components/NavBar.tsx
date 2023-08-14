@@ -1,8 +1,10 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import githubIcon from '../assets/img/github.png';
 import Logo from './Logo';
 import Modal from '../pages/Modal';
+import LoginPage from '../pages/LoginPage';
 
 const Container = styled.header`
   z-index: 1;
@@ -53,6 +55,7 @@ const LoginButton = styled.button`
 `;
 
 const NavBar = () => {
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const navigate = useNavigate();
   const handleContactIconClick = () => {
     window.open('https://github.com/koh1260', '_blank');
@@ -60,19 +63,23 @@ const NavBar = () => {
 
   return (
     <Container>
-      <Modal>
-        <p>asd</p>
-      </Modal>
+      {loginModalVisible && (
+        <Modal setModalVisible={setLoginModalVisible}>
+          <LoginPage />
+        </Modal>
+      )}
       <NavContent>
         <Logo />
         <ContactIconBlock>
-          <LoginButton>로그인</LoginButton>
-          <WriteButton onClick={() => navigate('/write')}>새 글 작성</WriteButton>
+          <LoginButton onClick={() => setLoginModalVisible(true)}>로그인</LoginButton>
+          <WriteButton onClick={() => navigate('/write')}>
+            새 글 작성
+          </WriteButton>
           <Icon src={githubIcon} onClick={handleContactIconClick} />
         </ContactIconBlock>
       </NavContent>
     </Container>
   );
-}
+};
 
 export default NavBar;
