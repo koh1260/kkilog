@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  #root {
+    height: 100%;
+  }
+
   a {
     text-decoration: none;
     color: black;
@@ -24,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     box-sizing: border-box;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     overflow-x: hidden;
   }
