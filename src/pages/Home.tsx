@@ -6,8 +6,8 @@ import CategoryBar from '../components/CategoryBar';
 import Footer from '../components/Footer';
 import PostList from '../components/PostList';
 import { PostPreview } from '../type';
-import PostApi from '../api/post-api';
 import BodyContainer from '../components/BodyContainer';
+import api from '../api/api';
 
 const Container = styled.article`
   display: flex;
@@ -28,7 +28,7 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await PostApi.getPosts();
+        const response = await api.getPostList();
         setPosts([...response.data.result]);
       } catch (e: unknown) {
         console.log(`Error: ${e}`);

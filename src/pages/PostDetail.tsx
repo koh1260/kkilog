@@ -6,9 +6,9 @@ import NavBar from '../components/NavBar';
 import CategoryBar from '../components/CategoryBar';
 import Footer from '../components/Footer';
 import Detail from '../components/Detail';
-import PostApi from '../api/post-api';
 import { Post } from '../type';
 import BodyContainer from '../components/BodyContainer';
+import api from '../api/api';
 
 const Container = styled.article`
   display: flex;
@@ -28,13 +28,12 @@ const PostDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState<Post>();
-  const postId = useParams()?.postId;
+  const postId: string = useParams()?.postId!;
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await PostApi.getPost(Number(postId));
-        console.log(response);
+        const response = await api.getPost(+postId);
         setPost(response.data.result);
       } catch (e) {
         console.log(e);
