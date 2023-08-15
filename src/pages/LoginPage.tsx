@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import LoginForm from '../components/form/LoginForm';
-import vanner from '../assets/img/login-vanner.jpeg';
+import vanner from '../assets/img/login-vanner.png';
 
 const Container = styled.div`
   display: flex;

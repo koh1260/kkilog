@@ -1,9 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  #root {
+  /* #root {
     height: 100%;
-  }
+  } */
 
   a {
     text-decoration: none;
@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     overflow-x: hidden;
+  }
+
+  body.open-modal {
+    overflow: hidden;
   }
 
   html {

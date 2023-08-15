@@ -44,7 +44,10 @@ const CloseButton = styled.button`
 const Modal = ({ children, setModalVisible }: ModalProps) => (
   <Background>
     <Container>
-    <CloseButton onClick={() => setModalVisible(false)}>x</CloseButton>
+    <CloseButton onClick={() => {
+      setModalVisible(false)
+      document.body.classList.remove('open-modal');
+    }}>x</CloseButton>
       {children}
     </Container>
   </Background>
