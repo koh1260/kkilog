@@ -5,11 +5,16 @@ const Container = styled.form`
   display: flex;
   flex-direction: column;
   gap: 14px;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem;
+    align-items: center;
+  }
 `;
 
 const Input = styled.input`
   height: fit-content;
-  width: 100%;
+  min-width: 18rem;
   padding: 10px;
   border: 1px solid lightgray;
   outline: none;

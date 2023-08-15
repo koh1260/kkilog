@@ -35,6 +35,7 @@ const LoginBloack = styled.section`
 
   @media screen and (max-width: 1024px) {
     width: 100%;
+    justify-content: center;
   }
 
   @media screen and (max-width: 768px) {
@@ -46,10 +47,17 @@ const TopBlock = styled.div`
   width: 100%;
   display: flex;
   padding: 2rem 0;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem;
+    justify-content: center;
+    padding: 1rem 0;
+  }
 `;
 
 const Logo = styled.img`
   width: 40%;
+  min-width: 12rem;
 `;
 
 // const BottomBlock = styled.div``;
