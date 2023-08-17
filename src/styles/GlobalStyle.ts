@@ -1,9 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  /* #root {
-    height: 100%;
-  } */
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  }
+
+  * {
+    font-family: 'Pretendard-Regular', sans-serif;
+  }
 
   a {
     text-decoration: none;
@@ -83,8 +90,13 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  input {
+    outline: none;
+  }
+
   textarea {
     resize: none;
+    outline: none;
   }
 `;
 export default GlobalStyle;
