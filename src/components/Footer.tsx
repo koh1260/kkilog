@@ -2,11 +2,14 @@ import { styled } from 'styled-components';
 import elephant from '../assets/img/elephant.png';
 
 const Container = styled.section`
+  /* position: absolute; */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 10rem;
+  width: 100%;
   background-color: #292d3e;
+  /* bottom: 0; */
 `;
 
 const Email = styled.h3`

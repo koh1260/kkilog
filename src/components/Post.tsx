@@ -11,15 +11,21 @@ interface PostProps {
 }
 
 const Container = styled.div`
+  margin: 8px;
   display: flex;
   flex-direction: column;
-  width: calc(33.33% - 10px);
+  width: calc(33.33% - 16px);
   border: 0.5px solid lightgray;
   cursor: pointer;
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1024px) {
+    width: calc(50% - 16px);
+  }
+
+  @media screen and (max-width: 768px) {
     width: 100%;
-    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
   }
 `;
 

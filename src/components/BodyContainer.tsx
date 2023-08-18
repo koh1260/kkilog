@@ -5,9 +5,13 @@ interface BodyContainerProps {
 }
 
 const Container = styled.section`
-  padding: 0 20px;
+  padding-left: 20px;
   height: 100%;
   width: 100%;
+
+  @media screen and (max-width: 1285px) {
+    padding: 0 24px;
+  }
 `;
 
 const BodyContainer = ({ children }: BodyContainerProps) => <Container>{children}</Container>;

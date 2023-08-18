@@ -21,7 +21,7 @@ const PostCountBlock = styled.div`
   gap: 5px;
   margin-right: 10px;
   margin-bottom: 15px;
-  border-bottom: 0.5px solid black;
+  /* border-bottom: 0.5px solid black; */
 `
 
 const PostCountText = styled.h3`
@@ -44,7 +44,6 @@ const PostOuter = styled.div`
   flex-direction: row;
   height: min-content;
   flex-wrap: wrap;
-  gap: 10px;
 
   @media screen and (max-width: 1000px) {
     gap: 0;

@@ -7,6 +7,11 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 48px;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
 `;
 
 const NavigationBlock = styled.div`
@@ -15,9 +20,12 @@ const NavigationBlock = styled.div`
   display: flex;
   padding: 12px 14px;
   width: 45%;
-   &.next {
+  &.next {
     justify-content: end;
-   }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -51,10 +59,12 @@ const NextPostText = styled.div`
   width: 100%;
 `;
 
-const OtherPostTitle = styled.h3`
+const OtherPostTitle = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 const OtherPostNavigation = () => (
