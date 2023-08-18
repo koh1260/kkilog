@@ -22,7 +22,7 @@ const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 24px;
-/* 
+  /* 
   @media screen and (max-width: 768px) {
     justify-content: start;
   } */
@@ -86,7 +86,14 @@ const NavBar = () => {
       <NavContent>
         <Logo />
         <ContactIconBlock>
-          <LoginButton onClick={() => setLoginModalVisible(true)}>로그인</LoginButton>
+          <LoginButton
+            onClick={() => {
+              setLoginModalVisible(true);
+              document.body.classList.add('open-modal');
+            }}
+          >
+            로그인
+          </LoginButton>
           <WriteButton onClick={() => navigate('/write')}>
             새 글 작성
           </WriteButton>
