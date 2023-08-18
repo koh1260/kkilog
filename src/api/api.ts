@@ -4,17 +4,22 @@ import axios, {
   HeadersDefaults,
   RawAxiosRequestHeaders
 } from 'axios';
-import { UpdatePostData, WriteCommentData, WritePostData } from '../type/request';
+import {
+  LoginData,
+  UpdatePostData,
+  WriteCommentData,
+  WritePostData
+} from '../type/request';
 
 class Api {
-  apiToken: string | null = null;
+  apiToken: string | null | undefined = null;
 
   client: AxiosInstance | null = null;
 
   apiUrl: string = process.env.API_URL!;
 
   init = () => {
-    this.apiToken = window.localStorage.getItem('access_token');
+    this.apiToken = localStorage.getItem('access_token')?.split(' ')[1];
 
     const headers:
       | RawAxiosRequestHeaders
@@ -32,6 +37,25 @@ class Api {
       timeout: 31000,
       headers
     });
+
+    // this.client.interceptors.response.use(
+    //   (response) => response,
+    //   async (e: any) => {
+    //     const originalRequest = e.config;
+
+    //     if (e.response.status === 401) {
+    //       try {
+    //         const { accessToken } = (await this.refreshAccessToken()).data;
+    //         localStorage.setItem('access_token', accessToken);
+    //         originalRequest.headers.authorization = `Bearer ${accessToken}`;
+    //         return await axios(originalRequest);
+    //       } catch (er: any) {
+    //         console.log(er.stack);
+    //       }
+    //     }
+    //     return null;
+    //   }
+    // );
 
     return this.client;
   };
@@ -71,7 +95,7 @@ class Api {
   getCategoryList() {
     return this.init().get('/categorys');
   }
-  
+
   writeComment(payload: WriteCommentData) {
     return this.init().post('/comments', payload);
   }
@@ -90,8 +114,17 @@ class Api {
     return this.init().delete(`/comments/${commentId}`);
   }
 
-  login(email: string, password: string) {
-    return this.init().post('/users/login', {email, password});
+  login(payload: LoginData) {
+    return this.init().post('/users/login', payload);
+  }
+
+  loginValidate(email: string) {
+    const params = { email };
+    return this.init().get('/auth/login-validate', { params })
+  }
+
+  async refreshAccessToken() {
+    return this.init().get('/auth/refresh');
   }
 }
 
