@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { categorys } from '../data/mockData';
+import api from '../api/api';
+import { Category as ICategory } from '../type';
 import Category from './Category';
+
 
 const Container = styled.section`
   @media screen and (max-width: 1285px) {
@@ -23,19 +26,31 @@ const Content = styled.ul`
   flex-direction: column;
 `;
 
-const CategoryBar = () => (
+const CategoryBar = () => {
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  useEffect(() => {
+    (async () => {
+      const response = await api.getCategoryList();
+      const result = response.data;
+      setCategories([...result]);
+    })();
+  }, []);
+
+  return (
     <Container>
       <Content>
-        {categorys.map((category) => (
+        {categories.map((category) => (
           <Category
             key={category.id}
             to={`/category/${category.id}`}
             categoryName={category.categoryName}
             icon={category.icon}
+            chldrenCategories={category.childCategories}
           />
         ))}
       </Content>
     </Container>
-  )
+  );
+};
 
 export default CategoryBar;

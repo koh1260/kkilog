@@ -30,3 +30,10 @@ export interface Comment {
   createAt: Date;
   writer: Writer;
 }
+
+export interface Category {
+  id: number;
+  categoryName: string;
+  icon: string;
+  childCategories: Category[] | [];
+}

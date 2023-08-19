@@ -1,11 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
+import ChildrenCategory from './ChildrenCategory';
+import { Category as ICategory } from '../type';
 
 interface CategoryProps {
   to: string;
   categoryName: string;
   icon: string;
+  chldrenCategories: ICategory[];
 }
+
+const OuterBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Container = styled(NavLink)`
   padding: 0.5rem 0;
@@ -31,16 +39,38 @@ const Icon = styled.img`
 `;
 
 const CategoryName = styled.p`
-font-size: 0.9rem;
-font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 600;
   flex: 1;
 `;
 
-const Category = ({to , categoryName, icon }: CategoryProps) => (
+const ChildrenCategoryList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Category = ({
+  to,
+  categoryName,
+  icon,
+  chldrenCategories
+}: CategoryProps) => (
+  <OuterBlock>
     <Container to={to}>
       <Icon src={icon} />
       <CategoryName>{categoryName}</CategoryName>
     </Container>
-  )
+    <ChildrenCategoryList>
+      {chldrenCategories.map((category) => (
+        <ChildrenCategory
+          key={category.id}
+          to={`/category/${category.id}`}
+          categoryName={category.categoryName}
+          icon={category.icon}
+        />
+      ))}
+    </ChildrenCategoryList>
+  </OuterBlock>
+);
 
 export default Category;
