@@ -46,7 +46,7 @@ const CategoryName = styled.p`
 `;
 
 interface DropdownButtonProps {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
 const DropdownButton = styled.button<DropdownButtonProps>`
@@ -55,18 +55,18 @@ const DropdownButton = styled.button<DropdownButtonProps>`
   font-size: 1.4rem;
   width: fit-content;
   height: fit-content;
-  transform: ${(props) => (props.isActive ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transform: ${(props) => (props.$isActive ? 'rotate(180deg)' : 'rotate(0deg)')};
   transition: 0.3s;
   z-index: 999;
 `;
 
 interface ChildCategoryListProps {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
 const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
-  display: ${(props) => props.isActive ? 'flex' : 'none'};
-  height: ${(props) => props.isActive ? 'fit-content' : 0};
+  display: ${(props) => props.$isActive ? 'flex' : 'none'};
+  height: ${(props) => props.$isActive ? 'fit-content' : 0};
   flex-direction: column;
   transition: 0.3s ease-in-out;
 `;
@@ -84,14 +84,14 @@ const Category = ({
       <Container to={to}>
         <Icon src={icon} />
         <CategoryName>{categoryName}</CategoryName>
-        <DropdownButton isActive={childrenVisible} onClick={(e) => {
+        <DropdownButton $isActive={childrenVisible} onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
           if (childrenVisible) setChildrenVisible(false);
           else setChildrenVisible(true);
         }} >🐘</DropdownButton>
       </Container>
-      <ChildrenCategoryList isActive={childrenVisible}>
+      <ChildrenCategoryList $isActive={childrenVisible}>
         {chldrenCategories.map((category) => (
           <ChildrenCategory
             key={category.id}
