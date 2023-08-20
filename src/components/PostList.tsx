@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import Post from './Post';
 import { PostPreview } from '../type';
+import stringToDate from '../lib/transform-date';
 
 interface PostListProps {
   categoryName: string;
@@ -65,7 +66,7 @@ const PostList = ({categoryName, posts}: PostListProps) => (
               title={post.title}
               thumbnail={post.thumbnail}
               introduction={post.introduction}
-              createAt={post.createAt}
+              createAt={stringToDate(post.createAt)}
               commentCount={post.commentCount}
             />
           ))}
