@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 import ChildrenCategory from './ChildrenCategory';
@@ -25,10 +26,10 @@ const Container = styled(NavLink)`
   cursor: pointer;
   border-radius: 7px;
   &:hover {
-    background-color: #f2f2f2;
+    background-color: #F6F7F9;
   }
   &.active {
-    background-color: #f2f2f2;
+    background-color: #E6F7FF;
   }
 `;
 
@@ -39,14 +40,35 @@ const Icon = styled.img`
 `;
 
 const CategoryName = styled.p`
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: bold;
   flex: 1;
 `;
 
-const ChildrenCategoryList = styled.div`
-  display: flex;
+interface DropdownButtonProps {
+  isActive: boolean;
+}
+
+const DropdownButton = styled.button<DropdownButtonProps>`
+  background-color: transparent;
+  border: none;
+  font-size: 1.4rem;
+  width: fit-content;
+  height: fit-content;
+  transform: ${(props) => (props.isActive ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transition: 0.3s;
+  z-index: 999;
+`;
+
+interface ChildCategoryListProps {
+  isActive: boolean;
+}
+
+const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
+  display: ${(props) => props.isActive ? 'flex' : 'none'};
+  height: ${(props) => props.isActive ? 'fit-content' : 0};
   flex-direction: column;
+  transition: 0.3s ease-in-out;
 `;
 
 const Category = ({
@@ -54,23 +76,33 @@ const Category = ({
   categoryName,
   icon,
   chldrenCategories
-}: CategoryProps) => (
-  <OuterBlock>
-    <Container to={to}>
-      <Icon src={icon} />
-      <CategoryName>{categoryName}</CategoryName>
-    </Container>
-    <ChildrenCategoryList>
-      {chldrenCategories.map((category) => (
-        <ChildrenCategory
-          key={category.id}
-          to={`/category/${category.id}`}
-          categoryName={category.categoryName}
-          icon={category.icon}
-        />
-      ))}
-    </ChildrenCategoryList>
-  </OuterBlock>
-);
+}: CategoryProps) => {
+  const [childrenVisible, setChildrenVisible] = useState(false);
+
+  return (
+    <OuterBlock>
+      <Container to={to}>
+        <Icon src={icon} />
+        <CategoryName>{categoryName}</CategoryName>
+        <DropdownButton isActive={childrenVisible} onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          if (childrenVisible) setChildrenVisible(false);
+          else setChildrenVisible(true);
+        }} >🐘</DropdownButton>
+      </Container>
+      <ChildrenCategoryList isActive={childrenVisible}>
+        {chldrenCategories.map((category) => (
+          <ChildrenCategory
+            key={category.id}
+            to={`/blog/category/${category.categoryName}`}
+            categoryName={category.categoryName}
+            icon={category.icon}
+          />
+        ))}
+      </ChildrenCategoryList>
+    </OuterBlock>
+  );
+};
 
 export default Category;
