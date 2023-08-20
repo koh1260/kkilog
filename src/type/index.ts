@@ -3,7 +3,7 @@ export interface PostPreview {
   title: string;
   introduction: string;
   thumbnail: string;
-  createAt: Date;
+  createAt: string;
   commentCount: number;
 };
 
@@ -11,7 +11,7 @@ export interface Post {
   id: number;
   title: string;
   content: string;
-  createAt: Date;
+  createAt: string;
   writer: Writer;
   thumbnail: string;
   comments: Comment[]
