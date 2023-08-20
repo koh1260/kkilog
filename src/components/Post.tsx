@@ -16,8 +16,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(33.33% - 16px);
-  border: 0.5px solid lightgray;
+  height: 25rem;
+  /* border: 0.5px solid lightgray; */
+  border-radius: 7px;
+  overflow: hidden;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px 3px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 7px 10px 5px rgba(0, 0, 0, 0.09);
+  }
 
   @media screen and (max-width: 1024px) {
     width: calc(50% - 16px);
@@ -30,15 +40,23 @@ const Container = styled.div`
   }
 `;
 
+const ImageBlock = styled.div`
+  height: 60%;
+`;
+
 const ThubnailImage = styled.img`
   width: 100%;
+  height: 100%;
   margin-bottom: 0.2rem;
+  object-fit: cover;
 `;
 
 const Content = styled.div`
   margin: 0.4rem;
+  height: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Title = styled.h3`
@@ -83,7 +101,9 @@ const Post = ({
 
   return (
     <Container onClick={() => navigate(`/blog/${id}`)}>
-      <ThubnailImage src={thumbnail} />
+      <ImageBlock>
+        <ThubnailImage src={thumbnail} />
+      </ImageBlock>
       <Content>
         <Title>{title}</Title>
         <Introduction>{introduction}</Introduction>
@@ -95,6 +115,6 @@ const Post = ({
       </Content>
     </Container>
   );
-}
+};
 
 export default Post;
