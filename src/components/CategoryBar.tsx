@@ -13,7 +13,7 @@ const Container = styled.section`
   top: 4rem;
   display: flex;
   flex-direction: column;
-  width: 18rem;
+  width: 15rem;
   height: 100vh;
   padding-right: 20px;
   border-right: 0.5px solid black;
@@ -42,7 +42,7 @@ const CategoryBar = () => {
         {categories.map((category) => (
           <Category
             key={category.id}
-            to={`/category/${category.id}`}
+            to={`/blog/category/${category.categoryName}`}
             categoryName={category.categoryName}
             icon={category.icon}
             chldrenCategories={category.childCategories}

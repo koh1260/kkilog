@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import formatDate from '../lib/format-date';
 
 interface PostProps {
   id: number;
@@ -81,13 +82,13 @@ const Post = ({
   const navigate = useNavigate();
 
   return (
-    <Container onClick={() => navigate(`/${id}`)}>
+    <Container onClick={() => navigate(`/blog/${id}`)}>
       <ThubnailImage src={thumbnail} />
       <Content>
         <Title>{title}</Title>
         <Introduction>{introduction}</Introduction>
         <Bottom>
-          <CreateAt>{createAt.toString()}</CreateAt>
+          <CreateAt>{formatDate(createAt)}</CreateAt>
           <Dash>·</Dash>
           <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
         </Bottom>

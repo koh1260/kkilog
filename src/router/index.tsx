@@ -3,26 +3,31 @@ import Home from '../pages/Home';
 import PostDetail from '../pages/PostDetail';
 import WritePostPage from '../pages/WritePostPage';
 import EditPostPage from '../pages/EditPostPage';
+import MainPage from '../pages/MainPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <MainPage />,
   },
   {
-    path: '/category/:id',
+    path: '/blog',
     element: <Home />
   },
   {
-    path: '/:postId',
+    path: '/blog/category/:categoryName',
+    element: <Home />
+  },
+  {
+    path: '/blog/:postId',
     element: <PostDetail />
   },
   {
-    path: '/write',
+    path: '/blog/write',
     element: <WritePostPage />
   },
   {
-    path: '/edit/:postId',
+    path: '/blog/edit/:postId',
     element: <EditPostPage />
   },
 ]);

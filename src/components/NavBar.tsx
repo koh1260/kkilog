@@ -94,7 +94,7 @@ const NavBar = () => {
           >
             로그인
           </LoginButton>
-          <WriteButton onClick={() => navigate('/write')}>
+          <WriteButton onClick={() => navigate('/blog/write')}>
             새 글 작성
           </WriteButton>
           <Icon src={githubIcon} onClick={handleContactIconClick} />
