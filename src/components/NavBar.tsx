@@ -91,14 +91,14 @@ const NavBar = () => {
       <NavContent>
         <Logo />
         <ContactIconBlock>
-          <LoginButton
+          {user.logined || <LoginButton
             onClick={() => {
               setLoginModalVisible(true);
               document.body.classList.add('open-modal');
             }}
           >
             로그인
-          </LoginButton>
+          </LoginButton>}
           {(user.logined && user.role==='ADMIN') && (<WriteButton onClick={() => navigate('/blog/write')}>
             새 글 작성
           </WriteButton>)}
