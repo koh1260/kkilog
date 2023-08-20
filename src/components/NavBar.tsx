@@ -5,6 +5,7 @@ import githubIcon from '../assets/img/github.png';
 import Logo from './Logo';
 import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
+import { useAppSelector } from '../redux/hook';
 
 const Container = styled.header`
   z-index: 1;
@@ -14,7 +15,9 @@ const Container = styled.header`
   display: flex;
   height: 4rem;
   width: 100%;
+  /* border-bottom: 0.5px solid lightgray; */
   border-bottom: 0.5px solid lightgray;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.03);
 `;
 
 const NavContent = styled.div`
@@ -70,11 +73,13 @@ const LoginButton = styled.button`
 `;
 
 const NavBar = () => {
+  const user = useAppSelector((state) => state.user);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const navigate = useNavigate();
   const handleContactIconClick = () => {
     window.open('https://github.com/koh1260', '_blank');
   };
+  console.log(user);
 
   return (
     <Container>
@@ -94,9 +99,9 @@ const NavBar = () => {
           >
             로그인
           </LoginButton>
-          <WriteButton onClick={() => navigate('/blog/write')}>
+          {(user.logined && user.role==='ADMIN') && (<WriteButton onClick={() => navigate('/blog/write')}>
             새 글 작성
-          </WriteButton>
+          </WriteButton>)}
           <Icon src={githubIcon} onClick={handleContactIconClick} />
         </ContactIconBlock>
       </NavContent>
