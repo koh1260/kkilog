@@ -4,6 +4,7 @@ export interface PostPreview {
   introduction: string;
   thumbnail: string;
   createAt: string;
+  likes: number;
   commentCount: number;
 };
 
@@ -36,4 +37,9 @@ export interface Category {
   categoryName: string;
   icon: string;
   childCategories: Category[] | [];
+}
+
+export interface OtherPost {
+  id: number;
+  title: string;
 }

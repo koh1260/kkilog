@@ -10,6 +10,13 @@ import {
   WriteCommentData,
   WritePostData
 } from '../type/request';
+import { OtherPost, PostPreview } from '../type';
+
+interface Result<T = any> {
+  statusCode: number;
+  message: string;
+  result?: T;
+}
 
 class Api {
   apiToken: string | null | undefined = null;
@@ -18,14 +25,15 @@ class Api {
 
   apiUrl: string = process.env.API_URL!;
 
-  init = () => {
+  init() {
     this.apiToken = localStorage.getItem('access_token')?.split(' ')[1];
 
     const headers:
       | RawAxiosRequestHeaders
       | AxiosHeaders
       | Partial<HeadersDefaults> = {
-      Accept: 'application/json'
+      'Accept': 'application/json',
+      'Cache-Control': 'no-cache',
     };
 
     if (this.apiToken) {
@@ -60,16 +68,47 @@ class Api {
     return this.client;
   };
 
+  setAccessToken() {
+    this.apiToken = localStorage.getItem('access_token');
+  }
+
+  async fetchDate(input: RequestInfo | URL, init?: RequestInit | undefined) {
+    this.setAccessToken();
+    const config: RequestInit = {
+      ...init,
+      headers: {
+        ...init?.headers,
+        ...(this.apiToken ? {Authorization: this.apiToken} : {}),
+      }
+    }
+    const fetchFn = () => fetch(input, config);
+
+    const response = await fetchFn();
+    // TODO Refresh Access Token
+
+    return response;
+  }
+
+  async fetchJson<T>(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Result<T>> {
+    const response = this.fetchDate(input, init);
+    const result: Promise<Result<T>> = (await response).json();
+    return result;
+  }
+
   writerPost(payload: WritePostData) {
     return this.init().post('/posts', payload);
   }
 
   getPostList() {
-    return this.init().get('/posts');
+    return this.fetchJson<PostPreview[]>('/posts');
   }
 
-  getPostListByCategory(categoryId: number) {
-    return this.init().get(`/posts/category/${categoryId}`);
+  getPostListByCategoryId(categoryId: number) {
+    return this.fetchJson<PostPreview[]>(`/posts/category/${categoryId}`);
+  }
+
+  getPostListByCategoryName(categoryName: string) {
+    return this.fetchJson<PostPreview[]>(`/posts/category?categoryName=${categoryName}`);
   }
 
   getPost(postId: number) {
@@ -89,7 +128,7 @@ class Api {
   }
 
   getPreviousAndNextPost(postId: number) {
-    return this.init().get(`/posts/${postId}`);
+    return this.fetchJson<OtherPost[]>(`/posts/other/${postId}`);
   }
 
   getCategoryList() {

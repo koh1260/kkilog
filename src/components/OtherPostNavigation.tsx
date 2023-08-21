@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import nextArrow from '../assets/img/next-arrow.png';
 import previousArrow from '../assets/img/previous-arrow.png';
+import { OtherPost as OtherPostType } from '../type';
+import api from '../api/api';
+
+interface OtherPostNavigationProps {
+  postId: number;
+}
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +22,8 @@ const Container = styled.div`
 `;
 
 const NavigationBlock = styled.div`
-  background-color: #F8F9FA;
+  cursor: pointer;
+  background-color: #f8f9fa;
   border-radius: 12px;
   display: flex;
   padding: 12px 14px;
@@ -36,16 +44,23 @@ const StyledButton = styled.button`
 const Icon = styled.img`
   width: 52px;
   height: 52px;
-
+  transition: all 0.2s;
   &.previous {
     margin-right: 12px;
+  }
+  &.previous:hover {
+    transform: translateX(-10px);
   }
   &.next {
     margin-left: 12px;
   }
-`
+  &.next:hover {
+    transform: translateX(10px);
+  }
+`;
 
 const OtherPost = styled.div`
+overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -67,28 +82,48 @@ const OtherPostTitle = styled.p`
   font-weight: 600;
 `;
 
-const OtherPostNavigation = () => (
+const OtherPostNavigation = ({ postId }: OtherPostNavigationProps) => {
+  const navigate = useNavigate();
+  const [postsInfo, setPostsInfo] = useState<OtherPostType[]>([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await api.getPreviousAndNextPost(postId);
+        setPostsInfo([...response.result!]);
+      } catch (e) {
+        if (e instanceof Error) console.error(`Error: ${e.stack}`);
+      }
+    })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postId]);
+
+  return (
     <Container>
       <NavigationBlock>
         <StyledButton>
-          <Icon className="previous" src={previousArrow}/>
+          <Icon className='previous' src={previousArrow} />
         </StyledButton>
-        <OtherPost>
-          <PreviousPostText>이전 글</PreviousPostText>
-          <OtherPostTitle>React 너무 어렵군!!</OtherPostTitle>
-        </OtherPost>
+        {postsInfo[0] ? (
+          <OtherPost onClick={() => navigate(`/blog/${postsInfo[0].id}`)}>
+            <PreviousPostText>이전 글</PreviousPostText>
+            <OtherPostTitle>{postsInfo[0].title}</OtherPostTitle>
+          </OtherPost>
+        ) : <div />}
       </NavigationBlock>
 
-      <NavigationBlock className="next">
-        <OtherPost>
-          <NextPostText>다음 글</NextPostText>
-          <OtherPostTitle>React 너무 어렵군!!</OtherPostTitle>
-        </OtherPost>
+      <NavigationBlock className='next'>
+        {postsInfo[1] && (
+          <OtherPost onClick={() => navigate(`/blog/${postsInfo[1].id}`)}>
+            <NextPostText>다음 글</NextPostText>
+            <OtherPostTitle>{postsInfo[1].title}</OtherPostTitle>
+          </OtherPost>
+        )}
         <StyledButton>
-          <Icon className="next" src={nextArrow}/>
+          <Icon className='next' src={nextArrow} />
         </StyledButton>
       </NavigationBlock>
     </Container>
-  )
+  );
+};
 
 export default OtherPostNavigation;
