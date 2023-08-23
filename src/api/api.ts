@@ -10,7 +10,7 @@ import {
   WriteCommentData,
   WritePostData
 } from '../type/request';
-import { OtherPost, PostPreview, RefreshAccessToken } from '../type';
+import { OtherPost, Post, PostPreview, RefreshAccessToken } from '../type';
 import storage from '../lib/storage';
 
 interface Result<T = any> {
@@ -120,7 +120,7 @@ class Api {
   }
 
   getPost(postId: number) {
-    return this.init().get(`/posts/${postId}`);
+    return this.fetchJson<Post>(`/posts/${postId}`);
   }
 
   updatePost(postId: number, payload: UpdatePostData) {

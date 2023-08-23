@@ -34,7 +34,7 @@ const PostDetail = () => {
     (async () => {
       try {
         const response = await api.getPost(+postId);
-        setPost(response.data.result);
+        setPost(response.result!);
       } catch (e) {
         console.log(e);
         setError(true);
