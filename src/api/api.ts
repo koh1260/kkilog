@@ -10,7 +10,8 @@ import {
   WriteCommentData,
   WritePostData
 } from '../type/request';
-import { OtherPost, PostPreview } from '../type';
+import { OtherPost, PostPreview, RefreshAccessToken } from '../type';
+import storage from '../lib/storage';
 
 interface Result<T = any> {
   statusCode: number;
@@ -19,6 +20,8 @@ interface Result<T = any> {
 }
 
 class Api {
+  isAccessTokenRefresh = false;
+
   apiToken: string | null | undefined = null;
 
   client: AxiosInstance | null = null;
@@ -32,8 +35,8 @@ class Api {
       | RawAxiosRequestHeaders
       | AxiosHeaders
       | Partial<HeadersDefaults> = {
-      'Accept': 'application/json',
-      'Cache-Control': 'no-cache',
+      Accept: 'application/json',
+      'Cache-Control': 'no-cache'
     };
 
     if (this.apiToken) {
@@ -46,50 +49,53 @@ class Api {
       headers
     });
 
-    // this.client.interceptors.response.use(
-    //   (response) => response,
-    //   async (e: any) => {
-    //     const originalRequest = e.config;
-
-    //     if (e.response.status === 401) {
-    //       try {
-    //         const { accessToken } = (await this.refreshAccessToken()).data;
-    //         localStorage.setItem('access_token', accessToken);
-    //         originalRequest.headers.authorization = `Bearer ${accessToken}`;
-    //         return await axios(originalRequest);
-    //       } catch (er: any) {
-    //         console.log(er.stack);
-    //       }
-    //     }
-    //     return null;
-    //   }
-    // );
-
     return this.client;
-  };
+  }
 
   setAccessToken() {
     this.apiToken = localStorage.getItem('access_token');
   }
 
-  async fetchDate(input: RequestInfo | URL, init?: RequestInit | undefined) {
-    this.setAccessToken();
-    const config: RequestInit = {
-      ...init,
-      headers: {
-        ...init?.headers,
-        ...(this.apiToken ? {Authorization: this.apiToken} : {}),
+  async fetchDate(
+    input: RequestInfo | URL,
+    init?: RequestInit | undefined
+  ): Promise<Response> {
+    try {
+      const fetchFn = () => {
+        this.setAccessToken();
+        const config: RequestInit = {
+          ...init,
+          headers: {
+            ...init?.headers,
+            ...(this.apiToken ? { Authorization: this.apiToken } : {})
+          }
+        };
+        return fetch(input, config);
+      };
+      let response = await fetchFn();
+
+      if (!response.ok && !this.isAccessTokenRefresh) {
+        this.isAccessTokenRefresh = true;
+        const refreshResponse = await this.refreshAccessToken();
+        const newToken = refreshResponse.result!.accessToken;
+        storage.set('access_token', `Bearer ${newToken}`);
+        this.isAccessTokenRefresh = false;
+
+        response = await fetchFn();
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        if (!response.ok) throw response;
       }
+  
+      return response;
+    } catch(e) {
+      throw new Error('Client Error');
     }
-    const fetchFn = () => fetch(input, config);
-
-    const response = await fetchFn();
-    // TODO Refresh Access Token
-
-    return response;
   }
 
-  async fetchJson<T>(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Result<T>> {
+  async fetchJson<T>(
+    input: RequestInfo | URL,
+    init?: RequestInit | undefined
+  ): Promise<Result<T>> {
     const response = this.fetchDate(input, init);
     const result: Promise<Result<T>> = (await response).json();
     return result;
@@ -108,7 +114,9 @@ class Api {
   }
 
   getPostListByCategoryName(categoryName: string) {
-    return this.fetchJson<PostPreview[]>(`/posts/category?categoryName=${categoryName}`);
+    return this.fetchJson<PostPreview[]>(
+      `/posts/category?categoryName=${categoryName}`
+    );
   }
 
   getPost(postId: number) {
@@ -159,11 +167,11 @@ class Api {
 
   loginValidate(email: string) {
     const params = { email };
-    return this.init().get('/auth/login-validate', { params })
+    return this.init().get('/auth/login-validate', { params });
   }
 
   async refreshAccessToken() {
-    return this.init().get('/auth/refresh');
+    return this.fetchJson<RefreshAccessToken>('/auth/refresh');
   }
 }
 
