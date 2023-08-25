@@ -4,9 +4,10 @@ import PostContent from './PostContent';
 import OtherPostNavigation from './OtherPostNavigation';
 import CommentBlock from './CommentBlock';
 import { Post } from '../type';
+import stringToDate from '../lib/transform-date';
 
 interface DetailProps {
-  post: Post
+  post: Post;
 }
 
 const Container = styled.article`
@@ -21,11 +22,19 @@ const Container = styled.article`
 `;
 
 const Detail = ({ post }: DetailProps) => (
-    <Container>
-      <PostContent post={post}/>
-      <OtherPostNavigation />
-      <CommentBlock comments={post.comments}/>
-    </Container>
-  )
+  <Container>
+    <PostContent
+      key={post.id}
+      id={post.id}
+      title={post.title}
+      content={post.content}
+      writer={post.writer.nickname}
+      thumbnail={post.thumbnail}
+      createAt={stringToDate(post.createAt)}
+    />
+    <OtherPostNavigation postId={post.id} />
+    <CommentBlock comments={post.comments} />
+  </Container>
+);
 
 export default Detail;

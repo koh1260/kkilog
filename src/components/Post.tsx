@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import {PiHeartDuotone} from 'react-icons/pi';
 import formatDate from '../lib/format-date';
 
 interface PostProps {
@@ -7,6 +8,7 @@ interface PostProps {
   title: string;
   thumbnail: string;
   introduction: string;
+  likes: number;
   createAt: Date;
   commentCount: number;
 }
@@ -63,6 +65,7 @@ const Title = styled.h3`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  margin: 0.4rem 0;
 `;
 
 const Introduction = styled.p`
@@ -71,6 +74,11 @@ const Introduction = styled.p`
 
 const Bottom = styled.div`
   display: flex;
+  justify-content: space-between;
+`;
+
+const CommentAndCreateAtBlock = styled.div`
+  display: flex;
 `;
 
 const CommentCount = styled.p`
@@ -78,15 +86,20 @@ const CommentCount = styled.p`
   color: lightslategray;
 `;
 
-const Dash = styled.div`
-  margin: 0.2rem;
-  font-size: 0.8rem;
-  color: lightslategray;
-`;
-
 const CreateAt = styled.p`
   font-size: 0.8rem;
   color: lightslategray;
+  margin-right: 12px;
+`;
+
+const LikeBlock = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const LikeCount = styled.p`
+  font-size: 0.7rem;
+  margin-left: 4px;
 `;
 
 const Post = ({
@@ -94,6 +107,7 @@ const Post = ({
   title,
   thumbnail,
   introduction,
+  likes,
   createAt,
   commentCount
 }: PostProps) => {
@@ -108,9 +122,14 @@ const Post = ({
         <Title>{title}</Title>
         <Introduction>{introduction}</Introduction>
         <Bottom>
+          <CommentAndCreateAtBlock>
           <CreateAt>{formatDate(createAt)}</CreateAt>
-          <Dash>·</Dash>
           <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
+          </CommentAndCreateAtBlock>
+          <LikeBlock>
+          <PiHeartDuotone />
+          <LikeCount>{likes}</LikeCount>
+          </LikeBlock>
         </Bottom>
       </Content>
     </Container>

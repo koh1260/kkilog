@@ -66,6 +66,7 @@ const PostList = ({categoryName, posts}: PostListProps) => (
               title={post.title}
               thumbnail={post.thumbnail}
               introduction={post.introduction}
+              likes={post.likes}
               createAt={stringToDate(post.createAt)}
               commentCount={post.commentCount}
             />

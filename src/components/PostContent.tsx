@@ -2,10 +2,15 @@ import React from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { Post } from '../type';
+import formatDate from '../lib/format-date';
 
 interface PostContentProps {
-  post: Post
+  id: number;
+  title: string;
+  content: string;
+  createAt: Date;
+  writer: string;
+  thumbnail: string;
 }
 
 const Container = styled.div`
@@ -54,29 +59,47 @@ const StyledButton = styled.button`
 
 // const Content = styled.div``;
 
-const PostContent = ({post}: PostContentProps) => {
+const PostContent = ({
+  id,
+  title,
+  content,
+  writer,
+  thumbnail,
+  createAt,
+}: PostContentProps) => {
   const navigate = useNavigate();
   // const formatDate = (date: Date) => `${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`;
 
   return (
     <Container>
-      <Title>{post.title}</Title>
+      <Title>{title}</Title>
       <Utils>
         <PostInfoBlock>
-          <p className="nickname">{post.writer.nickname}</p>
+          <p className='nickname'>{writer}</p>
           <p>·</p>
-          <p className="create_at">{post.createAt.toString()}</p>
+          <p className='create_at'>{formatDate(createAt)}</p>
         </PostInfoBlock>
         <EditBlock>
-          <StyledButton onClick={() => navigate(`/edit/${post.id}`, {state: {content: post.content}})}>수정</StyledButton>
+          <StyledButton
+            onClick={() =>
+              navigate(`/blog/edit/${id}`, {
+                state: { content }
+              })
+            }
+          >
+            수정
+          </StyledButton>
           <StyledButton>삭제</StyledButton>
         </EditBlock>
       </Utils>
-      <Thumbnail src={post.thumbnail} />
+      <Thumbnail src={thumbnail} />
       {/* <Content>{post.content}</Content> */}
-      <MDEditor.Markdown source={post.content} style={{ whiteSpace: 'pre-wrap' }} />
+      <MDEditor.Markdown
+        source={content}
+        style={{ whiteSpace: 'pre-wrap' }}
+      />
     </Container>
   );
-}
+};
 
 export default PostContent;
