@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import NavBar from '../components/NavBar';
@@ -22,19 +23,33 @@ const BodyBlock = styled.div`
   height: 100%;
 `;
 
+// interface ParamType {
+//   categoryName: string;
+// }
+
 const Home = () => {
+  const {categoryName} = useParams<'categoryName'>();
   const [posts, setPosts] = useState<PostPreview[]>([]);
 
   useEffect(() => {
-    (async () => {
+    console.log(categoryName);
+    const getPosts = async (name: string | undefined) => {
       try {
-        const response = await api.getPostList();
-        setPosts([...response.data.result]);
-      } catch (e: unknown) {
-        console.log(`Error: ${e}`);
+        if (name) {
+          const response = await api.getPostListByCategoryName(name);
+          setPosts([...response.result!]);
+        } else {
+          const response = await api.getPostList();
+          setPosts([...response.result!]);
+        }
+      } catch (e) {
+        if (e instanceof Error)
+          console.error(`Error: ${e.stack}`);
       }
-    })();
-  }, []);
+    };
+    getPosts(categoryName);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryName]);
 
   return (
     <Container>
