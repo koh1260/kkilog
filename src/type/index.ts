@@ -43,3 +43,7 @@ export interface OtherPost {
   id: number;
   title: string;
 }
+
+export interface RefreshAccessToken {
+  accessToken: string;
+}
