@@ -25,7 +25,7 @@ const Input = styled.input`
 `;
 
 const LoginButton = styled.button`
-  margin-top: 10px;
+  height: 2.5rem;
   padding: 0.4rem 1rem;
   color: white;
   background-color: #529fdc;
@@ -33,6 +33,32 @@ const LoginButton = styled.button`
   font-size: 1.2rem;
   font-weight: 500;
   width: fit-content;
+`;
+
+const LoginButtonBlock = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+`;
+
+const SocialLoginButtonBlock = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+const SocialLoginButton = styled.button`
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  padding: 0;
+  background-color: white;
+`;
+
+const SocialLoginIcon = styled.img`
+  height: 2.5rem;
+  width: 2.5rem;
 `;
 
 interface ILoginInfo {
@@ -58,20 +84,20 @@ const LoginForm = () => {
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = (await api.login(loginInfo));
+      const response = await api.login(loginInfo);
       const token = response.headers.authorization;
       const user = response.data.result;
       const loginedUser: UserState = {
         id: user.id,
         username: user.email,
-        role: user.role,
+        role: user.role
       };
       dispatch(setUser(loginedUser));
       storage.set('access_token', token);
       storage.set('user', loginedUser);
     } catch (e: any) {
       alert(e.stack);
-      if(e instanceof Error) console.log(e.stack);
+      if (e instanceof Error) console.log(e.stack);
     }
   };
 
@@ -90,7 +116,17 @@ const LoginForm = () => {
         value={loginInfo.password}
         onChange={handleOnChange}
       />
-      <LoginButton>로그인</LoginButton>
+      <LoginButtonBlock>
+        <LoginButton>로그인</LoginButton>
+        <SocialLoginButtonBlock>
+          <SocialLoginButton>
+            <SocialLoginIcon src='https://cdn-icons-png.flaticon.com/512/2504/2504739.png' />
+          </SocialLoginButton>
+          <SocialLoginButton>
+            <SocialLoginIcon src='https://cdn-icons-png.flaticon.com/512/3669/3669973.png' />
+          </SocialLoginButton>
+        </SocialLoginButtonBlock>
+      </LoginButtonBlock>
     </Container>
   );
 };
