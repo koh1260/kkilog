@@ -60,7 +60,7 @@ const Icon = styled.img`
 `;
 
 const OtherPost = styled.div`
-overflow: hidden;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -94,34 +94,38 @@ const OtherPostNavigation = ({ postId }: OtherPostNavigationProps) => {
         if (e instanceof Error) console.error(`Error: ${e.stack}`);
       }
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   return (
     <Container>
-      <NavigationBlock>
-        <StyledButton>
-          <Icon className='previous' src={previousArrow} />
-        </StyledButton>
-        {postsInfo[0] ? (
+      {postsInfo[0] ? (
+        <NavigationBlock>
+          <StyledButton>
+            <Icon className='previous' src={previousArrow} />
+          </StyledButton>
           <OtherPost onClick={() => navigate(`/blog/${postsInfo[0].id}`)}>
             <PreviousPostText>이전 글</PreviousPostText>
             <OtherPostTitle>{postsInfo[0].title}</OtherPostTitle>
           </OtherPost>
-        ) : <div />}
-      </NavigationBlock>
+        </NavigationBlock>
+      ) : (
+        <div />
+      )}
 
-      <NavigationBlock className='next'>
-        {postsInfo[1] && (
+      {postsInfo[1] ? (
+        <NavigationBlock className='next'>
           <OtherPost onClick={() => navigate(`/blog/${postsInfo[1].id}`)}>
             <NextPostText>다음 글</NextPostText>
             <OtherPostTitle>{postsInfo[1].title}</OtherPostTitle>
           </OtherPost>
-        )}
-        <StyledButton>
-          <Icon className='next' src={nextArrow} />
-        </StyledButton>
-      </NavigationBlock>
+          <StyledButton>
+            <Icon className='next' src={nextArrow} />
+          </StyledButton>
+        </NavigationBlock>
+      ) : (
+        <div />
+      )}
     </Container>
   );
 };
