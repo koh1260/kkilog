@@ -79,7 +79,6 @@ const NavBar = () => {
   const handleContactIconClick = () => {
     window.open('https://github.com/koh1260', '_blank');
   };
-  console.log(user);
 
   return (
     <Container>

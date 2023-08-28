@@ -23,7 +23,6 @@ const userSlice = createSlice({
         ...state,
         ...action.payload
       };
-      console.log(payload);
       return payload;
     },
     setLogined: (state, action: PayloadAction<{logined: boolean}>) => ({...state, ...action.payload}),
