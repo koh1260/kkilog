@@ -36,9 +36,15 @@ const LoginButton = styled.button`
 `;
 
 const LoginButtonBlock = styled.div`
+  margin-top: 1.2rem;
   display: flex;
   align-items: center;
   gap: 24px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 32px;
+  }
 `;
 
 const SocialLoginButtonBlock = styled.div`
