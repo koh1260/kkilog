@@ -10,7 +10,14 @@ import {
   WriteCommentData,
   WritePostData
 } from '../type/request';
-import { OtherPost, Post, PostPreview, RefreshAccessToken, UploadedImage, ValidateLogin } from '../type';
+import {
+  OtherPost,
+  Post,
+  PostPreview,
+  RefreshAccessToken,
+  UploadedImage,
+  ValidateLogin
+} from '../type';
 import storage from '../lib/storage';
 
 interface Result<T = any> {
@@ -66,6 +73,7 @@ class Api {
         const config: RequestInit = {
           ...init,
           headers: {
+            'Content-Type': 'application/json',
             ...init?.headers,
             ...(this.apiToken ? { Authorization: this.apiToken } : {})
           }
@@ -85,9 +93,9 @@ class Api {
         // eslint-disable-next-line @typescript-eslint/no-throw-literal
         if (!response.ok) throw response;
       }
-  
+
       return response;
-    } catch(e) {
+    } catch (e) {
       throw new Error('Client Error');
     }
   }
@@ -124,7 +132,10 @@ class Api {
   }
 
   updatePost(postId: number, payload: UpdatePostData) {
-    return this.init().patch(`/posts/${postId}`, payload);
+    return this.fetchJson<void>(`/posts/${postId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload)
+    });
   }
 
   deletePost(postId: number) {
@@ -170,7 +181,10 @@ class Api {
   }
 
   uploadImage(form: FormData) {
-    return this.fetchJson<UploadedImage>('/file/upload', {method: 'POST', body: form});
+    return this.fetchJson<UploadedImage>('/file/upload', {
+      method: 'POST',
+      body: form
+    });
   }
 
   async refreshAccessToken() {

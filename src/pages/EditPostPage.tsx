@@ -53,7 +53,7 @@ const PostingButton = styled.button`
 const EditPostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {content, title, introduction, thumbnail, publicScope} = location.state;
+  const {id, content, title, introduction, thumbnail, publicScope} = location.state;
   const [text, setText] = useState(content);
   const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
@@ -68,6 +68,7 @@ const EditPostPage = () => {
     <Container>
       {uploadModalVisible && (
         <UploadPostPage
+          id={id}
           title={title}
           content={text}
           introduction={introduction}

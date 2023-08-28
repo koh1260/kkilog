@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
+import { UpdatePostData } from '../type/request';
 
 interface UploadPostPageProps {
+  id?: number;
   title?: string;
   content: string;
   introduction?: string;
@@ -167,6 +170,7 @@ const PostingButton = styled.button`
 `;
 
 const UploadPostPage = ({
+  id,
   content,
   setModalVisible,
   title,
@@ -174,11 +178,11 @@ const UploadPostPage = ({
   thumbnail,
   publicScope
 }: UploadPostPageProps) => {
-
+  const navigate = useNavigate();
   const [postIntroduction, setPostIntroduction] = useState(introduction);
   const [postThumbnail, setPostThumbnail] = useState(thumbnail);
   const [postTitle, setPostTitle] = useState(title);
-  const [postPublicScope, setPostPublicScope] = useState('PUBLIC');
+  const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>('PUBLIC');
   // const [category, setCategory] = useState('');
 
   useEffect(() => {
@@ -195,6 +199,19 @@ const UploadPostPage = ({
     const response = await api.uploadImage(form);
     if (!response.result) throw new Error('이미지 url이 없습니다.');
     setPostThumbnail(response.result.filePath);
+  }
+
+  const handleOnClickPosting = async () => {
+    const payload: UpdatePostData = {
+      content,
+      title: postTitle,
+      introduction: postIntroduction,
+      thumbnail: postThumbnail,
+      publicScope: postPublicScope
+    }
+    const response = await api.updatePost(id!, payload);
+    navigate(-1);
+    console.log(response);
   }
 
   return (
@@ -243,7 +260,7 @@ const UploadPostPage = ({
               <CancelButton onClick={() => setModalVisible(false)}>
                 취소
               </CancelButton>
-              <PostingButton>포스팅</PostingButton>
+              <PostingButton onClick={handleOnClickPosting}>포스팅</PostingButton>
             </PostingButtonBlock>
           </RightBlock>
         </Content>
