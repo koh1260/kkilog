@@ -40,6 +40,7 @@ const CategoryBar = () => {
   return (
     <Container>
       <Content>
+        <Category key={0} to='/blog' end categoryName='전체 글' icon='test' childrenCategories={[]} />
         {categories.map((category) => (
           <Category
             key={category.id}

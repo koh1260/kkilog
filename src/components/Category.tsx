@@ -6,6 +6,7 @@ import { Category as ICategory } from '../type';
 
 interface CategoryProps {
   to: string;
+  end?: boolean;
   categoryName: string;
   icon: string;
   childrenCategories: ICategory[];
@@ -32,6 +33,10 @@ const Container = styled(NavLink)`
     background-color: #e6f7ff;
   }
 `;
+
+Container.defaultProps = {
+  end: false,
+}
 
 const Icon = styled.img`
   width: 38px;
@@ -74,6 +79,7 @@ const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
 
 const Category = ({
   to,
+  end = false,
   categoryName,
   icon,
   childrenCategories
@@ -82,31 +88,35 @@ const Category = ({
 
   return (
     <OuterBlock>
-      <Container to={to}>
+      <Container to={to} end={end}>
         <Icon src={icon} />
         <CategoryName>{categoryName}</CategoryName>
-        <DropdownButton
-          $isActive={childrenVisible}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            if (childrenVisible) setChildrenVisible(false);
-            else setChildrenVisible(true);
-          }}
-        >
-          🐘
-        </DropdownButton>
+        {childrenCategories.length ? (
+          <DropdownButton
+            $isActive={childrenVisible}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              if (childrenVisible) setChildrenVisible(false);
+              else setChildrenVisible(true);
+            }}
+          >
+            🐘
+          </DropdownButton>
+        ) : null}
       </Container>
-      <ChildrenCategoryList $isActive={childrenVisible}>
-        {childrenCategories.map((category) => (
-          <ChildrenCategory
-            key={category.id}
-            to={`/blog/category/${category.categoryName}`}
-            categoryName={category.categoryName}
-            icon={category.icon}
-          />
-        ))}
-      </ChildrenCategoryList>
+      {childrenCategories.length ? (
+        <ChildrenCategoryList $isActive={childrenVisible}>
+          {childrenCategories.map((category) => (
+            <ChildrenCategory
+              key={category.id}
+              to={`/blog/category/${category.categoryName}`}
+              categoryName={category.categoryName}
+              icon={category.icon}
+            />
+          ))}
+        </ChildrenCategoryList>
+      ) : null}
     </OuterBlock>
   );
 };
