@@ -39,8 +39,8 @@ Container.defaultProps = {
 }
 
 const Icon = styled.img`
-  width: 38px;
-  height: 28px;
+  width: 28px;
+  height: 18px;
   padding: 0 5px;
 `;
 
