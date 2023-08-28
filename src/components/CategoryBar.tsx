@@ -6,6 +6,7 @@ import Category from './Category';
 
 
 const Container = styled.section`
+  /* box-shadow: 5px 0 10px rgba(0, 0, 0, 0.03); */
   @media screen and (max-width: 1285px) {
     display: none;
   }
@@ -16,7 +17,7 @@ const Container = styled.section`
   width: 15rem;
   height: 100vh;
   padding-right: 20px;
-  border-right: 0.5px solid black;
+  /* border-right: 0.5px solid lightgray; */
 `;
 
 const Content = styled.ul`
@@ -45,7 +46,7 @@ const CategoryBar = () => {
             to={`/blog/category/${category.categoryName}`}
             categoryName={category.categoryName}
             icon={category.icon}
-            chldrenCategories={category.childCategories}
+            childrenCategories={category.childCategories}
           />
         ))}
       </Content>

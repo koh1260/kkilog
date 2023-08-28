@@ -8,7 +8,7 @@ interface CategoryProps {
   to: string;
   categoryName: string;
   icon: string;
-  chldrenCategories: ICategory[];
+  childrenCategories: ICategory[];
 }
 
 const OuterBlock = styled.div`
@@ -26,10 +26,10 @@ const Container = styled(NavLink)`
   cursor: pointer;
   border-radius: 7px;
   &:hover {
-    background-color: #F6F7F9;
+    background-color: #f6f7f9;
   }
   &.active {
-    background-color: #E6F7FF;
+    background-color: #e6f7ff;
   }
 `;
 
@@ -55,7 +55,8 @@ const DropdownButton = styled.button<DropdownButtonProps>`
   font-size: 1.4rem;
   width: fit-content;
   height: fit-content;
-  transform: ${(props) => (props.$isActive ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transform: ${(props) =>
+    props.$isActive ? 'rotate(180deg)' : 'rotate(0deg)'};
   transition: 0.3s;
   z-index: 999;
 `;
@@ -65,8 +66,8 @@ interface ChildCategoryListProps {
 }
 
 const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
-  display: ${(props) => props.$isActive ? 'flex' : 'none'};
-  height: ${(props) => props.$isActive ? 'fit-content' : 0};
+  display: ${(props) => (props.$isActive ? 'flex' : 'none')};
+  height: ${(props) => (props.$isActive ? 'fit-content' : 0)};
   flex-direction: column;
   transition: 0.3s ease-in-out;
 `;
@@ -75,7 +76,7 @@ const Category = ({
   to,
   categoryName,
   icon,
-  chldrenCategories
+  childrenCategories
 }: CategoryProps) => {
   const [childrenVisible, setChildrenVisible] = useState(false);
 
@@ -84,15 +85,20 @@ const Category = ({
       <Container to={to}>
         <Icon src={icon} />
         <CategoryName>{categoryName}</CategoryName>
-        <DropdownButton $isActive={childrenVisible} onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          if (childrenVisible) setChildrenVisible(false);
-          else setChildrenVisible(true);
-        }} >🐘</DropdownButton>
+        <DropdownButton
+          $isActive={childrenVisible}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            if (childrenVisible) setChildrenVisible(false);
+            else setChildrenVisible(true);
+          }}
+        >
+          🐘
+        </DropdownButton>
       </Container>
       <ChildrenCategoryList $isActive={childrenVisible}>
-        {chldrenCategories.map((category) => (
+        {childrenCategories.map((category) => (
           <ChildrenCategory
             key={category.id}
             to={`/blog/category/${category.categoryName}`}
