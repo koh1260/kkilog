@@ -2,6 +2,7 @@ import MDEditor, { ContextStore } from '@uiw/react-md-editor';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import UploadPostPage from './UploadPostPage';
 
 type MDEditorOnChange = (
   value?: string,
@@ -52,8 +53,9 @@ const PostingButton = styled.button`
 const EditPostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {content} = location.state;
+  const {content, title, introduction, thumbnail, publicScope} = location.state;
   const [text, setText] = useState(content);
+  const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
   const onClick: MDEditorOnChange = (
     value?: string,
@@ -64,6 +66,16 @@ const EditPostPage = () => {
 
   return (
     <Container>
+      {uploadModalVisible && (
+        <UploadPostPage
+          title={title}
+          content={text}
+          introduction={introduction}
+          thumbnail={thumbnail}
+          publicScope={publicScope}
+          setModalVisible={setUploadModalVisible}
+        />
+      )}
       <EdittorBlock>
         <MDEditor
           className="editor"
@@ -75,7 +87,7 @@ const EditPostPage = () => {
         />
         <ButtonBlock>
           <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>
-          <PostingButton>수정하기</PostingButton>
+          <PostingButton onClick={() => setUploadModalVisible(true)}>수정하기</PostingButton>
         </ButtonBlock>
       </EdittorBlock>
       {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}

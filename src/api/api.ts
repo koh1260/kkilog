@@ -10,7 +10,7 @@ import {
   WriteCommentData,
   WritePostData
 } from '../type/request';
-import { OtherPost, Post, PostPreview, RefreshAccessToken } from '../type';
+import { OtherPost, Post, PostPreview, RefreshAccessToken, UploadedImage, ValidateLogin } from '../type';
 import storage from '../lib/storage';
 
 interface Result<T = any> {
@@ -165,9 +165,12 @@ class Api {
     return this.init().post('/users/login', payload);
   }
 
-  loginValidate(email: string) {
-    const params = { email };
-    return this.init().get('/auth/login-validate', { params });
+  loginValidate() {
+    return this.fetchJson<ValidateLogin>('/auth/login-validate');
+  }
+
+  uploadImage(form: FormData) {
+    return this.fetchJson<UploadedImage>('/file/upload', {method: 'POST', body: form});
   }
 
   async refreshAccessToken() {

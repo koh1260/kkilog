@@ -2,6 +2,8 @@ import MDEditor, { ContextStore } from '@uiw/react-md-editor';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { FileDrop } from 'react-file-drop';
+import UploadPostPage from './UploadPostPage';
 
 type MDEditorOnChange = (
   value?: string,
@@ -10,6 +12,8 @@ type MDEditorOnChange = (
 ) => void;
 
 const Container = styled.div`
+  position: relative;
+  z-index: 1;
   height: 100vh;
   .editor {
     position: relative;
@@ -51,34 +55,60 @@ const PostingButton = styled.button`
 
 const WritePostPage = () => {
   const navigate = useNavigate();
+  // const [isDragOn, setIsDragOn] = useState(false);
   const [text, setText] = useState('**Hello world!!!**');
+  const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
   const onClick: MDEditorOnChange = (
     value?: string,
-    event?: React.ChangeEvent<HTMLTextAreaElement>  ) => {
+    event?: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     console.log(text);
     setText(event!.target.value);
   };
 
   return (
     <Container>
-      <EdittorBlock>
-        <MDEditor
-          className="editor"
-          value={text}
-          onChange={onClick}
-          preview="live"
-          fullscreen
-          height={90}
+      {uploadModalVisible && (
+        <UploadPostPage
+          title=''
+          content={text}
+          introduction=''
+          publicScope='PUBLIC'
+          thumbnail=''
+          setModalVisible={setUploadModalVisible}
         />
+      )}
+      <EdittorBlock>
+        <FileDrop
+          className='file-drop'
+        >
+          <MDEditor
+            className='editor'
+            value={text}
+            onChange={onClick}
+            preview='live'
+            fullscreen
+            height={500}
+          />
+        </FileDrop>
         <ButtonBlock>
-          <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>
-          <PostingButton>포스팅</PostingButton>
+          <BackButton
+            onClick={() => {
+              navigate(-1);
+              document.body.style.overflow = 'auto';
+            }}
+          >
+            뒤로 가기
+          </BackButton>
+          <PostingButton onClick={() => setUploadModalVisible(true)}>
+            포스팅
+          </PostingButton>
         </ButtonBlock>
       </EdittorBlock>
       {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}
     </Container>
   );
-}
+};
 
 export default WritePostPage;

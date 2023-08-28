@@ -7,7 +7,9 @@ import formatDate from '../lib/format-date';
 interface PostContentProps {
   id: number;
   title: string;
+  introduction: string;
   content: string;
+  publicScope: 'PUBLIC' | 'PRIVATE';
   createAt: Date;
   writer: string;
   thumbnail: string;
@@ -62,9 +64,11 @@ const StyledButton = styled.button`
 const PostContent = ({
   id,
   title,
+  introduction,
   content,
   writer,
   thumbnail,
+  publicScope,
   createAt,
 }: PostContentProps) => {
   const navigate = useNavigate();
@@ -83,7 +87,7 @@ const PostContent = ({
           <StyledButton
             onClick={() =>
               navigate(`/blog/edit/${id}`, {
-                state: { content }
+                state: { id, title, introduction, thumbnail, content, publicScope }
               })
             }
           >

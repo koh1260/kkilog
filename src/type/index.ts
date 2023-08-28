@@ -11,7 +11,9 @@ export interface PostPreview {
 export interface Post {
   id: number;
   title: string;
+  introduction: string;
   content: string;
+  publicScope: 'PUBLIC' | 'PRIVATE';
   createAt: string;
   writer: Writer;
   thumbnail: string;
@@ -46,4 +48,14 @@ export interface OtherPost {
 
 export interface RefreshAccessToken {
   accessToken: string;
+}
+
+export interface ValidateLogin {
+  id: number;
+  email: string;
+  role: 'USER' | 'ADMIN';
+};
+
+export interface UploadedImage {
+  filePath: string;
 }

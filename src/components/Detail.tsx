@@ -27,9 +27,11 @@ const Detail = ({ post }: DetailProps) => (
       key={post.id}
       id={post.id}
       title={post.title}
+      introduction={post.introduction}
       content={post.content}
       writer={post.writer.nickname}
       thumbnail={post.thumbnail}
+      publicScope={post.publicScope}
       createAt={stringToDate(post.createAt)}
     />
     <OtherPostNavigation postId={post.id} />
