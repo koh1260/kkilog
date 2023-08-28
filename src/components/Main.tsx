@@ -14,11 +14,12 @@ const Container = styled.main`
 `;
 
 const PositionCenterBox = styled.div`
-  max-width: 980px;
+  width: 980px;
+  margin: 0 auto;
+
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
-  margin: 0 auto;
 `;
 
 const Main = ({children}: MainProps) => (

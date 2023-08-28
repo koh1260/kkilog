@@ -10,7 +10,6 @@ interface ChildrenCategoryProps {
 
 const Container = styled(NavLink)`
   padding: 0.5rem 21px;
-  
   margin-bottom: 8px;
   width: 100%;
   display: flex;
@@ -19,10 +18,10 @@ const Container = styled(NavLink)`
   cursor: pointer;
   border-radius: 7px;
   &:hover {
-    background-color: #f2f2f2;
+    background-color: #F6F7F9;
   }
   &.active {
-    background-color: #f2f2f2;
+    background-color: #E6F7FF;
   }
 `;
 
@@ -33,8 +32,7 @@ const Icon = styled.img`
 `;
 
 const CategoryName = styled.p`
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.85rem;
   flex: 1;
 `;
 
