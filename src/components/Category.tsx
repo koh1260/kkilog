@@ -13,6 +13,7 @@ interface CategoryProps {
 }
 
 const OuterBlock = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
 `;
@@ -21,6 +22,7 @@ const Container = styled(NavLink)`
   padding: 0.5rem 0;
   margin-bottom: 8px;
   width: 100%;
+  height: 3rem;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -102,12 +104,17 @@ interface ChildCategoryListProps {
 }
 
 const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
-  display: ${(props) => (props.$isActive ? 'flex' : 'none')};
-  height: ${(props) => (props.$isActive ? 'fit-content' : 0)};
+  display: flex;
+  height: 3rem;
+  pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
+  height: ${(props) => (props.$isActive ? '3rem' : 0)};
   flex-direction: column;
-  transition: 0.3s ease-in-out;
+  transition: height 0.2s ease-in-out, opacity 0.1s ease-in-out;
 
   @media screen and (max-width: 1285px) {
+    pointer-events: auto;
+    opacity: 1;
     display: flex;
     height: fit-content;
   }

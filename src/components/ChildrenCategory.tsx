@@ -10,6 +10,7 @@ interface ChildrenCategoryProps {
 
 const Container = styled(NavLink)`
   padding: 0.5rem 21px;
+  height: 3rem;
   margin-bottom: 8px;
   width: 100%;
   display: flex;
@@ -43,8 +44,6 @@ const Container = styled(NavLink)`
 const Icon = styled.img`
   width: 24px;
   height: 24px;
-  
-
   @media screen and (max-width: 1285px) {
     
   }
