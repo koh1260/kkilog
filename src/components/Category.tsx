@@ -32,6 +32,21 @@ const Container = styled(NavLink)`
   &.active {
     background-color: #e6f7ff;
   }
+
+  @media screen and (max-width: 1285px) {
+    flex: 1;
+    margin-bottom: 1rem;
+
+    &:hover {
+      background-color: initial;
+      color: pink;
+    }
+
+    &.active {
+      background-color: initial;
+      color: red;
+    }
+  }
 `;
 
 Container.defaultProps = {
@@ -42,12 +57,20 @@ const Icon = styled.img`
   width: 28px;
   height: 18px;
   padding: 0 5px;
+
+  @media screen and (max-width: 1285px) {
+    display: none;
+  }
 `;
 
 const CategoryName = styled.p`
   font-size: 1rem;
   font-weight: bold;
   flex: 1;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 interface DropdownButtonProps {
@@ -64,7 +87,15 @@ const DropdownButton = styled.button<DropdownButtonProps>`
     props.$isActive ? 'rotate(180deg)' : 'rotate(0deg)'};
   transition: 0.3s;
   z-index: 999;
+
+  @media screen and (max-width: 1285px) {
+    display: none;
+  }
 `;
+
+  const DropdownButtonIcon = styled.img`
+    width: 18px;
+  `
 
 interface ChildCategoryListProps {
   $isActive: boolean;
@@ -75,6 +106,11 @@ const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
   height: ${(props) => (props.$isActive ? 'fit-content' : 0)};
   flex-direction: column;
   transition: 0.3s ease-in-out;
+
+  @media screen and (max-width: 1285px) {
+    display: flex;
+    height: fit-content;
+  }
 `;
 
 const Category = ({
@@ -101,7 +137,7 @@ const Category = ({
               else setChildrenVisible(true);
             }}
           >
-            🐘
+            <DropdownButtonIcon alt='dropdown' src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/dropdown-btn-icon.png' />
           </DropdownButton>
         ) : null}
       </Container>

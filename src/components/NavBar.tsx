@@ -1,11 +1,12 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import githubIcon from '../assets/img/github.png';
+// import githubIcon from '../assets/img/github.png';
 import Logo from './Logo';
 import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
-import { useAppSelector } from '../redux/hook';
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { setIsVisible } from '../redux/slice/category-slice';
 
 const Container = styled.header`
   z-index: 1;
@@ -45,6 +46,22 @@ const Icon = styled.img`
   cursor: pointer;
 `;
 
+const OpenCategoryButton = styled.button`
+  display: none;
+  align-items: center;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+
+  @media screen and (max-width: 1285px){
+    display: flex;
+  }
+`;
+
+const HambergerIcon = styled.img`
+  height: 32px;
+`;
+
 const WriteButton = styled.button`
   background-color: powderblue;
   color: white;
@@ -53,8 +70,9 @@ const WriteButton = styled.button`
   font-weight: 600;
   height: 32px;
   padding: 4px 10px;
-  height: fit-content;
+  height: 32px;
   width: fit-content;
+  border-radius: 12px;
 
   @media screen and (max-width: 768px) {
     display: none;
@@ -73,9 +91,10 @@ const LoginButton = styled.button`
 `;
 
 const NavBar = () => {
-  const user = useAppSelector((state) => state.user);
-  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const handleContactIconClick = () => {
     window.open('https://github.com/koh1260', '_blank');
   };
@@ -90,18 +109,28 @@ const NavBar = () => {
       <NavContent>
         <Logo />
         <ContactIconBlock>
-          {user.logined || <LoginButton
-            onClick={() => {
-              setLoginModalVisible(true);
-              document.body.classList.add('open-modal');
-            }}
+          {user.logined || (
+            <LoginButton
+              onClick={() => {
+                setLoginModalVisible(true);
+                document.body.classList.add('open-modal');
+              }}
+            >
+              로그인
+            </LoginButton>
+          )}
+          <OpenCategoryButton
+            onMouseEnter={() => dispatch(setIsVisible({ isVisible: true }))}
+            onMouseLeave={() => dispatch(setIsVisible({ isVisible: false }))}
           >
-            로그인
-          </LoginButton>}
-          {(user.logined && user.role==='ADMIN') && (<WriteButton onClick={() => navigate('/blog/write')}>
-            새 글 작성
-          </WriteButton>)}
-          <Icon src={githubIcon} onClick={handleContactIconClick} />
+            <HambergerIcon src='https://cdn-icons-png.flaticon.com/128/4074/4074170.png' />
+          </OpenCategoryButton>
+          <Icon src='https://cdn-icons-png.flaticon.com/128/1051/1051377.png' onClick={handleContactIconClick} />
+          {user.logined && user.role === 'ADMIN' && (
+            <WriteButton onClick={() => navigate('/blog/write')}>
+              새 글 작성
+            </WriteButton>
+          )}
         </ContactIconBlock>
       </NavContent>
     </Container>

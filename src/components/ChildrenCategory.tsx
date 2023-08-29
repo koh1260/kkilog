@@ -23,12 +23,31 @@ const Container = styled(NavLink)`
   &.active {
     background-color: #E6F7FF;
   }
+
+  @media screen and (max-width: 1285px) {
+    flex: 1;
+    padding: 0;
+
+    &:hover {
+      background-color: initial;
+      color: pink;
+    }
+
+    &.active {
+      background-color: initial;
+      color: red;
+    }
+  }
 `;
 
 const Icon = styled.img`
-  width: 38px;
-  height: 28px;
-  padding: 0 5px;
+  width: 24px;
+  height: 24px;
+  
+
+  @media screen and (max-width: 1285px) {
+    
+  }
 `;
 
 const CategoryName = styled.p`
