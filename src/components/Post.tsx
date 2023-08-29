@@ -14,6 +14,7 @@ interface PostProps {
 }
 
 const Container = styled.div`
+  background-color: white;
   margin: 8px;
   display: flex;
   flex-direction: column;
