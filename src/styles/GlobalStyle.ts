@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: #F8F9FA;
+    background-color: white;
     margin: 0%;
     width: 100%;
     height: 100%;
