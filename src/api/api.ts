@@ -13,6 +13,8 @@ import {
 import {
   OtherPost,
   Post,
+  PostLike,
+  PostLikeCheck,
   PostPreview,
   RefreshAccessToken,
   UploadedImage,
@@ -143,7 +145,12 @@ class Api {
   }
 
   postLike(postId: number) {
-    return this.init().get(`/posts/like/${postId}`);
+    return this.fetchJson<PostLike>(`/posts/like/${postId}`);
+    // return this.init().get(`/posts/like/${postId}`);
+  }
+
+  postLikeCheck(postId: number) {
+    return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`);
   }
 
   getPreviousAndNextPost(postId: number) {

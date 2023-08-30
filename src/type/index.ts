@@ -17,6 +17,7 @@ export interface Post {
   createAt: string;
   writer: Writer;
   thumbnail: string;
+  likes: number;
   comments: Comment[]
 }
 
@@ -58,4 +59,12 @@ export interface ValidateLogin {
 
 export interface UploadedImage {
   filePath: string;
+}
+
+export interface PostLike {
+  likeCount: number;
+}
+
+export interface PostLikeCheck {
+  liked: boolean;
 }
