@@ -11,6 +11,10 @@ const Container = styled.main`
   height: 100%;
   width: 100%;
   flex: 1;
+
+  @media screen and (max-width: 1285px) {
+    padding: 0 24px;
+  }
 `;
 
 const PositionCenterBox = styled.div`

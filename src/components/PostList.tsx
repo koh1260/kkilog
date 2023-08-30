@@ -9,7 +9,7 @@ interface PostListProps {
 }
 
 const Container = styled.section`
-padding: 0 24px;
+  /* padding: 0 24px; */
   width: 100%;
   margin: 0 auto;
 
