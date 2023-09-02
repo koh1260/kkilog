@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import { useAppDispatch } from '../../redux/hook';
 import { UserState, setUser } from '../../redux/slice/user-slice';
 import storage from '../../lib/storage';
+import ClientExcepction from '../../common/exceptions/client-exception';
 
 const Container = styled.form`
   display: flex;
@@ -73,6 +75,7 @@ interface ILoginInfo {
 }
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [loginInfo, setLoginInfo] = useState<ILoginInfo>({
     username: '',
@@ -101,9 +104,11 @@ const LoginForm = () => {
       dispatch(setUser(loginedUser));
       storage.set('access_token', token);
       storage.set('user', loginedUser);
+      document.body.classList.remove('open-modal');
+      navigate('/');
     } catch (e: any) {
-      alert(e.stack);
-      if (e instanceof Error) console.log(e.stack);
+      if (e instanceof ClientExcepction) console.error(e.stack);
+      if (e instanceof Error) console.error(e.stack);
     }
   };
 

@@ -183,6 +183,10 @@ class Api {
     return this.init().post('/users/login', payload);
   }
 
+  logout() {
+    return this.fetchJson<void>('/users/logout');
+  }
+
   loginValidate() {
     return this.fetchJson<ValidateLogin>('/auth/login-validate');
   }

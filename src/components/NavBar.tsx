@@ -7,6 +7,10 @@ import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import { setIsVisible } from '../redux/slice/category-slice';
+import ClientExcepction from '../common/exceptions/client-exception';
+import api from '../api/api';
+import { setUser } from '../redux/slice/user-slice';
+import storage from '../lib/storage';
 
 const Container = styled.header`
   z-index: 1;
@@ -53,7 +57,7 @@ const OpenCategoryButton = styled.button`
   background-color: transparent;
   border: none;
 
-  @media screen and (max-width: 1285px){
+  @media screen and (max-width: 1285px) {
     display: flex;
   }
 `;
@@ -99,6 +103,25 @@ const NavBar = () => {
     window.open('https://github.com/koh1260', '_blank');
   };
 
+  const handleOnClickLogout = async () => {
+    try {
+      await api.logout();
+      dispatch(setUser({
+        id: null,
+        role: null,
+        username: null,
+        logined: false,
+      }))
+      storage.remove('access_token');
+      storage.remove('user');
+      alert('로그아웃');
+      navigate('/');
+    } catch (e) {
+      if (e instanceof ClientExcepction) console.error(e.stack);
+      if (e instanceof Error) console.error(e.stack);
+    }
+  };
+
   return (
     <Container>
       {loginModalVisible && (
@@ -109,7 +132,9 @@ const NavBar = () => {
       <NavContent>
         <Logo />
         <ContactIconBlock>
-          {user.logined || (
+          {user.logined ? (
+            <LoginButton onClick={handleOnClickLogout}>로그아웃</LoginButton>
+          ) : (
             <LoginButton
               onClick={() => {
                 setLoginModalVisible(true);
@@ -125,7 +150,10 @@ const NavBar = () => {
           >
             <HambergerIcon src='https://cdn-icons-png.flaticon.com/128/4074/4074170.png' />
           </OpenCategoryButton>
-          <Icon src='https://cdn-icons-png.flaticon.com/128/1051/1051377.png' onClick={handleContactIconClick} />
+          <Icon
+            src='https://cdn-icons-png.flaticon.com/128/1051/1051377.png'
+            onClick={handleContactIconClick}
+          />
           {user.logined && user.role === 'ADMIN' && (
             <WriteButton onClick={() => navigate('/blog/write')}>
               새 글 작성
