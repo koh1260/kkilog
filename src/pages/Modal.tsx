@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 interface ModalProps {
   children: JSX.Element;
-  setModalVisible(visible: boolean): void;
+  handleVisible(): void;
 }
 
 const Background = styled.div`
@@ -28,7 +28,7 @@ const Container = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    width: 70%;
+    width: 100%;
   }
 `;
 
@@ -41,13 +41,10 @@ const CloseButton = styled.button`
   border: none;
 `;
 
-const Modal = ({ children, setModalVisible }: ModalProps) => (
+const Modal = ({ children, handleVisible }: ModalProps) => (
   <Background>
     <Container>
-    <CloseButton onClick={() => {
-      setModalVisible(false)
-      document.body.classList.remove('open-modal');
-    }}>x</CloseButton>
+      <CloseButton onClick={handleVisible}>x</CloseButton>
       {children}
     </Container>
   </Background>

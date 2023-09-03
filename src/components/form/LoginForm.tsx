@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../redux/hook';
 import { UserState, setUser } from '../../redux/slice/user-slice';
 import storage from '../../lib/storage';
 import ClientExcepction from '../../common/exceptions/client-exception';
+import { setIsVisibleLoginModal } from '../../redux/slice/modal-slice';
 
 const Container = styled.form`
   display: flex;
@@ -99,11 +100,13 @@ const LoginForm = () => {
       const loginedUser: UserState = {
         id: user.id,
         username: user.email,
-        role: user.role
+        role: user.role,
+        logined: true,
       };
       dispatch(setUser(loginedUser));
       storage.set('access_token', token);
       storage.set('user', loginedUser);
+      dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}))
       document.body.classList.remove('open-modal');
       navigate('/');
     } catch (e: any) {

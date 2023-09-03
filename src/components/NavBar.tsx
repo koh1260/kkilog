@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+// import { useState } from 'react';
 // import githubIcon from '../assets/img/github.png';
 import Logo from './Logo';
 import Modal from '../pages/Modal';
@@ -11,6 +11,7 @@ import ClientExcepction from '../common/exceptions/client-exception';
 import api from '../api/api';
 import { setUser } from '../redux/slice/user-slice';
 import storage from '../lib/storage';
+import { setIsVisibleLoginModal } from '../redux/slice/modal-slice';
 
 const Container = styled.header`
   z-index: 1;
@@ -98,10 +99,16 @@ const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const [loginModalVisible, setLoginModalVisible] = useState(false);
+  const isVisibleLoginModal = useAppSelector((state) => state.modal.isVisibleLoginModal);
+  // const [loginModalVisible, setLoginModalVisible] = useState(false);
   const handleContactIconClick = () => {
     window.open('https://github.com/koh1260', '_blank');
   };
+
+  const handleLoginModalVisible = () => {
+    dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}));
+    document.body.classList.remove('open-modal');
+  }
 
   const handleOnClickLogout = async () => {
     try {
@@ -111,7 +118,7 @@ const NavBar = () => {
         role: null,
         username: null,
         logined: false,
-      }))
+      }));
       storage.remove('access_token');
       storage.remove('user');
       alert('로그아웃');
@@ -124,8 +131,8 @@ const NavBar = () => {
 
   return (
     <Container>
-      {loginModalVisible && (
-        <Modal setModalVisible={setLoginModalVisible}>
+      {isVisibleLoginModal && (
+        <Modal handleVisible={handleLoginModalVisible}>
           <LoginPage />
         </Modal>
       )}
@@ -137,7 +144,7 @@ const NavBar = () => {
           ) : (
             <LoginButton
               onClick={() => {
-                setLoginModalVisible(true);
+                dispatch(setIsVisibleLoginModal({isVisibleLoginModal: true}))
                 document.body.classList.add('open-modal');
               }}
             >
