@@ -37,6 +37,11 @@ const Container = styled.section<ContainerProps>`
     transform: ${(props) => props.$isActive ? 'translateY(-0.3rem)' : 'translateY(0.3rem)'};
     transition: transform ease-in-out 0.2s;
   }
+
+  /* @media screen and (max-width: 768px) {
+    top: 100%;
+    transform: ${(props) => props.$isActive ? 'translateY(-100%)' : 'translateY(0)'};
+  } */
 `;
 
 const Content = styled.ul`
@@ -50,7 +55,7 @@ const Content = styled.ul`
     border-radius: 12px;
     overflow: hidden;
     width: 920px;
-    box-shadow: 0 0 10px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 0 10px 1px rgba(0,0,0,0.1);
     background-color: white;
     flex-direction: row;
     justify-content: space-between;
