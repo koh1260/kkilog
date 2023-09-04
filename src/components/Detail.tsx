@@ -5,6 +5,8 @@ import OtherPostNavigation from './OtherPostNavigation';
 import CommentBlock from './CommentBlock';
 import { Post } from '../type';
 import stringToDate from '../lib/transform-date';
+import PostLike from './PostLike';
+// import PostLike from './PostLike';
 
 interface DetailProps {
   post: Post;
@@ -34,6 +36,7 @@ const Detail = ({ post }: DetailProps) => (
       publicScope={post.publicScope}
       createAt={stringToDate(post.createAt)}
     />
+    <PostLike postId={post.id} initLikeCount={post.likes} />
     <OtherPostNavigation postId={post.id} />
     <CommentBlock comments={post.comments} />
   </Container>
