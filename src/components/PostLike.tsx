@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import api from '../api/api';
 import { useAppSelector } from '../redux/hook';
+import ClientExcepction from '../common/exceptions/client-exception';
 
 interface PostLikeProps {
   postId: number;
-  initLikeCount: number;
 }
 
 const Container = styled.div`
@@ -44,12 +44,12 @@ interface LikeIconProps {
 }
 
 const LikeIcon = styled.img<LikeIconProps>`
-  color: red;
-  width: ${(props) => props.$isActive ? '2.5rem' : '2.2rem'};
+  fill: red;
+  width: ${(props) => props.$isActive ? '3.5rem' : '2.5rem'};
   transition: width 0.1s ease-in-out;
 
   &:hover {
-    width: 2.5rem;
+    
   }
 `;
 
@@ -60,19 +60,35 @@ const DoLikeText = styled.h4`
   font-size: 1.2rem;
 `;
 
-const PostLike = ({postId, initLikeCount}: PostLikeProps) => {
+const PostLike = ({postId}: PostLikeProps) => {
   const isLogined = useAppSelector((state) => state.user.logined);
-  const [likeCount, setLikeCount] = useState(initLikeCount);
+  const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
+    console.log('like');
+    console.log(likeCount);
     (async () => {
       if (isLogined) {
         const response = await api.postLikeCheck(postId);
+        
         setLiked(response.result!.liked);
+        
       }
     })();
-  }, [isLogined, liked])
+  }, [postId, isLogined, liked])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await api.postLikeCount(postId);
+        setLikeCount(response.result!.likeCount);
+      } catch(e) {
+        if (e instanceof ClientExcepction) console.error(e.stack);
+        else if (e instanceof Error) console.error();
+      }
+    })();
+  }, [postId])
 
   const handleOnClick = async () => {
     if (!isLogined) {
@@ -81,7 +97,7 @@ const PostLike = ({postId, initLikeCount}: PostLikeProps) => {
     }
     const response = await api.postLike(postId);
     setLikeCount(response.result!.likeCount);
-    if (liked) setLiked(false)
+    if (liked) setLiked(false);
     else setLiked(true);
   }
 
@@ -89,7 +105,7 @@ const PostLike = ({postId, initLikeCount}: PostLikeProps) => {
     <Container>
       <LikeBlock>
         <LikeButton onClick={handleOnClick}>
-          <LikeIcon $isActive={liked} src='https://cdn-icons-png.flaticon.com/128/48/48897.png' />
+          <LikeIcon $isActive={liked} alt='좋아요 코끼리 SVG' src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.svg' />
         </LikeButton>
         <LikeCount>{likeCount}</LikeCount>
       </LikeBlock>
