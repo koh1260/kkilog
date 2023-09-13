@@ -23,7 +23,7 @@ const Container = styled.section<ContainerProps>`
   /* border-right: 0.5px solid lightgray; */
 
   @media screen and (max-width: 1285px) {
-    position: absolute;
+    position: fixed;
     flex-direction: row;
     justify-content: center;
     z-index: 10;
@@ -62,7 +62,7 @@ const Content = styled.ul`
   }
 
   @media screen and (max-width: 768px) {
-    padding: 0 1rem;
+    padding: 0 2rem;
   }
 `;
 
@@ -75,8 +75,8 @@ const CategoryBar = () => {
   useEffect(() => {
     (async () => {
       const response = await api.getCategoryList();
-      const result = response.data;
-      setCategories([...result]);
+      console.log(response);
+      setCategories([...response.result!]);
     })();
   }, []);
 
