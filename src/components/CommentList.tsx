@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from 'styled-components';
 import Comment from './Comment';
 import { Comment as IComment } from '../type';
+import stringToDate from '../lib/transform-date';
 
 interface CommentListProps {
   comments: IComment[];
@@ -21,8 +22,8 @@ const CommentList = ({comments}: CommentListProps) => (
           id={comment.id}
           nickname={comment.writer.nickname}
           content={comment.content}
-          profileImage={comment.profileImage}
-          createAt={comment.createAt}
+          profileImage={comment.writer.profileImage}
+          createAt={stringToDate(comment.createAt)}
         />
       ))}
     </Container>
