@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import {PiHeartDuotone} from 'react-icons/pi';
 import formatDate from '../lib/format-date';
 
 interface PostProps {
@@ -94,8 +93,13 @@ const CreateAt = styled.p`
 `;
 
 const LikeBlock = styled.div`
+  height: 1rem;
   display: flex;
   align-items: center;
+`;
+
+const LikeIcon = styled.img`
+  height: 100%;
 `;
 
 const LikeCount = styled.p`
@@ -124,12 +128,13 @@ const Post = ({
         <Introduction>{introduction}</Introduction>
         <Bottom>
           <CommentAndCreateAtBlock>
-          <CreateAt>{formatDate(createAt)}</CreateAt>
-          <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
+            <CreateAt>{formatDate(createAt)}</CreateAt>
+            <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
           </CommentAndCreateAtBlock>
           <LikeBlock>
-          <PiHeartDuotone />
-          <LikeCount>{likes}</LikeCount>
+            {/* <PiHeartDuotone /> */}
+            <LikeIcon src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.svg'/>
+            <LikeCount>{likes}</LikeCount>
           </LikeBlock>
         </Bottom>
       </Content>
