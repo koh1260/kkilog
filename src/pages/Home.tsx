@@ -9,6 +9,7 @@ import PostList from '../components/PostList';
 import { PostPreview } from '../type';
 import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
+import Loading from '../components/Loading';
 
 const Container = styled.article`
   display: flex;
@@ -33,7 +34,12 @@ const BodyBlock = styled.div`
 
 const Home = () => {
   const {categoryName} = useParams<'categoryName'>();
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState<PostPreview[]>([]);
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, [])
 
   useEffect(() => {
     console.log(categoryName);
@@ -52,8 +58,11 @@ const Home = () => {
       }
     };
     getPosts(categoryName);
+    setLoading(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryName]);
+
+  if (loading) return (<Loading />)
 
   return (
     <Container>
