@@ -8,6 +8,15 @@ export interface PostPreview {
   commentCount: number;
 };
 
+export interface User {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImage: string;
+  role: 'ADMIN' | 'USER';
+  createAt: Date;
+}
+
 export interface Post {
   id: number;
   title: string;
@@ -31,7 +40,7 @@ export interface Comment {
   profileImage: string;
   nickname: string;
   content: string;
-  createAt: Date;
+  createAt: string;
   writer: Writer;
 }
 
