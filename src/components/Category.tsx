@@ -80,6 +80,8 @@ interface DropdownButtonProps {
 }
 
 const DropdownButton = styled.button<DropdownButtonProps>`
+  display: flex;
+  align-items: center;
   background-color: transparent;
   border: none;
   font-size: 1.4rem;
@@ -96,7 +98,7 @@ const DropdownButton = styled.button<DropdownButtonProps>`
 `;
 
   const DropdownButtonIcon = styled.img`
-    width: 18px;
+    width: 1.7rem;
   `
 
 interface ChildCategoryListProps {

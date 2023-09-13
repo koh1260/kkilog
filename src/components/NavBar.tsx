@@ -1,7 +1,5 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-// import { useState } from 'react';
-// import githubIcon from '../assets/img/github.png';
 import Logo from './Logo';
 import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
@@ -93,6 +91,7 @@ const LoginButton = styled.button`
   font-weight: 600;
   height: fit-content;
   width: fit-content;
+  border-radius: 12px;
 `;
 
 const NavBar = () => {
@@ -100,7 +99,7 @@ const NavBar = () => {
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const isVisibleLoginModal = useAppSelector((state) => state.modal.isVisibleLoginModal);
-  // const [loginModalVisible, setLoginModalVisible] = useState(false);
+
   const handleContactIconClick = () => {
     window.open('https://github.com/koh1260', '_blank');
   };

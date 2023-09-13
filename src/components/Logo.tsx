@@ -6,11 +6,6 @@ const Container = styled(NavLink)`
   display: flex;
   gap: 7px;
   align-items: center;
-  transition: ease-in 0.2s;
-
-  &:hover {
-    transform: scale(1.1);
-  }
 `;
 
 // const Text = styled.h2`

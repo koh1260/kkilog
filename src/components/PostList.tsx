@@ -27,7 +27,9 @@ const PostCountBlock = styled.div`
 `
 
 const PostCountText = styled.h3`
-  
+  @media screen and (min-width: 769px) {
+    margin-left: 12px;
+  }
 `
 
 const PostCountNumber = styled.h3`

@@ -45,12 +45,13 @@ interface LikeIconProps {
 
 const LikeIcon = styled.img<LikeIconProps>`
   fill: red;
-  width: ${(props) => props.$isActive ? '3.5rem' : '2.5rem'};
+  width: ${(props) => props.$isActive ? '4rem' : '2.5rem'};
   transition: width 0.1s ease-in-out;
-
+  margin-bottom: 4px;
+/* 
   &:hover {
-    
-  }
+    width: ${(props) => props.$isActive ? '3.5rem' : '3rem'};
+  } */
 `;
 
 const LikeCount = styled.h4``;

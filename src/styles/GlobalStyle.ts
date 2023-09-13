@@ -32,8 +32,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0%;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: auto;
   }
 
   body.open-modal {
@@ -44,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     width: 100vw;
     height: 100vh;
-    overflow-x: hidden;
+    overflow: auto;
   }
 
   *, *::before, *::after {
@@ -102,4 +101,5 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
 `;
+
 export default GlobalStyle;
