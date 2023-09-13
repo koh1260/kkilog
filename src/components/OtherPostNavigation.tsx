@@ -14,6 +14,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 48px;
+
   @media screen and (max-width: 768px) {
     flex-direction: column;
     width: 100%;
@@ -28,6 +29,7 @@ const NavigationBlock = styled.div`
   display: flex;
   padding: 12px 14px;
   width: 45%;
+
   &.next {
     justify-content: end;
   }
@@ -45,6 +47,7 @@ const Icon = styled.img`
   width: 52px;
   height: 52px;
   transition: all 0.2s;
+
   &.previous {
     margin-right: 12px;
   }
@@ -100,11 +103,11 @@ const OtherPostNavigation = ({ postId }: OtherPostNavigationProps) => {
   return (
     <Container>
       {postsInfo[0] ? (
-        <NavigationBlock>
+        <NavigationBlock onClick={() => navigate(`/blog/${postsInfo[0].id}`)}>
           <StyledButton>
             <Icon className='previous' src={previousArrow} />
           </StyledButton>
-          <OtherPost onClick={() => navigate(`/blog/${postsInfo[0].id}`)}>
+          <OtherPost>
             <PreviousPostText>이전 글</PreviousPostText>
             <OtherPostTitle>{postsInfo[0].title}</OtherPostTitle>
           </OtherPost>
@@ -114,8 +117,8 @@ const OtherPostNavigation = ({ postId }: OtherPostNavigationProps) => {
       )}
 
       {postsInfo[1] ? (
-        <NavigationBlock className='next'>
-          <OtherPost onClick={() => navigate(`/blog/${postsInfo[1].id}`)}>
+        <NavigationBlock className='next'  onClick={() => navigate(`/blog/${postsInfo[1].id}`)}>
+          <OtherPost>
             <NextPostText>다음 글</NextPostText>
             <OtherPostTitle>{postsInfo[1].title}</OtherPostTitle>
           </OtherPost>
