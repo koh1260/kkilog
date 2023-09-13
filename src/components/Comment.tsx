@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { AiOutlineHeart } from 'react-icons/ai';
-// import {AiFillHeart} from 'react-icons/ai';
+// import { AiOutlineHeart } from 'react-icons/ai';
+import formatDate from '../lib/format-date';
 
 interface CommentProps {
   id: number;
@@ -33,10 +33,10 @@ const WriterInfo = styled.div`
 `;
 
 const Profileimage = styled.img`
-  width: 48px;
-  height: 48px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
-  border: 0.5px solid gray;
+  border: 0.5px solid lightgray;
   margin-right: 14px;
 `;
 
@@ -57,12 +57,12 @@ const Comment = ({ id, nickname, content, createAt, profileImage }: CommentProps
       <WriterInfo key={id}>
         <Profileimage src={profileImage} />
         <p className='nickname'>{nickname}</p>
-        <p className='create-at'>{createAt.toString()}</p>
+        <p className='create-at'>{formatDate(createAt)}</p>
       </WriterInfo>
       <Content>{content}</Content>
       <LikeBlock>
-        <p className='like-count'>좋아요 1개</p>
-        <AiOutlineHeart size='21px' />
+        {/* <p className='like-count'>좋아요 1개</p>
+        <AiOutlineHeart size='21px' /> */}
       </LikeBlock>
     </Container>
   );
