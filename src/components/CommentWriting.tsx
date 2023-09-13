@@ -51,7 +51,7 @@ const CommentWriting = () => {
   return (
     <Container>
       <WriterInfoBlock>
-        <WriterInfoInput placeholder='닉네임' />
+        <WriterInfoInput placeholder='닉네임' maxLength={10} />
         <WriterInfoInput type='password' placeholder='비밀번호 (6자리 이하)' maxLength={6} />
       </WriterInfoBlock>
       <CommentInput value={value} placeholder='댓글을 입력해주세요' onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
