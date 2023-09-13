@@ -8,6 +8,7 @@ import PostList from '../components/PostList';
 import { PostPreview } from '../type';
 import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
+import Loading from '../components/Loading';
 // import vanner from '../assets/img/vanner.png';
 
 const Container = styled.article`
@@ -16,6 +17,7 @@ const Container = styled.article`
   height: 100%;
   width: 100vw;
   flex: 1;
+  overflow: scroll;
 `;
 
 const BodyBlock = styled.div`
@@ -84,6 +86,7 @@ const BlogButton = styled.button`
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState<PostPreview[]>([]);
 
   useEffect(() => {
@@ -94,8 +97,11 @@ const MainPage = () => {
       } catch (e: unknown) {
         console.log(`Error: ${e}`);
       }
+      setLoading(false);
     })();
   }, []);
+
+  if (loading) return (<Loading />);
 
   return (
     <Container>

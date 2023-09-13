@@ -9,6 +9,7 @@ import Detail from '../components/Detail';
 import { Post } from '../type';
 import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
+import Loading from '../components/Loading';
 
 const Container = styled.article`
   display: flex;
@@ -36,7 +37,7 @@ const PostDetail = () => {
         const response = await api.getPost(+postId);
         setPost(response.result!);
       } catch (e) {
-        console.log(e);
+        if (e instanceof Error) console.error(e.stack);
         setError(true);
       }
       setLoading(false);
@@ -44,7 +45,7 @@ const PostDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
   if (error) return <div>Error...</div>;
 
   return (
