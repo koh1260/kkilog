@@ -20,9 +20,9 @@ const CommentList = ({comments}: CommentListProps) => (
         <Comment
           key={comment.id}
           id={comment.id}
-          nickname={comment.writer.nickname}
+          nickname={comment.writer ? comment.writer.nickname : comment.nickname}
           content={comment.content}
-          profileImage={comment.writer.profileImage}
+          profileImage={comment.writer ? comment.writer.profileImage : 'test'}
           createAt={stringToDate(comment.createAt)}
         />
       ))}
