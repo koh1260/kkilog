@@ -36,7 +36,7 @@ const Detail = ({ post }: DetailProps) => (
       publicScope={post.publicScope}
       createAt={stringToDate(post.createAt)}
     />
-    <PostLike postId={post.id} initLikeCount={post.likes} />
+    <PostLike postId={post.id} />
     <OtherPostNavigation postId={post.id} />
     <CommentBlock comments={post.comments} />
   </Container>

@@ -1,4 +1,3 @@
-import React from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -69,10 +68,9 @@ const PostContent = ({
   writer,
   thumbnail,
   publicScope,
-  createAt,
+  createAt
 }: PostContentProps) => {
   const navigate = useNavigate();
-  // const formatDate = (date: Date) => `${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`;
 
   return (
     <Container>
@@ -87,7 +85,14 @@ const PostContent = ({
           <StyledButton
             onClick={() =>
               navigate(`/blog/edit/${id}`, {
-                state: { id, title, introduction, thumbnail, content, publicScope }
+                state: {
+                  id,
+                  title,
+                  introduction,
+                  thumbnail,
+                  content,
+                  publicScope
+                }
               })
             }
           >
@@ -98,10 +103,7 @@ const PostContent = ({
       </Utils>
       <Thumbnail src={thumbnail} />
       {/* <Content>{post.content}</Content> */}
-      <MDEditor.Markdown
-        source={content}
-        style={{ whiteSpace: 'pre-wrap' }}
-      />
+      <MDEditor.Markdown source={content} style={{ whiteSpace: 'pre-wrap' }} />
     </Container>
   );
 };

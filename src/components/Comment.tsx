@@ -50,22 +50,25 @@ const LikeBlock = styled.div`
   gap: 14px;
 `;
 
-const Comment = ({ id, nickname, content, createAt, profileImage }: CommentProps) => {
-  console.log(profileImage);
-  return (
-    <Container>
-      <WriterInfo key={id}>
-        <Profileimage src={profileImage} />
-        <p className='nickname'>{nickname}</p>
-        <p className='create-at'>{formatDate(createAt)}</p>
-      </WriterInfo>
-      <Content>{content}</Content>
-      <LikeBlock>
-        {/* <p className='like-count'>좋아요 1개</p>
+const Comment = ({
+  id,
+  nickname,
+  content,
+  createAt,
+  profileImage
+}: CommentProps) => (
+  <Container>
+    <WriterInfo key={id}>
+      <Profileimage src={profileImage} />
+      <p className='nickname'>{nickname}</p>
+      <p className='create-at'>{formatDate(createAt)}</p>
+    </WriterInfo>
+    <Content>{content}</Content>
+    <LikeBlock>
+      {/* <p className='like-count'>좋아요 1개</p>
         <AiOutlineHeart size='21px' /> */}
-      </LikeBlock>
-    </Container>
-  );
-}
+    </LikeBlock>
+  </Container>
+);
 
 export default Comment;
