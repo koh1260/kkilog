@@ -11,6 +11,8 @@ import {
   WritePostData
 } from '../type/request';
 import {
+  Category,
+  Comment,
   OtherPost,
   Post,
   PostLike,
@@ -35,7 +37,7 @@ class Api {
 
   client: AxiosInstance | null = null;
 
-  apiUrl: string = process.env.API_URL!;
+  apiUrl: string = process.env.API_URL || 'http://localhost:8080';
 
   init() {
     this.apiToken = localStorage.getItem('access_token')?.split(' ')[1];
@@ -53,7 +55,6 @@ class Api {
     }
 
     this.client = axios.create({
-      baseURL: this.apiUrl,
       timeout: 31000,
       headers
     });
@@ -80,11 +81,12 @@ class Api {
             ...(this.apiToken ? { Authorization: this.apiToken } : {})
           }
         };
-        return fetch(input, config);
+        console.log(this.apiUrl);
+        return fetch(`${input}`, config);
       };
       let response = await fetchFn();
 
-      if (!response.ok && !this.isAccessTokenRefresh) {
+      if (response.status === 401 && !this.isAccessTokenRefresh) {
         this.isAccessTokenRefresh = true;
         const refreshResponse = await this.refreshAccessToken();
         const newToken = refreshResponse.result!.accessToken;
@@ -146,11 +148,14 @@ class Api {
 
   postLike(postId: number) {
     return this.fetchJson<PostLike>(`/posts/like/${postId}`);
-    // return this.init().get(`/posts/like/${postId}`);
   }
 
   postLikeCheck(postId: number) {
     return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`);
+  }
+
+  postLikeCount(postId: number) {
+    return this.fetchJson<PostLike>(`/posts/like-count?post=${postId}`);
   }
 
   getPreviousAndNextPost(postId: number) {
@@ -158,16 +163,18 @@ class Api {
   }
 
   getCategoryList() {
-    return this.init().get('/categorys');
+    return this.fetchJson<Category[]>('/categorys');
   }
 
   writeComment(payload: WriteCommentData) {
-    return this.init().post('/comments', payload);
+    return this.fetchJson<void>('/comments', { method: 'POST', body: JSON.stringify(payload) })
+    // return this.init().post('/comments', payload);
   }
 
   getCommentList(postId: number) {
-    const params = { post: postId };
-    return this.init().get('/comments', { params });
+    return this.fetchJson<Comment[]>(`/comments?post=${postId}`);
+    // const params = { post: postId };
+    // return this.init().get('/comments', { params });
   }
 
   getChildCommentList(commentId: number) {
@@ -200,6 +207,10 @@ class Api {
 
   async refreshAccessToken() {
     return this.fetchJson<RefreshAccessToken>('/auth/refresh');
+  }
+
+  googleLogin() {
+    return this.fetchJson<void>('/auth/google');
   }
 }
 
