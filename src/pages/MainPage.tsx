@@ -9,6 +9,7 @@ import { PostPreview } from '../type';
 import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
 import Loading from '../components/Loading';
+import ClientExcepction from '../common/exceptions/client-exception';
 // import vanner from '../assets/img/vanner.png';
 
 const Container = styled.article`
@@ -95,7 +96,12 @@ const MainPage = () => {
         const response = await api.getPostList();
         setPosts([...response.result!]);
       } catch (e: unknown) {
-        console.log(`Error: ${e}`);
+        if (e instanceof ClientExcepction) {
+          console.error(`Client Error: ${e.stack}`);
+        }
+        else if (e instanceof Error) {
+          console.error(`Error: ${e.stack}`);
+        }
       }
       setLoading(false);
     })();

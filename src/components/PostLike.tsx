@@ -67,14 +67,18 @@ const PostLike = ({postId}: PostLikeProps) => {
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
-    console.log('like');
-    console.log(likeCount);
     (async () => {
-      if (isLogined) {
-        const response = await api.postLikeCheck(postId);
-        
-        setLiked(response.result!.liked);
-        
+      try {
+        if (isLogined) {
+          const response = await api.postLikeCheck(postId);
+          setLiked(response.result!.liked);
+        }
+      } catch(e) {
+        if (e instanceof ClientExcepction) {
+          console.error(`Client Error: ${e.stack}`);
+        } else if (e instanceof Error) {
+          console.error(`Error: ${e.stack}`);
+        }
       }
     })();
   }, [postId, isLogined, liked])
@@ -85,8 +89,11 @@ const PostLike = ({postId}: PostLikeProps) => {
         const response = await api.postLikeCount(postId);
         setLikeCount(response.result!.likeCount);
       } catch(e) {
-        if (e instanceof ClientExcepction) console.error(e.stack);
-        else if (e instanceof Error) console.error();
+        if (e instanceof ClientExcepction) {
+          console.error(`Client Error: ${e.stack}`);
+        } else if (e instanceof Error) {
+          console.error(`Error: ${e.stack}`);
+        }
       }
     })();
   }, [postId])
@@ -96,10 +103,18 @@ const PostLike = ({postId}: PostLikeProps) => {
       alert('로그인을 해주세요!');
       return;
     }
-    const response = await api.postLike(postId);
-    setLikeCount(response.result!.likeCount);
-    if (liked) setLiked(false);
-    else setLiked(true);
+    try {
+      const response = await api.postLike(postId);
+      setLikeCount(response.result!.likeCount);
+      if (liked) setLiked(false);
+      else setLiked(true);
+    } catch(e) {
+      if (e instanceof ClientExcepction) {
+        console.error(`Client Error: ${e.stack}`);
+      } else if (e instanceof Error) {
+        console.error(`Error: ${e.stack}`);
+      }
+    }
   }
 
   return (

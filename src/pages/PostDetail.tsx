@@ -10,6 +10,7 @@ import { Post } from '../type';
 import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
 import Loading from '../components/Loading';
+import ClientExcepction from '../common/exceptions/client-exception';
 
 const Container = styled.article`
   display: flex;
@@ -37,7 +38,12 @@ const PostDetail = () => {
         const response = await api.getPost(+postId);
         setPost(response.result!);
       } catch (e) {
-        if (e instanceof Error) console.error(e.stack);
+        if (e instanceof ClientExcepction) {
+          console.error(`Client Error: ${e.stack}`);
+        }
+        else if (e instanceof Error) {
+          console.error(`Error: ${e.stack}`);
+        }
         setError(true);
       }
       setLoading(false);

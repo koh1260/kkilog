@@ -4,6 +4,7 @@ import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
 import { UpdatePostData } from '../type/request';
+import ClientExcepction from '../common/exceptions/client-exception';
 
 interface UploadPostPageProps {
   id?: number;
@@ -194,11 +195,22 @@ const UploadPostPage = ({
 
   const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const form = new FormData();
-    if (!e.target.files) throw new Error('이미지가 없습니다.');
-    form.append('file', e.target.files[0]);
-    const response = await api.uploadImage(form);
-    if (!response.result) throw new Error('이미지 url이 없습니다.');
-    setPostThumbnail(response.result.filePath);
+
+    try {  
+      if (!e.target.files) throw new Error('이미지가 없습니다.');
+      form.append('file', e.target.files[0]);
+      const response = await api.uploadImage(form);
+      if (!response.result) throw new Error('이미지 url이 없습니다.');
+      setPostThumbnail(response.result.filePath);
+    } catch(error: unknown) {
+      if (error instanceof ClientExcepction) {
+        console.error(`Client Error: ${error.stack}`);
+      }
+      else if (error instanceof Error) {
+        console.error(`Error: ${error.stack}`);
+      }
+    }
+    
   }
 
   const handleOnClickPosting = async () => {

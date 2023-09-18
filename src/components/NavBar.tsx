@@ -123,8 +123,12 @@ const NavBar = () => {
       alert('로그아웃');
       navigate('/');
     } catch (e) {
-      if (e instanceof ClientExcepction) console.error(e.stack);
-      if (e instanceof Error) console.error(e.stack);
+      if (e instanceof ClientExcepction) {
+        console.error(`Client Error: ${e.stack}`);
+      }
+      else if (e instanceof Error) {
+        console.error(`Error: ${e.stack}`);
+      }
     }
   };
 
