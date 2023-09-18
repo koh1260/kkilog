@@ -16,7 +16,10 @@ export interface UpdatePostData extends Partial<WritePostData> {
 }
 
 export interface WriteCommentData {
-  postId: number;
+  postId: string;
   content: string;
-  parentId?: number
+  userId?: string;
+  parentId?: number;
+  nickname?: string;
+  password?: string;
 }
