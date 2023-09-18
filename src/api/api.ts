@@ -22,7 +22,7 @@ import {
   UploadedImage,
   ValidateLogin
 } from '../type';
-import storage from '../lib/storage';
+// import storage from '../lib/storage';
 
 interface Result<T = any> {
   statusCode: number;
@@ -72,25 +72,20 @@ class Api {
   ): Promise<Response> {
     try {
       const fetchFn = () => {
-        this.setAccessToken();
         const config: RequestInit = {
           ...init,
           headers: {
             'Content-Type': 'application/json',
             ...init?.headers,
-            ...(this.apiToken ? { Authorization: this.apiToken } : {})
           }
         };
-        console.log(this.apiUrl);
         return fetch(`${input}`, config);
       };
       let response = await fetchFn();
 
       if (response.status === 401 && !this.isAccessTokenRefresh) {
         this.isAccessTokenRefresh = true;
-        const refreshResponse = await this.refreshAccessToken();
-        const newToken = refreshResponse.result!.accessToken;
-        storage.set('access_token', `Bearer ${newToken}`);
+        await this.refreshAccessToken();
         this.isAccessTokenRefresh = false;
 
         response = await fetchFn();

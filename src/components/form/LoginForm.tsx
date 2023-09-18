@@ -95,7 +95,6 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       const response = await api.login(loginInfo);
-      const token = response.headers.authorization;
       const user = response.data.result;
       const loginedUser: UserState = {
         id: user.id,
@@ -104,7 +103,6 @@ const LoginForm = () => {
         logined: true,
       };
       dispatch(setUser(loginedUser));
-      storage.set('access_token', token);
       storage.set('user', loginedUser);
       dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}))
       document.body.classList.remove('open-modal');
@@ -114,6 +112,15 @@ const LoginForm = () => {
       if (e instanceof Error) console.error(e.stack);
     }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await api.googleLogin();
+    } catch(e) {
+      if (e instanceof ClientExcepction) console.error(`Client Error: ${e.stack}`);
+      if (e instanceof Error) console.error(`Error: ${e.stack}`);
+    }
+  }
 
   return (
     <Container onSubmit={handleOnSubmit}>
@@ -133,7 +140,7 @@ const LoginForm = () => {
       <LoginButtonBlock>
         <LoginButton>로그인</LoginButton>
         <SocialLoginButtonBlock>
-          <SocialLoginButton>
+          <SocialLoginButton onClick={handleGoogleLogin}>
             <SocialLoginIcon src='https://cdn-icons-png.flaticon.com/512/2504/2504739.png' />
           </SocialLoginButton>
           <SocialLoginButton>
