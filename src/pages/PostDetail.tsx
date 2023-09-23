@@ -33,10 +33,13 @@ const PostDetail = () => {
   const postId: string = useParams()?.postId!;
 
   useEffect(() => {
+    document.querySelector('body')?.scrollTo(0,0);
     (async () => {
       try {
         const response = await api.getPost(+postId);
-        setPost(response.result!);
+
+        if (response.statusCode === 200) 
+          setPost(response.result!);
       } catch (e) {
         if (e instanceof ClientExcepction) {
           console.error(`Client Error: ${e.stack}`);
