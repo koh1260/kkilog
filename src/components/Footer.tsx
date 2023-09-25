@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import elephant from '../assets/img/elephant.png';
 
 const Container = styled.section`
   /* position: absolute; */
@@ -21,14 +20,14 @@ const Icon = styled.img`
   width: 42px;
   height: 42px;
   color: white;
-`
+`;
 
 const Footer = () => (
-    <Container>
-      <Icon src={elephant} />
-      <Email>koh1260@naver.com</Email>
-      <Icon src={elephant} />
-    </Container>
-  )
+  <Container>
+    <Icon src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.png' />
+    <Email>koh1260@naver.com</Email>
+    <Icon src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.png' />
+  </Container>
+);
 
 export default Footer;

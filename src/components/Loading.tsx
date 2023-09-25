@@ -1,6 +1,5 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import spinner from '../assets/img/loading.gif';
 
 const Container = styled.div`
   width: 100%;
@@ -16,7 +15,7 @@ const Spinner = styled.img`
 
 const Loading = () => (
     <Container>
-      <Spinner src={spinner} />
+      <Spinner src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/loading.gif' />
     </Container>
 );
 

@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
-import logo from '../assets/img/logo.png';
 
 const Container = styled(NavLink)`
   display: flex;
@@ -19,7 +18,7 @@ const Icon = styled.img`
 
 const Logo = () => (
     <Container to="/">
-      <Icon src={logo} />
+      <Icon src="https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/logo.png" />
     </Container>
   )
 

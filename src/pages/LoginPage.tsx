@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import LoginForm from '../components/form/LoginForm';
-import vanner from '../assets/img/login-vanner.png';
 
 const Container = styled.div`
   display: flex;
@@ -65,11 +64,11 @@ const Logo = styled.img`
 const LoginPage = () => (
   <Container>
     <ImageBlock>
-      <VannerImage src={vanner}/>
+      <VannerImage src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/login-vanner.png' />
     </ImageBlock>
     <LoginBloack>
       <TopBlock>
-        <Logo src='http://localhost:3000/static/media/logo.b06a1d68547714d8cb3a.png' />
+        <Logo src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/logo.png' />
       </TopBlock>
       <LoginForm />
       {/* <BottomBlock>a</BottomBlock> */}

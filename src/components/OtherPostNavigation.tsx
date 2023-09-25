@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import nextArrow from '../assets/img/next-arrow.png';
-import previousArrow from '../assets/img/previous-arrow.png';
+
 import { OtherPost as OtherPostType } from '../type';
 import api from '../api/api';
 
@@ -105,7 +104,7 @@ const OtherPostNavigation = ({ postId }: OtherPostNavigationProps) => {
       {postsInfo[0] ? (
         <NavigationBlock onClick={() => navigate(`/blog/${postsInfo[0].id}`)}>
           <StyledButton>
-            <Icon className='previous' src={previousArrow} />
+            <Icon className='previous' src="https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/previous-arrow.png" />
           </StyledButton>
           <OtherPost>
             <PreviousPostText>이전 글</PreviousPostText>
@@ -123,7 +122,7 @@ const OtherPostNavigation = ({ postId }: OtherPostNavigationProps) => {
             <OtherPostTitle>{postsInfo[1].title}</OtherPostTitle>
           </OtherPost>
           <StyledButton>
-            <Icon className='next' src={nextArrow} />
+            <Icon className='next' src="https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/next-arrow.png" />
           </StyledButton>
         </NavigationBlock>
       ) : (

@@ -4,6 +4,7 @@ import axios, {
   HeadersDefaults,
   RawAxiosRequestHeaders
 } from 'axios';
+
 import {
   LoginData,
   UpdatePostData,
@@ -22,7 +23,6 @@ import {
   UploadedImage,
   ValidateLogin
 } from '../type';
-// import storage from '../lib/storage';
 
 interface Result<T = any> {
   statusCode: number;
@@ -163,13 +163,10 @@ class Api {
 
   writeComment(payload: WriteCommentData) {
     return this.fetchJson<void>('/comments', { method: 'POST', body: JSON.stringify(payload) })
-    // return this.init().post('/comments', payload);
   }
 
   getCommentList(postId: number) {
     return this.fetchJson<Comment[]>(`/comments?post=${postId}`);
-    // const params = { post: postId };
-    // return this.init().get('/comments', { params });
   }
 
   getChildCommentList(commentId: number) {

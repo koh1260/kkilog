@@ -75,7 +75,6 @@ const CategoryBar = () => {
   useEffect(() => {
     (async () => {
       const response = await api.getCategoryList();
-      console.log(response);
       setCategories([...response.result!]);
     })();
   }, []);

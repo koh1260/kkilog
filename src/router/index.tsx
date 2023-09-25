@@ -4,6 +4,7 @@ import PostDetail from '../pages/PostDetail';
 import WritePostPage from '../pages/WritePostPage';
 import EditPostPage from '../pages/EditPostPage';
 import MainPage from '../pages/MainPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/blog/edit/:postId',
     element: <EditPostPage />
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />
   },
 ]);
 

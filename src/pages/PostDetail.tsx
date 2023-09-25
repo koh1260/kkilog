@@ -33,7 +33,6 @@ const PostDetail = () => {
   const postId: string = useParams()?.postId!;
 
   useEffect(() => {
-    document.querySelector('body')?.scrollTo(0,0);
     (async () => {
       try {
         const response = await api.getPost(+postId);
@@ -50,6 +49,7 @@ const PostDetail = () => {
         setError(true);
       }
       setLoading(false);
+      document.querySelector('body')?.scrollTo(0,0);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
