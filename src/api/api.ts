@@ -37,7 +37,7 @@ class Api {
 
   client: AxiosInstance | null = null;
 
-  apiUrl: string = process.env.API_URL || 'http://localhost:8080';
+  apiUrl: string = 'http://localhost:8080';
 
   init() {
     this.apiToken = localStorage.getItem('access_token')?.split(' ')[1];
@@ -79,7 +79,7 @@ class Api {
             ...init?.headers,
           }
         };
-        return fetch(`${input}`, config);
+        return fetch(`${this.apiUrl}${input}`, config);
       };
       let response = await fetchFn();
 
@@ -178,6 +178,7 @@ class Api {
     return this.init().delete(`/comments/${commentId}`);
   }
 
+  // init에는 base url이 적용되고 있지 않음.
   login(payload: LoginData) {
     return this.init().post('/users/login', payload);
   }
