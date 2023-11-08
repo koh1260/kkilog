@@ -190,7 +190,9 @@ class Api {
   }
 
   loginValidate() {
-    return this.fetchJson<ValidateLogin>('/auth/login-validate');
+    return this.fetchJson<ValidateLogin>('/auth/login-validate', {
+      credentials: 'include'
+    });
   }
 
   uploadImage(form: FormData) {
@@ -201,7 +203,9 @@ class Api {
   }
 
   async refreshAccessToken() {
-    return this.fetchJson<RefreshAccessToken>('/auth/refresh');
+    return this.fetchJson<RefreshAccessToken>('/auth/refresh', {
+      credentials: 'include'
+    });
   }
 
   googleLogin() {
