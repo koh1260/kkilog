@@ -90,7 +90,6 @@ class Api {
 
         response = await fetchFn();
         // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        if (!response.ok) throw response;
       }
 
       return response;
@@ -178,9 +177,12 @@ class Api {
     return this.init().delete(`/comments/${commentId}`);
   }
 
-  // init에는 base url이 적용되고 있지 않음.
   login(payload: LoginData) {
-    return this.init().post('/users/login', payload);
+    return this.fetchDate('/users/login', {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
   }
 
   logout() {
