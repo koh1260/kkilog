@@ -7,6 +7,7 @@ import { UserState, setUser } from '../../redux/slice/user-slice';
 import storage from '../../lib/storage';
 import ClientExcepction from '../../common/exceptions/client-exception';
 import { setIsVisibleLoginModal } from '../../redux/slice/modal-slice';
+import { User } from '../../type';
 
 const Container = styled.form`
   display: flex;
@@ -93,20 +94,25 @@ const LoginForm = () => {
 
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     try {
       const response = await api.login(loginInfo);
-      const user = response.data.result;
-      const loginedUser: UserState = {
-        id: user.id,
-        username: user.email,
-        role: user.role,
-        logined: true,
-      };
-      dispatch(setUser(loginedUser));
-      storage.set('user', loginedUser);
-      dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}))
-      document.body.classList.remove('open-modal');
-      navigate('/');
+      if (response.ok) {
+        const data = await response.json();
+        const user: User = data.result;
+        const loginedUser: UserState = {
+          id: user.id,
+          username: user.email,
+          role: user.role,
+          logined: true,
+        };
+
+        dispatch(setUser(loginedUser));
+        storage.set('user', loginedUser);
+        dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}))
+        document.body.classList.remove('open-modal');
+        navigate('/');  
+      }
     } catch (e: any) {
       if (e instanceof ClientExcepction) console.error(e.stack);
       if (e instanceof Error) console.error(e.stack);
