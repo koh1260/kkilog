@@ -2,6 +2,7 @@ import MDEditor from '@uiw/react-md-editor';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import formatDate from '../lib/format-date';
+import { useAppSelector } from '../redux/hook';
 
 interface PostContentProps {
   id: number;
@@ -71,6 +72,7 @@ const PostContent = ({
   createAt
 }: PostContentProps) => {
   const navigate = useNavigate();
+  const role = useAppSelector((state) => state.user.role);
 
   return (
     <Container>
@@ -81,25 +83,27 @@ const PostContent = ({
           <p>·</p>
           <p className='create_at'>{formatDate(createAt)}</p>
         </PostInfoBlock>
-        <EditBlock>
-          <StyledButton
-            onClick={() =>
-              navigate(`/blog/edit/${id}`, {
-                state: {
-                  id,
-                  title,
-                  introduction,
-                  thumbnail,
-                  content,
-                  publicScope
-                }
-              })
-            }
-          >
-            수정
-          </StyledButton>
-          <StyledButton>삭제</StyledButton>
-        </EditBlock>
+        {role === 'ADMIN' && (
+          <EditBlock>
+            <StyledButton
+              onClick={() =>
+                navigate(`/blog/edit/${id}`, {
+                  state: {
+                    id,
+                    title,
+                    introduction,
+                    thumbnail,
+                    content,
+                    publicScope
+                  }
+                })
+              }
+            >
+              수정
+            </StyledButton>
+            <StyledButton>삭제</StyledButton>
+          </EditBlock>
+        )}
       </Utils>
       <Thumbnail src={thumbnail} />
       {/* <Content>{post.content}</Content> */}
