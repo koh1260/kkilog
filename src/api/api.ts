@@ -37,7 +37,7 @@ class Api {
 
   client: AxiosInstance | null = null;
 
-  apiUrl: string = 'http://localhost:8080';
+  apiUrl: string = process.env.REACT_APP_API_URL ?? '';
 
   init() {
     this.apiToken = localStorage.getItem('access_token')?.split(' ')[1];
