@@ -59,8 +59,6 @@ const StyledButton = styled.button`
   border: none;
 `;
 
-// const Content = styled.div``;
-
 const PostContent = ({
   id,
   title,

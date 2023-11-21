@@ -19,7 +19,6 @@ const Container = styled.header`
   display: flex;
   height: 4rem;
   width: 100%;
-  /* border-bottom: 0.5px solid lightgray; */
   border-bottom: 0.5px solid lightgray;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.03);
 `;
@@ -29,10 +28,6 @@ const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 24px;
-  /* 
-  @media screen and (max-width: 768px) {
-    justify-content: start;
-  } */
 `;
 
 const ContactIconBlock = styled.div`
@@ -120,7 +115,6 @@ const NavBar = () => {
       }));
       storage.remove('access_token');
       storage.remove('user');
-      alert('로그아웃');
       navigate('/');
     } catch (e) {
       if (e instanceof ClientExcepction) {
