@@ -71,11 +71,7 @@ const WritePostPage = () => {
     <Container>
       {uploadModalVisible && (
         <UploadPostPage
-          title=''
           content={text}
-          introduction=''
-          publicScope='PUBLIC'
-          thumbnail=''
           setModalVisible={setUploadModalVisible}
         />
       )}
