@@ -7,7 +7,7 @@ export interface WritePostData {
   title: string;
   content: string;
   introduction: string;
-  thumbnail: string;
+  thumbnail: string | null;
   categoryName: string;
 }
 
