@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import NavBar from '../components/NavBar';
 import CategoryBar from '../components/CategoryBar';
-import Footer from '../components/Footer';
 import Detail from '../components/Detail';
 import { Post } from '../type';
 import BodyContainer from '../components/BodyContainer';
@@ -68,7 +67,6 @@ const PostDetail = () => {
           </Main>
         </BodyBlock>
       </BodyContainer>
-      <Footer />
     </Container>
   );
 }

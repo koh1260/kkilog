@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Main from '../components/Main';
 import NavBar from '../components/NavBar';
 import CategoryBar from '../components/CategoryBar';
-import Footer from '../components/Footer';
 import PostList from '../components/PostList';
 import { PostPreview } from '../type';
 import BodyContainer from '../components/BodyContainer';
@@ -28,10 +27,6 @@ const BodyBlock = styled.div`
     flex-direction: column;
   }
 `;
-
-// interface ParamType {
-//   categoryName: string;
-// }
 
 const Home = () => {
   const {categoryName} = useParams<'categoryName'>();
@@ -79,7 +74,6 @@ const Home = () => {
           </Main>
         </BodyBlock>
       </BodyContainer>
-      <Footer />
     </Container>
   );
 };

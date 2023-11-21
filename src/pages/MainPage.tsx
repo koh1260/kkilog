@@ -3,14 +3,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Main from '../components/Main';
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
 import PostList from '../components/PostList';
 import { PostPreview } from '../type';
 import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
 import Loading from '../components/Loading';
 import ClientExcepction from '../common/exceptions/client-exception';
-// import vanner from '../assets/img/vanner.png';
 
 const Container = styled.article`
   display: flex;
@@ -127,7 +125,6 @@ const MainPage = () => {
           </Main>
         </BodyBlock>
       </BodyContainer>
-      <Footer />
     </Container>
   );
 };
