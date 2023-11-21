@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -69,16 +69,26 @@ const ThumbnailImageBlock = styled.div`
 `;
 
 const SelectImageButton = styled.input`
+  display: none;
+`;
+
+const UploadImageButton = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 1rem;
-  font-weight: bold;
-  width: fit-content;
-  margin-bottom: 12px;
+  font-size: 0.8rem;
+`;
+
+const ImageBlock = styled.div`
+  overflow: hidden;
+  margin-top: 1rem;
+  width: 100%;
+  aspect-ratio: 16/9;
 `;
 
 const ThumbnailImage = styled.img`
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const IntroductionTextArea = styled.textarea`
@@ -180,10 +190,14 @@ const UploadPostPage = ({
   publicScope
 }: UploadPostPageProps) => {
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [postIntroduction, setPostIntroduction] = useState(introduction);
-  const [postThumbnail, setPostThumbnail] = useState(thumbnail);
+  const [previewImage, setPreviewImage] = useState<string>();
+  // const [postThumbnail, setPostThumbnail] = useState<File>();
   const [postTitle, setPostTitle] = useState(title);
-  const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>('PUBLIC');
+  const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>(
+    'PUBLIC'
+  );
   // const [category, setCategory] = useState('');
 
   useEffect(() => {
@@ -194,50 +208,72 @@ const UploadPostPage = ({
   }, []);
 
   const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const form = new FormData();
-
-    try {  
-      if (!e.target.files) throw new Error('이미지가 없습니다.');
-      form.append('file', e.target.files[0]);
-      const response = await api.uploadImage(form);
-      if (!response.result) throw new Error('이미지 url이 없습니다.');
-      setPostThumbnail(response.result.filePath);
-    } catch(error: unknown) {
+    // const form = new FormData();
+    const file = e.target.files?.[0];
+    try {
+      if (!file) throw new Error('이미지가 없습니다.');
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (typeof event.target?.result === 'string') {
+          setPreviewImage(event.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+      // form.append('file', e.target.files[0]);
+      // console.log(e.target.files[0]);
+      // const response = await api.uploadImage(form);
+      // if (!response.result) throw new Error('이미지 url이 없습니다.');
+      // setPostThumbnail(response.result.filePath);
+    } catch (error: unknown) {
       if (error instanceof ClientExcepction) {
         console.error(`Client Error: ${error.stack}`);
-      }
-      else if (error instanceof Error) {
+      } else if (error instanceof Error) {
         console.error(`Error: ${error.stack}`);
       }
     }
-    
-  }
+  };
 
   const handleOnClickPosting = async () => {
     const payload: UpdatePostData = {
       content,
       title: postTitle,
       introduction: postIntroduction,
-      thumbnail: postThumbnail,
+      thumbnail,
       publicScope: postPublicScope
-    }
-    const response = await api.updatePost(id!, payload);
+    };
+    await api.updatePost(id!, payload);
     navigate(-1);
-    console.log(response);
-  }
+  };
 
   return (
     <Container>
       <ContentBlock>
         <Content>
           <LeftBlock>
-            <TitleInput placeholder='제목' value={postTitle} onChange={(e) => setPostTitle(e.target.value)} />
+            <TitleInput
+              placeholder='제목'
+              value={postTitle}
+              onChange={(e) => setPostTitle(e.target.value)}
+            />
             <ThumbnailImageBlock>
-              <SelectImageButton type='file' onChange={handleUploadImage} />
-              <p>sda</p>
-              <ThumbnailImage src={postThumbnail} />
+              <SelectImageButton
+                ref={fileInputRef}
+                type='file'
+                accept='image/*'
+                onChange={handleUploadImage}
+              />
+              <UploadImageButton onClick={() => fileInputRef.current?.click()}>
+                이미지 선택
+              </UploadImageButton>
+              <ImageBlock>
+                <ThumbnailImage src={previewImage} />
+              </ImageBlock>
             </ThumbnailImageBlock>
-            <IntroductionTextArea placeholder='소개글' value={postIntroduction} onChange={(e) => setPostIntroduction(e.target.value)} />
+            <IntroductionTextArea
+              placeholder='소개글'
+              value={postIntroduction}
+              onChange={(e) => setPostIntroduction(e.target.value)}
+            />
           </LeftBlock>
           <Divider />
           <RightBlock>
@@ -272,7 +308,9 @@ const UploadPostPage = ({
               <CancelButton onClick={() => setModalVisible(false)}>
                 취소
               </CancelButton>
-              <PostingButton onClick={handleOnClickPosting}>포스팅</PostingButton>
+              <PostingButton onClick={handleOnClickPosting}>
+                포스팅
+              </PostingButton>
             </PostingButtonBlock>
           </RightBlock>
         </Content>
