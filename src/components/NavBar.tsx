@@ -61,7 +61,7 @@ const HambergerIcon = styled.img`
 `;
 
 const WriteButton = styled.button`
-  background-color: powderblue;
+  background-color: #84aaff;
   color: white;
   border: none;
   font-size: 1rem;
@@ -70,7 +70,7 @@ const WriteButton = styled.button`
   padding: 4px 10px;
   height: 32px;
   width: fit-content;
-  border-radius: 12px;
+  border-radius: 7px;
 
   @media screen and (max-width: 768px) {
     display: none;
@@ -78,7 +78,7 @@ const WriteButton = styled.button`
 `;
 
 const LoginButton = styled.button`
-  background-color: powderblue;
+  background-color: #84aaff;
   color: white;
   border: none;
   padding: 4px 10px;
@@ -86,7 +86,7 @@ const LoginButton = styled.button`
   font-weight: 600;
   height: fit-content;
   width: fit-content;
-  border-radius: 12px;
+  border-radius: 7px;
 `;
 
 const NavBar = () => {
