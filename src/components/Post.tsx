@@ -23,7 +23,7 @@ const Container = styled.div`
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 10px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 10px 3px rgba(0, 0, 0, 0.09);
 
   &:hover {
     transform: translateY(-5px);
