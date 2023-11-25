@@ -141,11 +141,15 @@ class Api {
   }
 
   postLike(postId: number) {
-    return this.fetchJson<PostLike>(`/posts/like/${postId}`);
+    return this.fetchJson<PostLike>(`/posts/like/${postId}`, {
+      credentials: 'include',
+    });
   }
 
   postLikeCheck(postId: number) {
-    return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`);
+    return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`, {
+      credentials: 'include',
+    });
   }
 
   postLikeCount(postId: number) {
