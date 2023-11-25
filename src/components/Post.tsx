@@ -54,14 +54,19 @@ const ThubnailImage = styled.img`
 `;
 
 const Content = styled.div`
-  margin: 0.4rem;
+  margin: 0.4rem 1rem;
   height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-const Title = styled.h3`
+const ContentInnerBlock = styled.div`
+`;
+
+const Title = styled.p`
+font-size: 1.2rem;
+font-weight: 550;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -124,8 +129,10 @@ const Post = ({
         <ThubnailImage src={thumbnail} />
       </ImageBlock>
       <Content>
+        <ContentInnerBlock>
         <Title>{title}</Title>
         <Introduction>{introduction}</Introduction>
+        </ContentInnerBlock>
         <Bottom>
           <CommentAndCreateAtBlock>
             <CreateAt>{formatDate(createAt)}</CreateAt>
