@@ -17,6 +17,7 @@ const Container = styled.article`
   height: 100%;
   width: 100%;
   flex: 1;
+  background-color: white;
 `;
 
 const BodyBlock = styled.div`
