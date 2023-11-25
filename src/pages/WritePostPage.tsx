@@ -2,7 +2,6 @@ import MDEditor, { ContextStore } from '@uiw/react-md-editor';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { FileDrop } from 'react-file-drop';
 import UploadPostPage from './UploadPostPage';
 
 type MDEditorOnChange = (
@@ -76,18 +75,16 @@ const WritePostPage = () => {
         />
       )}
       <EdittorBlock>
-        <FileDrop
-          className='file-drop'
-        >
           <MDEditor
+            
             className='editor'
             value={text}
             onChange={onClick}
             preview='live'
             fullscreen
             height={500}
+            
           />
-        </FileDrop>
         <ButtonBlock>
           <BackButton
             onClick={() => {
