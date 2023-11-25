@@ -18,8 +18,12 @@ const Container = styled.main`
 `;
 
 const PositionCenterBox = styled.div`
-  width: 980px;
+  width: 1300px;
   margin: 0 auto;
+
+  @media screen and (max-width: 1585px) {
+    width: 1000px;
+  }
 
   @media screen and (max-width: 1024px) {
     width: 100%;
