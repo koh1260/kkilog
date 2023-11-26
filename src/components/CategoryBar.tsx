@@ -11,7 +11,6 @@ interface ContainerProps {
 }
 
 const Container = styled.section<ContainerProps>`
-  /* box-shadow: 5px 0 10px rgba(0, 0, 0, 0.03); */
   position: sticky;
   top: 4rem;
   display: flex;
@@ -20,7 +19,6 @@ const Container = styled.section<ContainerProps>`
   height: 100vh;
   margin-left: 20px;
   padding-right: 20px;
-  /* border-right: 0.5px solid lightgray; */
 
   @media screen and (max-width: 1285px) {
     position: fixed;
@@ -32,16 +30,12 @@ const Container = styled.section<ContainerProps>`
     padding: 0 24px;
     margin-left: 0px;
     top: 4.3rem;
-    pointer-events: ${(props) => props.$isActive ? 'auto' : 'none'};
-    opacity: ${(props) => props.$isActive ? 1 : 0 };
-    transform: ${(props) => props.$isActive ? 'translateY(-0.3rem)' : 'translateY(0.3rem)'};
+    pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
+    opacity: ${(props) => (props.$isActive ? 1 : 0)};
+    transform: ${(props) =>
+      props.$isActive ? 'translateY(-0.3rem)' : 'translateY(0.3rem)'};
     transition: transform ease-in-out 0.2s;
   }
-
-  /* @media screen and (max-width: 768px) {
-    top: 100%;
-    transform: ${(props) => props.$isActive ? 'translateY(-100%)' : 'translateY(0)'};
-  } */
 `;
 
 const Content = styled.ul`
@@ -55,7 +49,7 @@ const Content = styled.ul`
     border-radius: 12px;
     overflow: hidden;
     width: 920px;
-    box-shadow: 0 0 10px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     background-color: white;
     flex-direction: row;
     justify-content: space-between;
@@ -80,12 +74,22 @@ const CategoryBar = () => {
   }, []);
 
   return (
-    <Container 
-      onMouseEnter={() => isVisible && dispatch(setIsVisible({ isVisible: true }))}
+    <Container
+      onMouseEnter={() =>
+        isVisible && dispatch(setIsVisible({ isVisible: true }))
+      }
       onMouseLeave={() => dispatch(setIsVisible({ isVisible: false }))}
-      $isActive={isVisible}>
+      $isActive={isVisible}
+    >
       <Content>
-        <Category key={0} to='/blog' end categoryName='전체 글' icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png' childrenCategories={[]} />
+        <Category
+          key={0}
+          to='/blog'
+          end
+          categoryName='전체 글'
+          icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
+          childrenCategories={[]}
+        />
         {categories.map((category) => (
           <Category
             key={category.id}
