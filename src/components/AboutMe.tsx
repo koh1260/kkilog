@@ -10,6 +10,10 @@ const Container = styled.section`
 const Title = styled.h1`
   font-size: 3rem;
   color: #444c66;
+
+  @media screen and (max-width: 769px) {
+    font-size: 2rem;
+  }
 `;
 
 const Body = styled.div`
@@ -22,9 +26,19 @@ const TopBlock = styled.div`
   display: flex;
   gap: 7rem;
   justify-content: space-between;
+
+  @media screen and (max-width: 769px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+  }
 `;
 
-const BottomBlock = styled.div``;
+const BottomBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const LeftBlock = styled.div``;
 
@@ -35,6 +49,11 @@ const ImageContainer = styled.div`
   overflow: hidden;
   border: 2px solid #84aaff;
   border-radius: 50%;
+
+  @media screen and (max-width: 769px) {
+    width: 12rem;
+    height: 12rem;
+  }
 `;
 
 const ProfileImage = styled.img`
@@ -47,31 +66,59 @@ const RightBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+    @media screen and (max-width: 769px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const SubTitle = styled.h3`
   color: #6ea3ff;
   margin-bottom: 0.2rem;
+
+  @media screen and (max-width: 769px) {
+    width: 7rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Content = styled.p`
   font-size: 1.1rem;
 `;
 
-const ContentBlock = styled.div``;
+const ContentBlock = styled.div`
+  @media screen and (max-width: 769px) {
+    display: flex;
+  }
+`;
 
 const Comment = styled.h3`
-  margin-top: 5rem;
+  margin-top: 7rem;
   margin-bottom: 1.5rem;
+  text-align: center;
+
+  @media screen and (max-width: 769px) {
+    margin-top: 4rem;
+  }
 `;
 
 const IconBlock = styled.div`
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 769px) {
+    gap: 1rem;
+    padding-left: 1rem;
+  }
 `;
 
 const DevIcon = styled.i`
   font-size: 4rem;
+
+  @media screen and (max-width: 769px) {
+    font-size: 3rem;
+  }
 `;
 
 const AboutMe = () => (
@@ -100,12 +147,14 @@ const AboutMe = () => (
         </RightBlock>
       </TopBlock>
       <BottomBlock>
-        <Comment>Tools I enjoy using for development</Comment>
+        <Comment>My Tech stack</Comment>
         <IconBlock>
-          <DevIcon className='devicon-react-original colored' />
+          <DevIcon className="devicon-javascript-plain colored" />
+          <DevIcon className="devicon-typescript-plain colored" />
+          <DevIcon className='devicon-nodejs-plain-wordmark colored' />
           <DevIcon className='devicon-nestjs-plain colored' />
           <DevIcon className='devicon-docker-plain colored' />
-          <DevIcon className='devicon-amazonwebservices-original colored' />
+          <DevIcon className='devicon-react-original colored' />
         </IconBlock>
       </BottomBlock>
     </Body>
