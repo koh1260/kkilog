@@ -19,6 +19,7 @@ const Container = styled.section<ContainerProps>`
   height: 100vh;
   margin-left: 20px;
   padding-right: 20px;
+  box-shadow: 2px 0 2px 0px rgba(0, 0, 0, 0.08);
 
   @media screen and (max-width: 1285px) {
     position: fixed;
