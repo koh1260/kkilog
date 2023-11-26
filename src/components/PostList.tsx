@@ -9,7 +9,6 @@ interface PostListProps {
 }
 
 const Container = styled.section`
-  /* padding: 0 24px; */
   width: 100%;
   margin: 0 auto;
 
@@ -33,7 +32,7 @@ const PostCountText = styled.h3`
 `
 
 const PostCountNumber = styled.h3`
-  color: red;
+  color: #FD889C;
 `
 
 const PostContainer = styled.div`

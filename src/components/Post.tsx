@@ -17,18 +17,21 @@ const Container = styled.div`
   margin: 8px;
   display: flex;
   flex-direction: column;
-  width: calc(33.33% - 16px);
+  width: calc(25% - 16px);
   height: 25rem;
-  /* border: 0.5px solid lightgray; */
   border-radius: 7px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 10px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 10px 3px rgba(0, 0, 0, 0.09);
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 7px 10px 5px rgba(0, 0, 0, 0.09);
+  }
+
+  @media screen and (max-width: 1585px) {
+    width: calc(33.33% - 16px);
   }
 
   @media screen and (max-width: 1024px) {

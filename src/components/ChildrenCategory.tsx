@@ -18,6 +18,7 @@ const Container = styled(NavLink)`
   gap: 8px;
   cursor: pointer;
   border-radius: 7px;
+  
   &:hover {
     background-color: #F6F7F9;
   }
@@ -31,12 +32,12 @@ const Container = styled(NavLink)`
 
     &:hover {
       background-color: initial;
-      color: pink;
+      color: #84AAFF;
     }
 
     &.active {
       background-color: initial;
-      color: red;
+      color: #4976C6;
     }
   }
 `;

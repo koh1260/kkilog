@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import CommentWriting from './CommentWriting';
@@ -20,7 +20,10 @@ const CommentCount = styled.div`
   margin-bottom: 7px;
 `;
 
+const BottomRef = styled.div``
+
 const CommentBlock = ({ comments }: CommentBlockProps) => {
+  const bottomRef = useRef<HTMLInputElement>(null);
   const postId = useParams() as { postId: string };
   const [commentList, setCommentList] = useState<Comment[]>([]);
 
@@ -28,12 +31,16 @@ const CommentBlock = ({ comments }: CommentBlockProps) => {
     setCommentList(comments);
   }, [postId])
   
+  const scrollBottom = () => {
+    bottomRef.current?.scrollIntoView({behavior: 'smooth'})
+  }
 
   return (
     <Container>
       <CommentCount>{`${commentList.length}개의 댓글`}</CommentCount>
       <CommentWriting setCommentList={setCommentList} />
-      <CommentList comments={commentList} />
+      <CommentList comments={commentList} scrollBottom={scrollBottom} />
+      <BottomRef ref={bottomRef} />
     </Container>
   );
 };

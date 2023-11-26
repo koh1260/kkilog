@@ -28,7 +28,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: #F2F2F2;
     margin: 0%;
     width: 100%;
     height: 100%;
