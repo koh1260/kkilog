@@ -7,6 +7,7 @@ import axios, {
 
 import {
   LoginData,
+  SignupData,
   UpdatePostData,
   WriteCommentData,
   WritePostData
@@ -179,6 +180,13 @@ class Api {
 
   deleteComment(commentId: number) {
     return this.init().delete(`/comments/${commentId}`);
+  }
+
+  signup(payload: SignupData) {
+    return this.fetchDate('/users', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
   }
 
   login(payload: LoginData) {
