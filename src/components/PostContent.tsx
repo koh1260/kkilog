@@ -24,6 +24,14 @@ const Container = styled.div`
 const Title = styled.h1`
   font-size: 3rem;
   margin: 1.4rem 0;
+
+  @media screen and (max-width: 1024px){
+    font-size: 2.2rem;
+  }
+
+  @media screen and (max-width: 769px){
+    font-size: 1.4rem;
+  }
 `;
 
 const Thumbnail = styled.img`
