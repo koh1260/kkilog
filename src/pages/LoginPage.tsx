@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import LoginForm from '../components/form/LoginForm';
+import SignupForm from '../components/form/SignupForm';
 
 const Container = styled.div`
   display: flex;
@@ -28,9 +29,10 @@ const VannerImage = styled.img`
 const LoginBloack = styled.section`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 50%;
   height: 100%;
-  padding: 5rem;
+  padding: 2rem 5rem;
 
   @media screen and (max-width: 1024px) {
     width: 100%;
@@ -99,7 +101,7 @@ const LoginPage = () => {
         <TopBlock>
           <Logo src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/logo.png' />
         </TopBlock>
-        {isLoginPage ? <LoginForm /> : <div>signup</div>}
+        {isLoginPage ? <LoginForm /> : <SignupForm />}
         {/* <BottomBlock>a</BottomBlock> */}
         {isLoginPage ? (
           <SignBlock>
