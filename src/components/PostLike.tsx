@@ -10,6 +10,7 @@ interface PostLikeProps {
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
   border-top: 0.5px solid lightgray;
   border-bottom: 0.5px solid lightgray;
   align-items: center;
@@ -56,9 +57,10 @@ const LikeIcon = styled.img<LikeIconProps>`
 
 const LikeCount = styled.h4``;
 
-const DoLikeText = styled.h4`
+const DoLikeText = styled.p`
   margin-left: 24px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 `;
 
 const PostLike = ({postId}: PostLikeProps) => {
@@ -125,7 +127,7 @@ const PostLike = ({postId}: PostLikeProps) => {
         </LikeButton>
         <LikeCount>{likeCount}</LikeCount>
       </LikeBlock>
-      <DoLikeText>🐘 게시글이 마음에 드신다면 코끼리를 눌러주세요! 🐘</DoLikeText>
+      <DoLikeText>🐘 코끼리를 눌러보세요! 🐘</DoLikeText>
     </Container>
   );
 };
