@@ -77,3 +77,9 @@ export interface PostLike {
 export interface PostLikeCheck {
   liked: boolean;
 }
+
+export interface ErrorResponse {
+  error: string;
+  message: string;
+  statusCode: number;
+};
