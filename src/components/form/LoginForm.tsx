@@ -9,6 +9,7 @@ import ClientExcepction from '../../common/exceptions/client-exception';
 import { setIsVisibleLoginModal } from '../../redux/slice/modal-slice';
 import { User } from '../../type';
 import StyledInput from '../common/StyledInput';
+import StyledButton from '../common/StyledButton';
 
 const Container = styled.form`
   display: flex;
@@ -21,16 +22,16 @@ const Container = styled.form`
   }
 `;
 
-const LoginButton = styled.button`
-  height: 2.5rem;
-  padding: 0.4rem 1rem;
-  color: white;
-  background-color: #529fdc;
-  border: none;
-  font-size: 1.2rem;
-  font-weight: 500;
-  width: fit-content;
-`;
+// const LoginButton = styled.button`
+//   height: 2.5rem;
+//   padding: 0.4rem 1rem;
+//   color: white;
+//   background-color: #529fdc;
+//   border: none;
+//   font-size: 1.2rem;
+//   font-weight: 500;
+//   width: fit-content;
+// `;
 
 const LoginButtonBlock = styled.div`
   margin-top: 1.2rem;
@@ -108,7 +109,7 @@ const LoginForm = () => {
         onChange={handleOnChange}
       />
       <LoginButtonBlock>
-        <LoginButton>로그인</LoginButton>
+        <StyledButton>로그인</StyledButton>
       </LoginButtonBlock>
     </Container>
   );
