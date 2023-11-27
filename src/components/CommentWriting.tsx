@@ -9,6 +9,7 @@ import { WriteCommentData } from '../type/request';
 
 interface CommentWritingProps {
   setCommentList: React.Dispatch<React.SetStateAction<Comment[]>>;
+  scrollBottom(): void;
 }
 
 const Container = styled.div`
@@ -60,7 +61,10 @@ const SubmitButton = styled.button<SubmitButtonProps>`
   border-radius: 7px;
 `;
 
-const CommentWriting = ({ setCommentList }: CommentWritingProps) => {
+const CommentWriting = ({
+  setCommentList,
+  scrollBottom
+}: CommentWritingProps) => {
   const isLogined = useAppSelector((state) => state.user.logined);
   const writerId = useAppSelector((state) => state.user.id);
   const { postId } = useParams() as { postId: string };
@@ -70,28 +74,11 @@ const CommentWriting = ({ setCommentList }: CommentWritingProps) => {
 
   const refreshCommentList = async () => {
     const response = await api.getCommentList(+postId);
-    if (response.statusCode === 200 && response.result)
+    if (response.statusCode === 200 && response.result) {
       setCommentList(response.result);
+      scrollBottom();
+    }
   };
-
-  // const handleOnClickPost = async () => {
-  //   try {
-  //     const response = await api.writeComment({
-  //       postId,
-  //       content,
-  //       userId: String(writerId!)
-  //     });
-
-  //     if (response.statusCode === 201) refreshCommentList();
-  //   } catch (e) {
-  //     if (e instanceof ClientExcepction) {
-  //       console.error(`Client Error: ${e.stack}`);
-  //     }
-  //     else if (e instanceof Error) {
-  //       console.error(`Error: ${e.stack}`);
-  //     }
-  //   }
-  // };
 
   const handleOnClickPost = async () => {
     try {

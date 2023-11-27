@@ -38,8 +38,8 @@ const CommentBlock = ({ comments }: CommentBlockProps) => {
   return (
     <Container>
       <CommentCount>{`${commentList.length}개의 댓글`}</CommentCount>
-      <CommentWriting setCommentList={setCommentList} />
-      <CommentList comments={commentList} scrollBottom={scrollBottom} />
+      <CommentWriting setCommentList={setCommentList} scrollBottom={scrollBottom} />
+      <CommentList comments={commentList} />
       <BottomRef ref={bottomRef} />
     </Container>
   );
