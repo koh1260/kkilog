@@ -48,7 +48,7 @@ const SignupForm = () => {
   const checkNickname = () => payload.nickname.length < 16;
 
   const checkPassword = () => {
-    const reg = /^[A-Za-z\\d!@#$%^&*()]{8,30}$/;
+    const reg = /^[A-Za-z\d!@#$%^&*()]{8,30}$/;
     return reg.test(payload.password);
   };
 
