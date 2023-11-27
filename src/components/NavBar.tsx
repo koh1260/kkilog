@@ -37,12 +37,12 @@ const ContactIconBlock = styled.div`
   gap: 12px;
 `;
 
-const Icon = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 12px;
-  cursor: pointer;
-`;
+// const Icon = styled.img`
+//   width: 32px;
+//   height: 32px;
+//   border-radius: 12px;
+//   cursor: pointer;
+// `;
 
 const OpenCategoryButton = styled.button`
   display: none;
@@ -77,8 +77,13 @@ const WriteButton = styled.button`
   }
 `;
 
-const LoginButton = styled.button`
-  background-color: #84aaff;
+interface StyledButtonProps {
+  color: string;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
+  /* background-color: #84aaff; */
+  background-color: ${(props) => props.color};
   color: white;
   border: none;
   padding: 4px 10px;
@@ -93,34 +98,33 @@ const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const isVisibleLoginModal = useAppSelector((state) => state.modal.isVisibleLoginModal);
-
-  const handleContactIconClick = () => {
-    window.open('https://github.com/koh1260', '_blank');
-  };
+  const isVisibleLoginModal = useAppSelector(
+    (state) => state.modal.isVisibleLoginModal
+  );
 
   const handleLoginModalVisible = () => {
-    dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}));
+    dispatch(setIsVisibleLoginModal({ isVisibleLoginModal: false }));
     document.body.classList.remove('open-modal');
-  }
+  };
 
   const handleOnClickLogout = async () => {
     try {
       await api.logout();
-      dispatch(setUser({
-        id: null,
-        role: null,
-        username: null,
-        logined: false,
-      }));
+      dispatch(
+        setUser({
+          id: null,
+          role: null,
+          username: null,
+          logined: false
+        })
+      );
       storage.remove('access_token');
       storage.remove('user');
       navigate('/');
     } catch (e) {
       if (e instanceof ClientExcepction) {
         console.error(`Client Error: ${e.stack}`);
-      }
-      else if (e instanceof Error) {
+      } else if (e instanceof Error) {
         console.error(`Error: ${e.stack}`);
       }
     }
@@ -136,28 +140,26 @@ const NavBar = () => {
       <NavContent>
         <Logo />
         <ContactIconBlock>
-          {user.logined ? (
-            <LoginButton onClick={handleOnClickLogout}>로그아웃</LoginButton>
-          ) : (
-            <LoginButton
-              onClick={() => {
-                dispatch(setIsVisibleLoginModal({isVisibleLoginModal: true}))
-                document.body.classList.add('open-modal');
-              }}
-            >
-              로그인
-            </LoginButton>
-          )}
           <OpenCategoryButton
             onMouseEnter={() => dispatch(setIsVisible({ isVisible: true }))}
             onMouseLeave={() => dispatch(setIsVisible({ isVisible: false }))}
           >
             <HambergerIcon src='https://cdn-icons-png.flaticon.com/128/4074/4074170.png' />
           </OpenCategoryButton>
-          <Icon
-            src='https://cdn-icons-png.flaticon.com/128/1051/1051377.png'
-            onClick={handleContactIconClick}
-          />
+
+          {user.logined ? (
+            <StyledButton onClick={handleOnClickLogout} color='#84aaff'>로그아웃</StyledButton>
+          ) : (
+            <StyledButton
+              onClick={() => {
+                dispatch(setIsVisibleLoginModal({ isVisibleLoginModal: true }));
+                document.body.classList.add('open-modal');
+              }}
+              color='#84aaff'
+            >
+              로그인
+            </StyledButton>
+          )}
           {user.logined && user.role === 'ADMIN' && (
             <WriteButton onClick={() => navigate('/blog/write')}>
               새 글 작성
