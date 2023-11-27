@@ -198,7 +198,9 @@ class Api {
   }
 
   logout() {
-    return this.fetchJson<void>('/users/logout');
+    return this.fetchJson<void>('/users/logout', {
+      credentials: 'include'
+    });
   }
 
   loginValidate() {
