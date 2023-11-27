@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import LoginForm from '../components/form/LoginForm';
 
@@ -59,21 +59,66 @@ const Logo = styled.img`
   min-width: 12rem;
 `;
 
+const SignBlock = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+  }
+`;
+
+const MemberCheckText = styled.span`
+  font-size: 0.8rem;
+  color: lightgray;
+`;
+
+const NavigationButton = styled.div`
+  color: #529fdc;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  background-color: transparent;
+  border: none;
+`;
+
 // const BottomBlock = styled.div``;
 
-const LoginPage = () => (
-  <Container>
-    <ImageBlock>
-      <VannerImage src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/login-vanner.png' />
-    </ImageBlock>
-    <LoginBloack>
-      <TopBlock>
-        <Logo src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/logo.png' />
-      </TopBlock>
-      <LoginForm />
-      {/* <BottomBlock>a</BottomBlock> */}
-    </LoginBloack>
-  </Container>
-);
+const LoginPage = () => {
+  const [isLoginPage, setIsLoginPage] = useState(true);
+
+  return (
+    <Container>
+      <ImageBlock>
+        <VannerImage src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/login-vanner.png' />
+      </ImageBlock>
+      <LoginBloack>
+        <TopBlock>
+          <Logo src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/logo.png' />
+        </TopBlock>
+        {isLoginPage ? <LoginForm /> : <div>signup</div>}
+        {/* <BottomBlock>a</BottomBlock> */}
+        {isLoginPage ? (
+          <SignBlock>
+            <MemberCheckText>회원이 아니신가요?</MemberCheckText>
+            <NavigationButton onClick={() => setIsLoginPage(false)}>
+              회원가입
+            </NavigationButton>
+          </SignBlock>
+        ) : (
+          <SignBlock>
+            <MemberCheckText>계정이 있으신가요?</MemberCheckText>
+            <NavigationButton onClick={() => setIsLoginPage(true)}>
+              로그인
+            </NavigationButton>
+          </SignBlock>
+        )}
+      </LoginBloack>
+    </Container>
+  );
+};
 
 export default LoginPage;
