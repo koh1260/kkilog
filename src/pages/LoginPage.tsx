@@ -101,8 +101,11 @@ const LoginPage = () => {
         <TopBlock>
           <Logo src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/logo.png' />
         </TopBlock>
-        {isLoginPage ? <LoginForm /> : <SignupForm />}
-        {/* <BottomBlock>a</BottomBlock> */}
+        {isLoginPage ? (
+          <LoginForm />
+        ) : (
+          <SignupForm setIsLoginPage={setIsLoginPage} />
+        )}
         {isLoginPage ? (
           <SignBlock>
             <MemberCheckText>회원이 아니신가요?</MemberCheckText>

@@ -5,6 +5,10 @@ import StyledButton from '../common/StyledButton';
 import api from '../../api/api';
 import { ErrorResponse } from '../../type';
 
+interface SignupFormProps {
+  setIsLoginPage(isLoginPage: boolean): void;
+}
+
 const Container = styled.form`
   display: flex;
   flex-direction: column;
@@ -29,7 +33,7 @@ interface SignupInfo {
   password: string;
 }
 
-const SignupForm = () => {
+const SignupForm = ({ setIsLoginPage }: SignupFormProps) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [payload, setPayload] = useState<SignupInfo>({
     email: '',
@@ -62,6 +66,7 @@ const SignupForm = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!checkBlank()) {
       setErrorMessage('입력란을 모두 입력해주세요.');
       return;
@@ -82,7 +87,7 @@ const SignupForm = () => {
     try {
       const response = await api.signup(payload);
       if (response.ok) {
-        alert('가입 완료');
+        setIsLoginPage(true);
         return;
       }
 
