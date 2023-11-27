@@ -67,6 +67,11 @@ const StyledButton = styled.button`
   border: none;
 `;
 
+const CustomMDEditor = styled(MDEditor.Markdown)`
+  background-color: white;
+  color: black;
+`;
+
 const PostContent = ({
   id,
   title,
@@ -113,7 +118,7 @@ const PostContent = ({
       </Utils>
       <Thumbnail src={thumbnail} />
       {/* <Content>{post.content}</Content> */}
-      <MDEditor.Markdown source={content} style={{ whiteSpace: 'pre-wrap' }} />
+      <CustomMDEditor source={content} style={{ whiteSpace: 'pre-wrap' }} />
     </Container>
   );
 };
