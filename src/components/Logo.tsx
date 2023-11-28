@@ -5,15 +5,11 @@ const Container = styled(NavLink)`
   display: flex;
   gap: 7px;
   align-items: center;
+  width: fit-content;
 `;
 
-// const Text = styled.h2`
-//   font-weight: 600;
-//   cursor: pointer;
-// `;
-
 const Icon = styled.img`
-  height: 70%;
+  height: 2.5rem;
 `
 
 const Logo = () => (
