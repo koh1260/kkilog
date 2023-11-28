@@ -37,13 +37,6 @@ const ContactIconBlock = styled.div`
   gap: 12px;
 `;
 
-// const Icon = styled.img`
-//   width: 32px;
-//   height: 32px;
-//   border-radius: 12px;
-//   cursor: pointer;
-// `;
-
 const OpenCategoryButton = styled.button`
   display: none;
   align-items: center;
@@ -82,7 +75,6 @@ interface StyledButtonProps {
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
-  /* background-color: #84aaff; */
   background-color: ${(props) => props.color};
   color: white;
   border: none;
