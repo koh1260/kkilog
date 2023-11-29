@@ -11,7 +11,6 @@ const Container = styled.article`
   height: 100%;
   width: 100vw;
   flex: 1;
-  overflow: scroll;
 `;
 
 const BodyBlock = styled.div`
