@@ -18,6 +18,10 @@ const Container = styled.section`
 
 const IconBlock = styled.div``;
 
+const Svg = styled.svg`
+  cursor: pointer;
+`;
+
 const Copyright = styled.p`
   font-size: 0.8rem;
   color: rgb(148, 148, 148);
@@ -27,13 +31,18 @@ const Copyright = styled.p`
 const Footer = () => (
   <Container>
     <IconBlock>
-      <svg width='32' height='32' xmlns='http://www.w3.org/2000/svg'>
+      <Svg
+        onClick={() => window.open('https://github.com/koh1260', '_blank')}
+        width='32'
+        height='32'
+        xmlns='http://www.w3.org/2000/svg'
+      >
         <image
           href='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg'
           height='32'
           width='32'
         />
-      </svg>
+      </Svg>
     </IconBlock>
     <Copyright>© 2023 Haesung Kang</Copyright>
   </Container>
