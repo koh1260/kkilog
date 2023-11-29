@@ -44,7 +44,7 @@ const Footer = () => (
         />
       </Svg>
     </IconBlock>
-    <Copyright>© 2023 Haesung Kang</Copyright>
+    <Copyright>© 2023 koh1260 All rights reserved.</Copyright>
   </Container>
 );
 
