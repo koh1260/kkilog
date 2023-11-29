@@ -10,6 +10,7 @@ import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
 import Loading from '../components/Loading';
 import ClientExcepction from '../common/exceptions/client-exception';
+import Footer from '../components/Footer';
 
 const Container = styled.article`
   display: flex;
@@ -68,6 +69,7 @@ const PostDetail = () => {
           </Main>
         </BodyBlock>
       </BodyContainer>
+      <Footer />
     </Container>
   );
 }

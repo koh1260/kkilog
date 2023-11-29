@@ -4,6 +4,7 @@ import Main from '../components/Main';
 import NavBar from '../components/NavBar';
 import BodyContainer from '../components/BodyContainer';
 import AboutMe from '../components/AboutMe';
+import Footer from '../components/Footer';
 
 const Container = styled.article`
   display: flex;
@@ -92,6 +93,7 @@ const MainPage = () => {
           </Main>
         </BodyBlock>
       </BodyContainer>
+      <Footer />
     </Container>
   );
 };

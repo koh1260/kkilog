@@ -1,32 +1,41 @@
 import { styled } from 'styled-components';
 
 const Container = styled.section`
-  /* position: absolute; */
+  border-top: 0.5px solid rgb(199, 198, 198);
   display: flex;
-  justify-content: center;
+  margin-bottom: 3rem;
+  flex-direction: column;
   align-items: center;
-  height: 10rem;
+  justify-content: end;
+  height: 9rem;
   width: 100%;
-  background-color: #292d3e;
-  /* bottom: 0; */
+
+  @media screen and (max-width: 769px) {
+    height: 6rem;
+    margin-bottom: 2rem;
+  }
 `;
 
-const Email = styled.h3`
-  color: white;
-  margin: 0 16px;
-`;
+const IconBlock = styled.div``;
 
-const Icon = styled.img`
-  width: 42px;
-  height: 42px;
-  color: white;
+const Copyright = styled.p`
+  font-size: 0.8rem;
+  color: rgb(148, 148, 148);
+  margin-top: 1rem;
 `;
 
 const Footer = () => (
   <Container>
-    <Icon src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.png' />
-    <Email>koh1260@naver.com</Email>
-    <Icon src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.png' />
+    <IconBlock>
+      <svg width='32' height='32' xmlns='http://www.w3.org/2000/svg'>
+        <image
+          href='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg'
+          height='32'
+          width='32'
+        />
+      </svg>
+    </IconBlock>
+    <Copyright>© 2023 Haesung Kang</Copyright>
   </Container>
 );
 
