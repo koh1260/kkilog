@@ -76,7 +76,6 @@ class Api {
         const config: RequestInit = {
           ...init,
           headers: {
-            'Content-Type': 'application/json',
             ...init?.headers,
           }
         };
@@ -109,7 +108,14 @@ class Api {
   }
 
   writerPost(payload: WritePostData) {
-    return this.init().post('/posts', payload);
+    return this.fetchDate('/posts', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   getPostList() {
@@ -212,7 +218,7 @@ class Api {
   uploadImage(form: FormData) {
     return this.fetchJson<UploadedImage>('/file/upload', {
       method: 'POST',
-      body: form
+      body: form,
     });
   }
 
