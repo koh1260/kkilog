@@ -1,24 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
-import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
+// import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
-import { UpdatePostData } from '../type/request';
+import { WritePostData } from '../type/request';
 import ClientExcepction from '../common/exceptions/client-exception';
+import { SimpleCategory } from '../type';
 
 interface UploadPostPageProps {
-  id?: number;
-  title?: string;
   content: string;
-  introduction?: string;
-  thumbnail?: string;
-  publicScope?: 'PUBLIC' | 'PRIVATE';
+  categoryList: SimpleCategory[];
   setModalVisible(visible: boolean): void;
 }
 
-interface PublicScopeButtonProps {
-  $isActive: boolean;
-}
+// interface PublicScopeButtonProps {
+//   $isActive: boolean;
+// }
 
 const Container = styled.div`
   z-index: 999999;
@@ -85,6 +82,17 @@ const ImageBlock = styled.div`
   aspect-ratio: 16/9;
 `;
 
+const EmptyImage = styled.div`
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+  height: 100%;
+  border: 0.5px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const ThumbnailImage = styled.img`
   width: 100%;
   height: 100%;
@@ -111,25 +119,25 @@ const RightBlock = styled.div`
   justify-content: space-between;
 `;
 
-const PublicScopeBlock = styled.div`
-  display: flex;
-  gap: 32px;
-`;
+// const PublicScopeBlock = styled.div`
+//   display: flex;
+//   gap: 32px;
+// `;
 
-const PublicScopeButton = styled.button<PublicScopeButtonProps>`
-  width: 50%;
-  height: 3rem;
-  background-color: white;
-  border: 1px solid lightgray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 7px;
-  color: ${(props) => props.$isActive && '#529EDC'};
-`;
+// const PublicScopeButton = styled.button<PublicScopeButtonProps>`
+//   width: 50%;
+//   height: 3rem;
+//   background-color: white;
+//   border: 1px solid lightgray;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 12px;
+//   font-size: 1.2rem;
+//   font-weight: bold;
+//   border-radius: 7px;
+//   color: ${(props) => props.$isActive && '#529EDC'};
+// `;
 
 const CategoryBlock = styled.div`
   display: flex;
@@ -147,12 +155,17 @@ const CategoryButtonBlock = styled.div`
   gap: 4px;
 `;
 
-const CategoryButton = styled.button`
-  background-color: white;
-  width: calc(25% - 3px);
+interface CategoryButtonProp {
+  $isActive: boolean;
+}
+
+const CategoryButton = styled.button<CategoryButtonProp>`
+  background-color: ${(props) => props.$isActive ? '#529edc' : 'white'};
+  color: ${(props) => props.$isActive ? 'white' : 'black'};
+  width: calc(50% - 3px);
   height: 2.2rem;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 600;
   border-radius: 4px;
   border: 1px solid lightgray;
 `;
@@ -180,38 +193,41 @@ const PostingButton = styled.button`
   border-radius: 4px;
 `;
 
-const UploadPostPage = ({
-  id,
-  content,
-  setModalVisible,
-  title,
-  introduction,
-  thumbnail,
-  publicScope
-}: UploadPostPageProps) => {
+const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPageProps) => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [postIntroduction, setPostIntroduction] = useState(introduction);
-  const [previewImage, setPreviewImage] = useState<string>();
-  // const [postThumbnail, setPostThumbnail] = useState<File>();
-  const [postTitle, setPostTitle] = useState(title);
-  const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>(
-    'PUBLIC'
-  );
-  // const [category, setCategory] = useState('');
+
+  const [postIntroduction, setPostIntroduction] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
+  const [postTitle, setPostTitle] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
-    console.log(publicScope);
-    console.log(postPublicScope);
-    console.log(content);
+    console.log(categoryList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleFormData = async (file: File) => {
+    const formData = new FormData();
+    console.log(file);
+    formData.append('file', file);
+    const response = await api.uploadImage(formData);
+    const fileUrl = response.result?.filePath;
+
+    if (fileUrl) {
+      return fileUrl;
+    }
+    throw new Error('이미지 경로가 없습니다.');
+  };
+
   const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const form = new FormData();
     const file = e.target.files?.[0];
     try {
       if (!file) throw new Error('이미지가 없습니다.');
+
+      // 이미지 업로드 안 되면 예외 발생해서 preview 안 됨
+      setThumbnail(await handleFormData(file));
       const reader = new FileReader();
       reader.onload = (event) => {
         if (typeof event.target?.result === 'string') {
@@ -219,11 +235,6 @@ const UploadPostPage = ({
         }
       };
       reader.readAsDataURL(file);
-      // form.append('file', e.target.files[0]);
-      // console.log(e.target.files[0]);
-      // const response = await api.uploadImage(form);
-      // if (!response.result) throw new Error('이미지 url이 없습니다.');
-      // setPostThumbnail(response.result.filePath);
     } catch (error: unknown) {
       if (error instanceof ClientExcepction) {
         console.error(`Client Error: ${error.stack}`);
@@ -234,15 +245,18 @@ const UploadPostPage = ({
   };
 
   const handleOnClickPosting = async () => {
-    const payload: UpdatePostData = {
-      content,
+    const payload: WritePostData = {
       title: postTitle,
+      content,
       introduction: postIntroduction,
       thumbnail,
-      publicScope: postPublicScope
+      categoryName: category
     };
-    await api.updatePost(id!, payload);
-    navigate(-1);
+    console.log(payload);
+    const response = await api.writerPost(payload);
+    if (response.ok) {
+      navigate(-1);
+    }
   };
 
   return (
@@ -266,7 +280,11 @@ const UploadPostPage = ({
                 이미지 선택
               </UploadImageButton>
               <ImageBlock>
-                <ThumbnailImage src={previewImage} />
+                {thumbnail ? (
+                  <ThumbnailImage src={previewImage} />
+                ) : (
+                  <EmptyImage>이미지를 등록하세요!</EmptyImage>
+                )}
               </ImageBlock>
             </ThumbnailImageBlock>
             <IntroductionTextArea
@@ -277,31 +295,26 @@ const UploadPostPage = ({
           </LeftBlock>
           <Divider />
           <RightBlock>
-            <PublicScopeBlock>
+            {/* <PublicScopeBlock>
               <PublicScopeButton
-                $isActive={publicScope === 'PUBLIC'}
+                $isActive={postPublicScope === 'PUBLIC'}
                 onClick={() => setPostPublicScope('PUBLIC')}
               >
                 <FaEarthAmericas />
                 <p>전체 공개</p>
               </PublicScopeButton>
               <PublicScopeButton
-                $isActive={publicScope === 'PRIVATE'}
+                $isActive={postPublicScope === 'PRIVATE'}
                 onClick={() => setPostPublicScope('PRIVATE')}
               >
                 <FaLock />
                 <p>비공개</p>
               </PublicScopeButton>
-            </PublicScopeBlock>
+            </PublicScopeBlock> */}
             <CategoryBlock>
               <CategoryText>카테고리</CategoryText>
               <CategoryButtonBlock>
-                {/* 카테고리 수 만큼 */}
-                <CategoryButton>생각 정리</CategoryButton>
-                <CategoryButton>Front-end</CategoryButton>
-                <CategoryButton>Back-end</CategoryButton>
-                <CategoryButton>DevOps</CategoryButton>
-                <CategoryButton>DevOps</CategoryButton>
+                {categoryList.map(c => <CategoryButton key={c.id} $isActive={category === c.categoryName} onClick={() => setCategory(c.categoryName)}>{c.categoryName}</CategoryButton>)}
               </CategoryButtonBlock>
             </CategoryBlock>
             <PostingButtonBlock>

@@ -51,6 +51,11 @@ export interface Category {
   childCategories: Category[] | [];
 }
 
+export interface SimpleCategory {
+  id: number;
+  categoryName: string;
+}
+
 export interface OtherPost {
   id: number;
   title: string;

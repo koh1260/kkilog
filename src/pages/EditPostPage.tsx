@@ -2,7 +2,7 @@ import MDEditor, { ContextStore } from '@uiw/react-md-editor';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import UploadPostPage from './UploadPostPage';
+// import UploadPostPage from './UploadPostPage';
 
 type MDEditorOnChange = (
   value?: string,
@@ -40,22 +40,22 @@ const BackButton = styled.button`
   border-radius: 12px;
 `;
 
-const PostingButton = styled.button`
-  padding: 1rem 2rem;
-  border: 0.5px solid lightgray;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: white;
-  background-color: powderblue;
-  border-radius: 12px;
-`;
+// const PostingButton = styled.button`
+//   padding: 1rem 2rem;
+//   border: 0.5px solid lightgray;
+//   font-size: 1.4rem;
+//   font-weight: 700;
+//   color: white;
+//   background-color: powderblue;
+//   border-radius: 12px;
+// `;
 
 const EditPostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {id, content, title, introduction, thumbnail, publicScope} = location.state;
+  const {content} = location.state;
   const [text, setText] = useState(content);
-  const [uploadModalVisible, setUploadModalVisible] = useState(false);
+  // const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
   const onClick: MDEditorOnChange = (
     value?: string,
@@ -66,17 +66,13 @@ const EditPostPage = () => {
 
   return (
     <Container>
-      {uploadModalVisible && (
+      {/* TODO 새로운 uploadModal로 변경 */}
+      {/* {uploadModalVisible && (
         <UploadPostPage
-          id={id}
-          title={title}
           content={text}
-          introduction={introduction}
-          thumbnail={thumbnail}
-          publicScope={publicScope}
           setModalVisible={setUploadModalVisible}
         />
-      )}
+      )} */}
       <EdittorBlock>
         <MDEditor
           className="editor"
@@ -88,7 +84,7 @@ const EditPostPage = () => {
         />
         <ButtonBlock>
           <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>
-          <PostingButton onClick={() => setUploadModalVisible(true)}>수정하기</PostingButton>
+          {/* <PostingButton onClick={() => setUploadModalVisible(true)}>수정하기</PostingButton> */}
         </ButtonBlock>
       </EdittorBlock>
       {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}
