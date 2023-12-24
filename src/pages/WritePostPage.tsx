@@ -1,8 +1,10 @@
 import MDEditor, { ContextStore } from '@uiw/react-md-editor';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import UploadPostPage from './UploadPostPage';
+import api from '../api/api';
+import { SimpleCategory } from '../type';
 
 type MDEditorOnChange = (
   value?: string,
@@ -54,9 +56,27 @@ const PostingButton = styled.button`
 
 const WritePostPage = () => {
   const navigate = useNavigate();
-  // const [isDragOn, setIsDragOn] = useState(false);
   const [text, setText] = useState('**Hello world!!!**');
   const [uploadModalVisible, setUploadModalVisible] = useState(false);
+  const [categoryList, setCategoryList] = useState<SimpleCategory[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const categories = (await api.getCategoryList()).result!;
+      const tmpList: SimpleCategory[] = [];
+      // depth가 있는 카테고리 평탄화
+      categories.forEach((c) => {
+        tmpList.push({ id: c.id, categoryName: c.categoryName });
+
+        if (c.childCategories.length >= 1) {
+          c.childCategories.forEach((cc) =>
+            tmpList.push({ id: cc.id, categoryName: cc.categoryName })
+          );
+        }
+      });
+      setCategoryList(tmpList);
+    })();
+  }, []);
 
   const onClick: MDEditorOnChange = (
     value?: string,
@@ -71,20 +91,19 @@ const WritePostPage = () => {
       {uploadModalVisible && (
         <UploadPostPage
           content={text}
+          categoryList={categoryList}
           setModalVisible={setUploadModalVisible}
         />
       )}
       <EdittorBlock>
-          <MDEditor
-            
-            className='editor'
-            value={text}
-            onChange={onClick}
-            preview='live'
-            fullscreen
-            height={500}
-            
-          />
+        <MDEditor
+          className='editor'
+          value={text}
+          onChange={onClick}
+          preview='live'
+          fullscreen
+          height={500}
+        />
         <ButtonBlock>
           <BackButton
             onClick={() => {

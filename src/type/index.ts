@@ -6,7 +6,7 @@ export interface PostPreview {
   createAt: string;
   likes: number;
   commentCount: number;
-};
+}
 
 export interface User {
   id: number;
@@ -27,7 +27,18 @@ export interface Post {
   writer: Writer;
   thumbnail: string;
   likes: number;
-  comments: Comment[]
+  comments: Comment[];
+  category: { categoryName: string };
+}
+
+export interface PostForUpdate {
+  id: number;
+  title: string;
+  content: string;
+  introduction: string;
+  publicScope: 'PUBLIC' | 'PRIVATE';
+  thumbnail: string;
+  categoryName: string;
 }
 
 interface Writer {
@@ -51,6 +62,11 @@ export interface Category {
   childCategories: Category[] | [];
 }
 
+export interface SimpleCategory {
+  id: number;
+  categoryName: string;
+}
+
 export interface OtherPost {
   id: number;
   title: string;
@@ -64,7 +80,7 @@ export interface ValidateLogin {
   id: number;
   email: string;
   role: 'USER' | 'ADMIN';
-};
+}
 
 export interface UploadedImage {
   filePath: string;
@@ -82,4 +98,4 @@ export interface ErrorResponse {
   error: string;
   message: string;
   statusCode: number;
-};
+}

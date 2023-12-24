@@ -76,8 +76,7 @@ class Api {
         const config: RequestInit = {
           ...init,
           headers: {
-            'Content-Type': 'application/json',
-            ...init?.headers,
+            ...init?.headers
           }
         };
         return fetch(`${this.apiUrl}${input}`, config);
@@ -109,7 +108,14 @@ class Api {
   }
 
   writerPost(payload: WritePostData) {
-    return this.init().post('/posts', payload);
+    return this.fetchDate('/posts', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   getPostList() {
@@ -131,9 +137,14 @@ class Api {
   }
 
   updatePost(postId: number, payload: UpdatePostData) {
-    return this.fetchJson<void>(`/posts/${postId}`, {
+    console.log(payload);
+    return this.fetchDate(`/posts/${postId}`, {
       method: 'PATCH',
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
     });
   }
 
@@ -143,13 +154,13 @@ class Api {
 
   postLike(postId: number) {
     return this.fetchJson<PostLike>(`/posts/like/${postId}`, {
-      credentials: 'include',
+      credentials: 'include'
     });
   }
 
   postLikeCheck(postId: number) {
     return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`, {
-      credentials: 'include',
+      credentials: 'include'
     });
   }
 
@@ -166,7 +177,13 @@ class Api {
   }
 
   writeComment(payload: WriteCommentData) {
-    return this.fetchJson<void>('/comments', { method: 'POST', body: JSON.stringify(payload) })
+    return this.fetchJson<void>('/comments', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   getCommentList(postId: number) {
@@ -186,6 +203,9 @@ class Api {
     return this.fetchDate('/users', {
       method: 'POST',
       body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
   }
 
@@ -194,6 +214,9 @@ class Api {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
   }
 
