@@ -34,6 +34,7 @@ const Detail = ({ post }: DetailProps) => (
       writer={post.writer.nickname}
       thumbnail={post.thumbnail}
       publicScope={post.publicScope}
+      categoryName={post.category.categoryName}
       createAt={stringToDate(post.createAt)}
     />
     <PostLike postId={post.id} />

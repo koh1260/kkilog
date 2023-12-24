@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
-// import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
+import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
-import { WritePostData } from '../type/request';
+import { UpdatePostData } from '../type/request';
 import ClientExcepction from '../common/exceptions/client-exception';
 import { SimpleCategory } from '../type';
 
-interface UploadPostPageProps {
+interface UpdatePostPageProps {
+  id: number;
+  title: string;
   content: string;
+  introduction: string;
+  publicScope: 'PUBLIC' | 'PRIVATE';
+  thumbnail: string;
   categoryList: SimpleCategory[];
+  categoryName: string;
   setModalVisible(visible: boolean): void;
 }
 
@@ -115,6 +121,30 @@ const RightBlock = styled.div`
   justify-content: space-between;
 `;
 
+const PublicScopeBlock = styled.div`
+  display: flex;
+  gap: 32px;
+`;
+
+interface PublicScopeButtonProps {
+  $isActive: boolean;
+}
+
+const PublicScopeButton = styled.button<PublicScopeButtonProps>`
+  width: 50%;
+  height: 3rem;
+  background-color: white;
+  border: 1px solid lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 7px;
+  color: ${(props) => props.$isActive && '#529EDC'};
+`;
+
 const CategoryBlock = styled.div`
   display: flex;
   flex-direction: column;
@@ -136,8 +166,8 @@ interface CategoryButtonProp {
 }
 
 const CategoryButton = styled.button<CategoryButtonProp>`
-  background-color: ${(props) => props.$isActive ? '#529edc' : 'white'};
-  color: ${(props) => props.$isActive ? 'white' : 'black'};
+  background-color: ${(props) => (props.$isActive ? '#529edc' : 'white')};
+  color: ${(props) => (props.$isActive ? 'white' : 'black')};
   width: calc(50% - 3px);
   height: 2.2rem;
   font-size: 1.1rem;
@@ -169,15 +199,26 @@ const PostingButton = styled.button`
   border-radius: 4px;
 `;
 
-const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPageProps) => {
+const UpdatePostPage = ({
+  id,
+  content,
+  title,
+  introduction,
+  publicScope,
+  thumbnail,
+  categoryList,
+  categoryName,
+  setModalVisible
+}: UpdatePostPageProps) => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [postIntroduction, setPostIntroduction] = useState('');
-  const [previewImage, setPreviewImage] = useState('');
-  const [postTitle, setPostTitle] = useState('');
-  const [thumbnail, setThumbnail] = useState('');
-  const [category, setCategory] = useState('');
+  const [postIntroduction, setPostIntroduction] = useState(introduction);
+  const [previewImage, setPreviewImage] = useState(thumbnail);
+  const [postTitle, setPostTitle] = useState(title);
+  const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>(publicScope);
+  const [postThumbnail, setPostThumbnail] = useState(thumbnail);
+  const [category, setCategory] = useState(categoryName);
 
   useEffect(() => {
     console.log(categoryList);
@@ -200,12 +241,10 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
   const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     try {
-      if (!file) {
-        throw new Error('이미지가 없습니다.');
-      }
+      if (!file) throw new Error('이미지가 없습니다.');
 
       // 이미지 업로드 안 되면 예외 발생해서 preview 안 됨
-      setThumbnail(await handleFormData(file));
+      setPostThumbnail(await handleFormData(file));
       const reader = new FileReader();
       reader.onload = (event) => {
         if (typeof event.target?.result === 'string') {
@@ -217,22 +256,22 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
       if (error instanceof ClientExcepction) {
         console.error(`Client Error: ${error.stack}`);
       } else if (error instanceof Error) {
-        alert(error.message);
         console.error(`Error: ${error.stack}`);
       }
     }
   };
 
   const handleOnClickPosting = async () => {
-    const payload: WritePostData = {
+    const payload: UpdatePostData = {
       title: postTitle,
       content,
       introduction: postIntroduction,
-      thumbnail,
-      categoryName: category
+      thumbnail: postThumbnail,
+      categoryName: category,
+      publicScope: postPublicScope
     };
     console.log(payload);
-    const response = await api.writerPost(payload);
+    const response = await api.updatePost(id, payload);
     if (response.ok) {
       navigate(-1);
     }
@@ -274,10 +313,34 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
           </LeftBlock>
           <Divider />
           <RightBlock>
+            <PublicScopeBlock>
+              <PublicScopeButton
+                $isActive={postPublicScope === 'PUBLIC'}
+                onClick={() => setPostPublicScope('PUBLIC')}
+              >
+                <FaEarthAmericas />
+                <p>전체 공개</p>
+              </PublicScopeButton>
+              <PublicScopeButton
+                $isActive={postPublicScope === 'PRIVATE'}
+                onClick={() => setPostPublicScope('PRIVATE')}
+              >
+                <FaLock />
+                <p>비공개</p>
+              </PublicScopeButton>
+            </PublicScopeBlock>
             <CategoryBlock>
               <CategoryText>카테고리</CategoryText>
               <CategoryButtonBlock>
-                {categoryList.map(c => <CategoryButton key={c.id} $isActive={category === c.categoryName} onClick={() => setCategory(c.categoryName)}>{c.categoryName}</CategoryButton>)}
+                {categoryList.map((c) => (
+                  <CategoryButton
+                    key={c.id}
+                    $isActive={category === c.categoryName}
+                    onClick={() => setCategory(c.categoryName)}
+                  >
+                    {c.categoryName}
+                  </CategoryButton>
+                ))}
               </CategoryButtonBlock>
             </CategoryBlock>
             <PostingButtonBlock>
@@ -295,4 +358,4 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
   );
 };
 
-export default UploadPostPage;
+export default UpdatePostPage;

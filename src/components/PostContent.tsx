@@ -13,6 +13,7 @@ interface PostContentProps {
   createAt: Date;
   writer: string;
   thumbnail: string;
+  categoryName: string;
 }
 
 const Container = styled.div`
@@ -80,6 +81,7 @@ const PostContent = ({
   writer,
   thumbnail,
   publicScope,
+  categoryName,
   createAt
 }: PostContentProps) => {
   const navigate = useNavigate();
@@ -105,7 +107,8 @@ const PostContent = ({
                     introduction,
                     thumbnail,
                     content,
-                    publicScope
+                    publicScope,
+                    categoryName
                   }
                 })
               }
