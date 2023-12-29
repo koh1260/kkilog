@@ -1,31 +1,11 @@
-import { styled } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Main from '../components/Main';
-import NavBar from '../components/NavBar';
-import CategoryBar from '../components/CategoryBar';
 import Detail from '../components/Detail';
 import { Post } from '../type';
-import BodyContainer from '../components/BodyContainer';
 import api from '../api/api';
 import Loading from '../components/Loading';
 import ClientExcepction from '../common/exceptions/client-exception';
-import Footer from '../components/Footer';
-
-const Container = styled.article`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  flex: 1;
-  background-color: white;
-`;
-
-const BodyBlock = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-`;
+import BlogLayout from '../layout/BlogLayout';
 
 const PostDetail = () => {
   const [loading, setLoading] = useState(true);
@@ -59,18 +39,9 @@ const PostDetail = () => {
   if (error) return <div>Error...</div>;
 
   return (
-    <Container>
-      <NavBar />
-      <BodyContainer>
-        <BodyBlock>
-          <CategoryBar />
-          <Main>
-            <Detail post={post!} />
-          </Main>
-        </BodyBlock>
-      </BodyContainer>
-      <Footer />
-    </Container>
+    <BlogLayout>
+      <Detail post={post!} />
+    </BlogLayout>
   );
 }
 

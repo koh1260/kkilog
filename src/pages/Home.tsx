@@ -1,42 +1,11 @@
-import { styled } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import NavBar from '../components/NavBar';
-import CategoryBar from '../components/CategoryBar';
 import PostList from '../components/PostList';
 import { PreviewPost } from '../type';
 import api from '../api/api';
 import Loading from '../components/Loading';
 import ClientExcepction from '../common/exceptions/client-exception';
-import Footer from '../components/Footer';
-
-const Container = styled.article`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100vw;
-  flex: 1;
-`;
-
-const Body = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const ContentBlock = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-
-  @media screen and (max-width: 1285px) {
-    flex-direction: column;
-  }
-`;
-
-const PostListBlock = styled.div`
-  flex: 1;
-  padding: 4rem 2rem;
-`;
+import BlogLayout from '../layout/BlogLayout';
 
 const Home = () => {
   const { categoryName } = useParams<'categoryName'>();
@@ -73,18 +42,9 @@ const Home = () => {
   if (loading) return <Loading />;
 
   return (
-    <Container>
-      <NavBar />
-      <Body>
-        <ContentBlock>
-          <CategoryBar />
-          <PostListBlock>
-            <PostList categoryName='Total' posts={posts} />
-          </PostListBlock>
-        </ContentBlock>
-      </Body>
-      <Footer />
-    </Container>
+    <BlogLayout>
+      <PostList categoryName='Total' posts={posts} />
+    </BlogLayout>
   );
 };
 
