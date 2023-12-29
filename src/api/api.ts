@@ -19,7 +19,7 @@ import {
   Post,
   PostLike,
   PostLikeCheck,
-  PostPreview,
+  PreviewPost,
   RefreshAccessToken,
   UploadedImage,
   ValidateLogin
@@ -119,15 +119,15 @@ class Api {
   }
 
   getPostList() {
-    return this.fetchJson<PostPreview[]>('/posts');
+    return this.fetchJson<PreviewPost[]>('/posts');
   }
 
   getPostListByCategoryId(categoryId: number) {
-    return this.fetchJson<PostPreview[]>(`/posts/category/${categoryId}`);
+    return this.fetchJson<PreviewPost[]>(`/posts/category/${categoryId}`);
   }
 
   getPostListByCategoryName(categoryName: string) {
-    return this.fetchJson<PostPreview[]>(
+    return this.fetchJson<PreviewPost[]>(
       `/posts/category?categoryName=${categoryName}`
     );
   }

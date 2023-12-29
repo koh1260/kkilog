@@ -1,15 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import formatDate from '../lib/format-date';
+import { PreviewPost } from '../type';
+import stringToDate from '../lib/transform-date';
 
 interface PostProps {
-  id: number;
-  title: string;
-  thumbnail: string;
-  introduction: string;
-  likes: number;
-  createAt: Date;
-  commentCount: number;
+  post: PreviewPost;
 }
 
 const Container = styled.div`
@@ -115,36 +111,28 @@ const LikeCount = styled.p`
   margin-left: 4px;
 `;
 
-const Post = ({
-  id,
-  title,
-  thumbnail,
-  introduction,
-  likes,
-  createAt,
-  commentCount
-}: PostProps) => {
+const Post = ({ post }: PostProps) => {
   const navigate = useNavigate();
 
   return (
-    <Container onClick={() => navigate(`/blog/${id}`)}>
+    <Container onClick={() => navigate(`/blog/${post.id}`)}>
       <ImageBlock>
-        <ThubnailImage src={thumbnail} />
+        <ThubnailImage src={post.thumbnail} />
       </ImageBlock>
       <Content>
         <ContentInnerBlock>
-        <Title>{title}</Title>
-        <Introduction>{introduction}</Introduction>
+        <Title>{post.title}</Title>
+        <Introduction>{post.introduction}</Introduction>
         </ContentInnerBlock>
         <Bottom>
           <CommentAndCreateAtBlock>
-            <CreateAt>{formatDate(createAt)}</CreateAt>
-            <CommentCount>{`댓글 ${commentCount}개`}</CommentCount>
+            <CreateAt>{formatDate(stringToDate(post.createAt))}</CreateAt>
+            <CommentCount>{`댓글 ${post.commentCount}개`}</CommentCount>
           </CommentAndCreateAtBlock>
           <LikeBlock>
             {/* <PiHeartDuotone /> */}
             <LikeIcon src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/elephant.svg'/>
-            <LikeCount>{likes}</LikeCount>
+            <LikeCount>{post.likes}</LikeCount>
           </LikeBlock>
         </Bottom>
       </Content>

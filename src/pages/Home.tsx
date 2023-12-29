@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
 import CategoryBar from '../components/CategoryBar';
 import PostList from '../components/PostList';
-import { PostPreview } from '../type';
+import { PreviewPost } from '../type';
 import api from '../api/api';
 import Loading from '../components/Loading';
 import ClientExcepction from '../common/exceptions/client-exception';
@@ -41,7 +41,7 @@ const PostListBlock = styled.div`
 const Home = () => {
   const { categoryName } = useParams<'categoryName'>();
   const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState<PostPreview[]>([]);
+  const [posts, setPosts] = useState<PreviewPost[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

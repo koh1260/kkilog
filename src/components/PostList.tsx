@@ -1,11 +1,10 @@
 import { styled } from 'styled-components';
 import Post from './Post';
-import { PostPreview } from '../type';
-import stringToDate from '../lib/transform-date';
+import { PreviewPost } from '../type';
 
 interface PostListProps {
   categoryName: string;
-  posts: PostPreview[];
+  posts: PreviewPost[];
 }
 
 const Container = styled.section`
@@ -63,14 +62,7 @@ const PostList = ({categoryName, posts}: PostListProps) => (
         <PostOuter>
           {posts.map((post) => (
             <Post
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              thumbnail={post.thumbnail}
-              introduction={post.introduction}
-              likes={post.likes}
-              createAt={stringToDate(post.createAt)}
-              commentCount={post.commentCount}
+              post={post}
             />
           ))}
         </PostOuter>
