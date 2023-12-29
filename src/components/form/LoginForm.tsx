@@ -6,10 +6,10 @@ import { useAppDispatch } from '../../redux/hook';
 import { UserState, setUser } from '../../redux/slice/user-slice';
 import storage from '../../lib/storage';
 import ClientExcepction from '../../common/exceptions/client-exception';
-import { setIsVisibleLoginModal } from '../../redux/slice/modal-slice';
 import { User } from '../../type';
 import StyledInput from '../common/StyledInput';
 import StyledButton from '../common/StyledButton';
+import { closeLoginModal } from '../../redux/slice/login-modal-slice';
 
 const Container = styled.form`
   display: flex;
@@ -72,7 +72,7 @@ const LoginForm = () => {
 
         dispatch(setUser(loginedUser));
         storage.set('user', loginedUser);
-        dispatch(setIsVisibleLoginModal({isVisibleLoginModal: false}))
+        dispatch(closeLoginModal())
         document.body.classList.remove('open-modal');
         navigate('/');
       }

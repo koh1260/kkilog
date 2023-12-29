@@ -5,7 +5,7 @@ import api from '../api/api';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import ClientExcepction from '../common/exceptions/client-exception';
 import { Comment } from '../type';
-import { openLoginModal } from '../redux/slice/modal-slice';
+import { openLoginModal } from '../redux/slice/login-modal-slice';
 
 interface CommentWritingProps {
   setCommentList: React.Dispatch<React.SetStateAction<Comment[]>>;

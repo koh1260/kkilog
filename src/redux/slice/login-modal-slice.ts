@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface ModalState {
   isVisibleLoginModal: boolean;
@@ -16,13 +16,6 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    setIsVisibleLoginModal: (state, action: PayloadAction<LoginModalState>) => {
-      const payload = {
-        ...state,
-        ...action.payload,
-      };
-      return payload;
-    },
     openLoginModal: (state) => {
       state.isVisibleLoginModal = true;
     },
@@ -32,5 +25,5 @@ const modalSlice = createSlice({
   }
 });
 
-export const { setIsVisibleLoginModal, openLoginModal, closeLoginModal } = modalSlice.actions;
+export const { openLoginModal, closeLoginModal } = modalSlice.actions;
 export default modalSlice.reducer;

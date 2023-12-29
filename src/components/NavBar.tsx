@@ -9,7 +9,7 @@ import ClientExcepction from '../common/exceptions/client-exception';
 import api from '../api/api';
 import { setUser } from '../redux/slice/user-slice';
 import storage from '../lib/storage';
-import { closeLoginModal, openLoginModal } from '../redux/slice/modal-slice';
+import { closeLoginModal, openLoginModal } from '../redux/slice/login-modal-slice';
 
 const Container = styled.header`
   z-index: 1;
