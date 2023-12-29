@@ -4,9 +4,7 @@ import PostContent from './PostContent';
 import OtherPostNavigation from './OtherPostNavigation';
 import CommentBlock from './CommentBlock';
 import { Post } from '../type';
-import stringToDate from '../lib/transform-date';
 import PostLike from './PostLike';
-// import PostLike from './PostLike';
 
 interface DetailProps {
   post: Post;
@@ -25,16 +23,7 @@ const Container = styled.article`
 const Detail = ({ post }: DetailProps) => (
   <Container>
     <PostContent
-      key={post.id}
-      id={post.id}
-      title={post.title}
-      introduction={post.introduction}
-      content={post.content}
-      writer={post.writer.nickname}
-      thumbnail={post.thumbnail}
-      publicScope={post.publicScope}
-      categoryName={post.category.categoryName}
-      createAt={stringToDate(post.createAt)}
+      post={post}
     />
     <PostLike postId={post.id} />
     <OtherPostNavigation postId={post.id} />

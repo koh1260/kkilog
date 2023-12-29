@@ -3,17 +3,20 @@ import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import formatDate from '../lib/format-date';
 import { useAppSelector } from '../redux/hook';
+import { Post } from '../type';
+import stringToDate from '../lib/transform-date';
 
 interface PostContentProps {
-  id: number;
-  title: string;
-  introduction: string;
-  content: string;
-  publicScope: 'PUBLIC' | 'PRIVATE';
-  createAt: Date;
-  writer: string;
-  thumbnail: string;
-  categoryName: string;
+  post: Post;
+  // id: number;
+  // title: string;
+  // introduction: string;
+  // content: string;
+  // publicScope: 'PUBLIC' | 'PRIVATE';
+  // createAt: Date;
+  // writer: string;
+  // thumbnail: string;
+  // categoryName: string;
 }
 
 const Container = styled.div`
@@ -76,41 +79,36 @@ const CustomMDEditor = styled(MDEditor.Markdown)`
 `;
 
 const PostContent = ({
-  id,
-  title,
-  introduction,
-  content,
-  writer,
-  thumbnail,
-  publicScope,
-  categoryName,
-  createAt
+  post
+  // id,
+  // title,
+  // introduction,
+  // content,
+  // writer,
+  // thumbnail,
+  // publicScope,
+  // categoryName,
+  // createAt
 }: PostContentProps) => {
   const navigate = useNavigate();
   const role = useAppSelector((state) => state.user.role);
 
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>{post.title}</Title>
       <Utils>
         <PostInfoBlock>
-          <p className='nickname'>{writer}</p>
+          <p className='nickname'>{post.writer.nickname}</p>
           <p>·</p>
-          <p className='create_at'>{formatDate(createAt)}</p>
+          <p className='create_at'>{formatDate(stringToDate(post.createAt))}</p>
         </PostInfoBlock>
         {role === 'ADMIN' && (
           <EditBlock>
             <StyledButton
               onClick={() =>
-                navigate(`/blog/edit/${id}`, {
+                navigate(`/blog/edit/${post.id}`, {
                   state: {
-                    id,
-                    title,
-                    introduction,
-                    thumbnail,
-                    content,
-                    publicScope,
-                    categoryName
+                    post
                   }
                 })
               }
@@ -121,9 +119,9 @@ const PostContent = ({
           </EditBlock>
         )}
       </Utils>
-      <Thumbnail src={thumbnail} />
+      <Thumbnail src={post.thumbnail} />
       {/* <Content>{post.content}</Content> */}
-      <CustomMDEditor source={content} style={{ whiteSpace: 'pre-wrap' }} />
+      <CustomMDEditor source={post.content} style={{ whiteSpace: 'pre-wrap' }} />
     </Container>
   );
 };
