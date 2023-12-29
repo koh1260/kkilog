@@ -1,8 +1,6 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Main from '../components/Main';
 import NavBar from '../components/NavBar';
-import BodyContainer from '../components/BodyContainer';
 import AboutMe from '../components/AboutMe';
 import Footer from '../components/Footer';
 
@@ -14,9 +12,17 @@ const Container = styled.article`
   flex: 1;
 `;
 
-const BodyBlock = styled.div`
+const Body = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const ContentBlock = styled.div`
   display: flex;
   height: 100%;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 `;
 
 const Vanner = styled.section`
@@ -86,13 +92,11 @@ const MainPage = () => {
           <BlogButton onClick={() => navigate('/blog')}>블로그</BlogButton>
         </VannerTextBlock>
       </Vanner>
-      <BodyContainer>
-        <BodyBlock>
-          <Main>
+      <Body>
+        <ContentBlock>
             <AboutMe />
-          </Main>
-        </BodyBlock>
-      </BodyContainer>
+        </ContentBlock>
+      </Body>
       <Footer />
     </Container>
   );
