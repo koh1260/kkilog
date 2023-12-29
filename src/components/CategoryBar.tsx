@@ -15,7 +15,7 @@ const Container = styled.section<ContainerProps>`
   top: 4rem;
   display: flex;
   flex-direction: column;
-  width: 15rem;
+  min-width: 15rem;
   height: 100vh;
   margin-left: 20px;
   padding-right: 20px;
