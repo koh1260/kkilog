@@ -24,6 +24,7 @@ import {
   UploadedImage,
   ValidateLogin
 } from '../type';
+import ClientExcepction from '../common/exceptions/client-exception';
 
 interface Result<T = any> {
   statusCode: number;
@@ -94,7 +95,7 @@ class Api {
 
       return response;
     } catch (e) {
-      throw new Error('Client Error');
+      throw new ClientExcepction();
     }
   }
 
@@ -137,7 +138,6 @@ class Api {
   }
 
   updatePost(postId: number, payload: UpdatePostData) {
-    console.log(payload);
     return this.fetchDate(`/posts/${postId}`, {
       method: 'PATCH',
       body: JSON.stringify(payload),
