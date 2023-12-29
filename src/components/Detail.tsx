@@ -17,7 +17,6 @@ const Container = styled.article`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding-left: 20px;
   @media screen and (max-width: 1024px) {
     padding: 0;
   }
