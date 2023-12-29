@@ -1,10 +1,3 @@
-import axios, {
-  AxiosHeaders,
-  AxiosInstance,
-  HeadersDefaults,
-  RawAxiosRequestHeaders
-} from 'axios';
-
 import {
   LoginData,
   SignupData,
@@ -35,38 +28,7 @@ interface Result<T = any> {
 class Api {
   isAccessTokenRefresh = false;
 
-  apiToken: string | null | undefined = null;
-
-  client: AxiosInstance | null = null;
-
   apiUrl: string = process.env.REACT_APP_API_URL || '';
-
-  init() {
-    this.apiToken = localStorage.getItem('access_token')?.split(' ')[1];
-
-    const headers:
-      | RawAxiosRequestHeaders
-      | AxiosHeaders
-      | Partial<HeadersDefaults> = {
-      Accept: 'application/json',
-      'Cache-Control': 'no-cache'
-    };
-
-    if (this.apiToken) {
-      headers.Authorization = `Bearer ${this.apiToken}`;
-    }
-
-    this.client = axios.create({
-      timeout: 31000,
-      headers
-    });
-
-    return this.client;
-  }
-
-  setAccessToken() {
-    this.apiToken = localStorage.getItem('access_token');
-  }
 
   async fetchDate(
     input: RequestInfo | URL,
@@ -149,7 +111,10 @@ class Api {
   }
 
   deletePost(postId: number) {
-    return this.init().delete(`/posts/${postId}`);
+    return this.fetchDate(`/posts/${postId}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
   }
 
   postLike(postId: number) {
@@ -188,15 +153,6 @@ class Api {
 
   getCommentList(postId: number) {
     return this.fetchJson<Comment[]>(`/comments?post=${postId}`);
-  }
-
-  getChildCommentList(commentId: number) {
-    const params = { parent: commentId };
-    return this.init().get('/comments', { params });
-  }
-
-  deleteComment(commentId: number) {
-    return this.init().delete(`/comments/${commentId}`);
   }
 
   signup(payload: SignupData) {
