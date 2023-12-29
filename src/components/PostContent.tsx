@@ -20,6 +20,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 48px;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -36,6 +37,7 @@ const Title = styled.h1`
 `;
 
 const Thumbnail = styled.img`
+width: 100%;
   margin-top: 2rem;
   margin-bottom: 4rem;
 `;
