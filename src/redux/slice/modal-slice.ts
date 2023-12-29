@@ -22,9 +22,15 @@ const modalSlice = createSlice({
         ...action.payload,
       };
       return payload;
+    },
+    openLoginModal: (state) => {
+      state.isVisibleLoginModal = true;
+    },
+    closeLoginModal: (state) => {
+      state.isVisibleLoginModal = false;
     }
   }
 });
 
-export const { setIsVisibleLoginModal } = modalSlice.actions;
+export const { setIsVisibleLoginModal, openLoginModal, closeLoginModal } = modalSlice.actions;
 export default modalSlice.reducer;
