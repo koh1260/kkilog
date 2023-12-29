@@ -12,8 +12,6 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const token = localStorage.getItem('access_token');
-        // if (!token) throw new Error('토큰이 없습니다');
         const response = await api.loginValidate();
         if (!response.result) throw new Error('회원 정보가 없습니다.');
         const {result} = response;
