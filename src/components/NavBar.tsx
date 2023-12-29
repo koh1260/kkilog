@@ -4,12 +4,12 @@ import Logo from './Logo';
 import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
-import { setIsVisible } from '../redux/slice/category-slice';
+import { hideCategory, showCategory } from '../redux/slice/category-slice';
 import ClientExcepction from '../common/exceptions/client-exception';
 import api from '../api/api';
 import { setUser } from '../redux/slice/user-slice';
 import storage from '../lib/storage';
-import { setIsVisibleLoginModal } from '../redux/slice/modal-slice';
+import { closeLoginModal, openLoginModal } from '../redux/slice/modal-slice';
 
 const Container = styled.header`
   z-index: 1;
@@ -95,7 +95,7 @@ const NavBar = () => {
   );
 
   const handleLoginModalVisible = () => {
-    dispatch(setIsVisibleLoginModal({ isVisibleLoginModal: false }));
+    dispatch(closeLoginModal());
     document.body.classList.remove('open-modal');
   };
 
@@ -133,8 +133,8 @@ const NavBar = () => {
         <Logo />
         <ContactIconBlock>
           <OpenCategoryButton
-            onMouseEnter={() => dispatch(setIsVisible({ isVisible: true }))}
-            onMouseLeave={() => dispatch(setIsVisible({ isVisible: false }))}
+            onMouseEnter={() => dispatch(showCategory())}
+            onMouseLeave={() => dispatch(hideCategory())}
           >
             <HambergerIcon src='https://cdn-icons-png.flaticon.com/128/4074/4074170.png' />
           </OpenCategoryButton>
@@ -144,7 +144,7 @@ const NavBar = () => {
           ) : (
             <StyledButton
               onClick={() => {
-                dispatch(setIsVisibleLoginModal({ isVisibleLoginModal: true }));
+                dispatch(openLoginModal());
                 document.body.classList.add('open-modal');
               }}
               color='#84aaff'

@@ -4,7 +4,7 @@ import api from '../api/api';
 import { Category as ICategory } from '../type';
 import Category from './Category';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
-import { setIsVisible } from '../redux/slice/category-slice';
+import { hideCategory, showCategory } from '../redux/slice/category-slice';
 
 interface ContainerProps {
   $isActive: boolean;
@@ -77,9 +77,9 @@ const CategoryBar = () => {
   return (
     <Container
       onMouseEnter={() =>
-        isVisible && dispatch(setIsVisible({ isVisible: true }))
+        isVisible && dispatch(showCategory())
       }
-      onMouseLeave={() => dispatch(setIsVisible({ isVisible: false }))}
+      onMouseLeave={() => dispatch(hideCategory())}
       $isActive={isVisible}
     >
       <Content>

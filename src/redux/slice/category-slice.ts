@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface CategoryState {
   isVisible: boolean;
@@ -12,15 +12,14 @@ const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    setIsVisible: (state, action: PayloadAction<CategoryState>) => {
-      const payload = {
-        ...state,
-        ...action.payload
-      };
-      return payload;
+    showCategory: (state) => {
+      state.isVisible = true;
+    },
+    hideCategory: (state) => {
+      state.isVisible = false;
     }
   }
 });
 
-export const { setIsVisible } = categorySlice.actions;
+export const { showCategory, hideCategory } = categorySlice.actions;
 export default categorySlice.reducer;
