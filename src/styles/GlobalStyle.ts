@@ -68,12 +68,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.8rem;
     margin: 0
   }
 
   h2 {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin: 0
   }
 

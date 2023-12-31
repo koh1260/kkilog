@@ -11,7 +11,7 @@ const Home = () => {
   const { categoryName } = useParams<'categoryName'>();
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState<PreviewPost[]>([]);
-  const currentCategory: string = useParams().categoryName || 'All Posts';
+  const currentCategory: string = useParams().categoryName || '🦖All Posts';
 
   useEffect(() => {
     window.scrollTo(0, 0);

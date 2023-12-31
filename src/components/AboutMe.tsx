@@ -4,11 +4,14 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 3rem 0;
+  margin: 5rem 0;
+  width: 100%;
+  max-width: 395px;
 `;
 
 const Title = styled.h1`
-  font-size: 3rem;
+  font-family: 'Bungee', sans-serif;
+  font-size: 3.5rem;
   color: #444c66;
 
   @media screen and (max-width: 769px) {
@@ -20,12 +23,13 @@ const Body = styled.div`
   margin-top: 4.5rem;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const TopBlock = styled.div`
   display: flex;
   gap: 7rem;
-  justify-content: space-between;
+  justify-content: center;
 
   @media screen and (max-width: 769px) {
     flex-direction: column;
@@ -33,6 +37,18 @@ const TopBlock = styled.div`
     gap: 4rem;
   }
 `;
+
+const IntroductionBlock = styled.div`
+  border-top: 2px solid rgb(194, 194, 194);
+  border-bottom: 2px solid rgb(194, 194, 194);
+  width: 100%;
+`
+
+const Introduction = styled.div`
+  color: rgb(146, 146, 146);
+  padding: 1.6rem 2rem;
+  text-align: center;
+`
 
 const BottomBlock = styled.div`
   display: flex;
@@ -47,8 +63,6 @@ const ImageContainer = styled.div`
   height: 18rem;
   border: 0.5px;
   overflow: hidden;
-  border: 2px solid #84aaff;
-  border-radius: 50%;
 
   @media screen and (max-width: 769px) {
     width: 12rem;
@@ -61,41 +75,12 @@ const ProfileImage = styled.img`
   aspect-ratio: 1/1;
 `;
 
-const RightBlock = styled.div`
-  width: 18rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-    @media screen and (max-width: 769px) {
-    margin-bottom: 1rem;
-  }
-`;
-
-const SubTitle = styled.h3`
-  color: #6ea3ff;
-  margin-bottom: 0.2rem;
-
-  @media screen and (max-width: 769px) {
-    width: 7rem;
-    margin-bottom: 1rem;
-  }
-`;
-
-const Content = styled.p`
-  font-size: 1.1rem;
-`;
-
-const ContentBlock = styled.div`
-  @media screen and (max-width: 769px) {
-    display: flex;
-  }
-`;
-
-const Comment = styled.h3`
+const Comment = styled.h2`
+  font-family: 'Bungee', sans-serif;
   margin-top: 7rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+  color: #444c66;
 
   @media screen and (max-width: 769px) {
     margin-top: 4rem;
@@ -123,7 +108,7 @@ const DevIcon = styled.i`
 
 const AboutMe = () => (
   <Container>
-    <Title>ABOUT ME</Title>
+    <Title>I&apos;m HAESUNG</Title>
     <Body>
       <TopBlock>
         <LeftBlock>
@@ -131,30 +116,20 @@ const AboutMe = () => (
             <ProfileImage src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/kkiri.jpeg' />
           </ImageContainer>
         </LeftBlock>
-        <RightBlock>
-          <ContentBlock>
-            <SubTitle>NAME</SubTitle>
-            <Content>강 해 성</Content>
-          </ContentBlock>
-          <ContentBlock>
-            <SubTitle>E-MAIL</SubTitle>
-            <Content>koh1260@naver.com</Content>
-          </ContentBlock>
-          <ContentBlock>
-            <SubTitle>I HOPE</SubTitle>
-            <Content>Back-End Engineer</Content>
-          </ContentBlock>
-        </RightBlock>
       </TopBlock>
+      <IntroductionBlock>
+        <Introduction>
+          반갑습니다 백엔드 개발자 강해성입니다!
+          
+        </Introduction>
+      </IntroductionBlock>
       <BottomBlock>
-        <Comment>My Tech stack</Comment>
+        <Comment>Skill</Comment>
         <IconBlock>
-          <DevIcon className="devicon-javascript-plain colored" />
           <DevIcon className="devicon-typescript-plain colored" />
-          <DevIcon className='devicon-nodejs-plain-wordmark colored' />
           <DevIcon className='devicon-nestjs-plain colored' />
-          <DevIcon className='devicon-docker-plain colored' />
           <DevIcon className='devicon-react-original colored' />
+          <DevIcon className='devicon-docker-plain colored' />
         </IconBlock>
       </BottomBlock>
     </Body>

@@ -10,11 +10,11 @@ interface PostProps {
 
 const Container = styled.div`
   background-color: white;
-  margin: 8px;
+  margin: 1.5rem 0.5rem;
   display: flex;
   flex-direction: column;
   width: calc(50% - 16px);
-  height: 25rem;
+  height: 21rem;
   border-radius: 7px;
   overflow: hidden;
   cursor: pointer;
@@ -65,6 +65,8 @@ font-weight: 550;
 `;
 
 const Introduction = styled.p`
+  font-size: 0.9rem;
+  color: rgb(125, 125, 125);
   margin: 0.5rem 0;
 `;
 

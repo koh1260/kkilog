@@ -7,7 +7,7 @@ interface CategoryProps {
   to: string;
   end?: boolean;
   categoryName: string;
-  icon: string;
+  // icon: string;
   childrenCategories?: ICategory[];
   isChild: boolean;
 }
@@ -23,6 +23,7 @@ const OuterBlock = styled.div`
 `;
 
 const Container = styled(NavLink)<ContainerProps>`
+padding: 0 0.5rem;
   color: #848484;
   font-size: 0.85rem;
   font-weight: 500;
@@ -65,18 +66,19 @@ Container.defaultProps = {
   end: false
 };
 
-const Icon = styled.img`
-  width: 28px;
-  height: 18px;
-  padding: 0 5px;
+// const Icon = styled.img`
+//   width: 28px;
+//   height: 18px;
+//   padding: 0 5px;
 
-  @media screen and (max-width: 1285px) {
-    display: none;
-  }
-`;
+//   @media screen and (max-width: 1285px) {
+//     display: none;
+//   }
+// `;
 
 const CategoryName = styled.p`
   flex: 1;
+  font-family: 'Noto Color Emoji', sans-serif;
 
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
@@ -136,7 +138,7 @@ const Category = ({
   to,
   end = false,
   categoryName,
-  icon,
+  // icon,
   childrenCategories,
   isChild
 }: CategoryProps) => {
@@ -145,7 +147,7 @@ const Category = ({
   return (
     <OuterBlock>
       <Container to={to} end={end} $isChild={isChild}>
-        <Icon src={icon} />
+        {/* <Icon src={icon} /> */}
         <CategoryName>{categoryName}</CategoryName>
         {childrenCategories?.length ? (
           <DropdownButton
@@ -171,7 +173,7 @@ const Category = ({
               key={category.id}
               to={`/blog/category/${category.categoryName}`}
               categoryName={category.categoryName}
-              icon={category.icon}
+              // icon={category.icon}
               childrenCategories={[]}
               isChild
             />

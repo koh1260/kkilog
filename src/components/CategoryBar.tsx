@@ -102,8 +102,8 @@ const CategoryBar = () => {
           key={0}
           to='/blog'
           end
-          categoryName='All Posts'
-          icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
+          categoryName='🦖All Posts'
+          // icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
           isChild={false}
         />
         {categories.map((category) => (
@@ -111,7 +111,7 @@ const CategoryBar = () => {
             key={category.id}
             to={`/blog/category/${category.categoryName}`}
             categoryName={category.categoryName}
-            icon={category.icon}
+            // icon={category.icon}
             childrenCategories={category.childCategories}
             isChild={false}
           />

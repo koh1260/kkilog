@@ -54,19 +54,27 @@ const PostOuter = styled.div`
   }
 `;
 
+const NotFountPost = styled.div`
+  margin-top: 4rem;
+  width: 100%;
+  text-align: center;
+  color: rgb(171, 171, 171);
+  font-size: 1rem;
+`
 const PostList = ({categoryName, posts}: PostListProps) => (
     <Container>
       <PostCountBlock>
-        <PostCountText>🐌 {categoryName}</PostCountText>
+        <PostCountText>{categoryName}</PostCountText>
         <PostCountNumber>{posts.length}</PostCountNumber>
       </PostCountBlock>
       <PostContainer>
         <PostOuter>
-          {posts.map((post) => (
+          {posts.length === 0 ? <NotFountPost>_〆(･_･｡) 공부가 더 필요해요..</NotFountPost> : posts.map((post) => (
             <Post
               post={post}
             />
           ))}
+          
         </PostOuter>
       </PostContainer>
     </Container>
