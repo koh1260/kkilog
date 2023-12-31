@@ -25,6 +25,8 @@ const PostCountBlock = styled.div`
 `
 
 const PostCountText = styled.h3`
+  font-family: 'Noto Color Emoji', sans-serif;;
+
   @media screen and (min-width: 769px) {
     margin-left: 12px;
   }
@@ -55,7 +57,7 @@ const PostOuter = styled.div`
 const PostList = ({categoryName, posts}: PostListProps) => (
     <Container>
       <PostCountBlock>
-        <PostCountText>{categoryName}</PostCountText>
+        <PostCountText>🐌{categoryName}</PostCountText>
         <PostCountNumber>{posts.length}</PostCountNumber>
       </PostCountBlock>
       <PostContainer>
