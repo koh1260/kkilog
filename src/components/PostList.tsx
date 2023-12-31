@@ -57,7 +57,7 @@ const PostOuter = styled.div`
 const PostList = ({categoryName, posts}: PostListProps) => (
     <Container>
       <PostCountBlock>
-        <PostCountText>🐌{categoryName}</PostCountText>
+        <PostCountText>🐌 {categoryName}</PostCountText>
         <PostCountNumber>{posts.length}</PostCountNumber>
       </PostCountBlock>
       <PostContainer>
