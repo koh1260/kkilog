@@ -62,14 +62,16 @@ const Content = styled.ul`
 `;
 
 const Tag = styled.div`
+  font-size: 1.1rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  margin-bottom: 0.4rem;
 `;
 
 const ElephantEmoji = styled.span`
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-family: 'Noto Color Emoji', sans-serif;
 `;
 
