@@ -102,7 +102,7 @@ const CategoryBar = () => {
           end
           categoryName='All Posts'
           icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
-          childrenCategories={[]}
+          isChild={false}
         />
         {categories.map((category) => (
           <Category
@@ -111,6 +111,7 @@ const CategoryBar = () => {
             categoryName={category.categoryName}
             icon={category.icon}
             childrenCategories={category.childCategories}
+            isChild={false}
           />
         ))}
       </Content>

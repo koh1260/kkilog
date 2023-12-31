@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
-import ChildrenCategory from './ChildrenCategory';
 import { Category as ICategory } from '../type';
 
 interface CategoryProps {
@@ -9,7 +8,12 @@ interface CategoryProps {
   end?: boolean;
   categoryName: string;
   icon: string;
-  childrenCategories: ICategory[];
+  childrenCategories?: ICategory[];
+  isChild: boolean;
+}
+
+interface ContainerProps {
+  $isChild: boolean;
 }
 
 const OuterBlock = styled.div`
@@ -18,7 +22,7 @@ const OuterBlock = styled.div`
   flex-direction: column;
 `;
 
-const Container = styled(NavLink)`
+const Container = styled(NavLink)<ContainerProps>`
   color: #848484;
   font-size: 0.85rem;
   font-weight: 500;
@@ -29,6 +33,7 @@ const Container = styled(NavLink)`
   gap: 8px;
   cursor: pointer;
   border-radius: 12px;
+  ${(props) => props.$isChild && 'padding-left: 1rem;'}
 
   &:hover {
     background-color: #f6f7f9;
@@ -45,20 +50,20 @@ const Container = styled(NavLink)`
 
     &:hover {
       background-color: initial;
-      color: #84AAFF;
+      color: #84aaff;
     }
 
     &.active {
       background-color: initial;
-      color: #4976C6;
+      color: #4976c6;
       font-weight: 600;
     }
   }
 `;
 
 Container.defaultProps = {
-  end: false,
-}
+  end: false
+};
 
 const Icon = styled.img`
   width: 28px;
@@ -100,9 +105,9 @@ const DropdownButton = styled.button<DropdownButtonProps>`
   }
 `;
 
-  const DropdownButtonIcon = styled.img`
-    width: 1rem;
-  `
+const DropdownButtonIcon = styled.img`
+  width: 1rem;
+`;
 
 interface ChildCategoryListProps {
   $isActive: boolean;
@@ -110,12 +115,14 @@ interface ChildCategoryListProps {
 
 const ChildrenCategoryList = styled.div<ChildCategoryListProps>`
   display: flex;
-  height: 3rem;
+  ${(props) => props.$isActive && 'margin-top: 0.8rem'};
   pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
   opacity: ${(props) => (props.$isActive ? 1 : 0)};
-  height: ${(props) => (props.$isActive ? '3rem' : 0)};
+  height: ${(props) => (props.$isActive ? '2.2rem' : 0)};
   flex-direction: column;
-  transition: height 0.2s ease-in-out, opacity 0.1s ease-in-out;
+  transition:
+    height 0.2s ease-in-out,
+    opacity 0.1s ease-in-out;
 
   @media screen and (max-width: 1285px) {
     pointer-events: auto;
@@ -130,16 +137,17 @@ const Category = ({
   end = false,
   categoryName,
   icon,
-  childrenCategories
+  childrenCategories,
+  isChild
 }: CategoryProps) => {
   const [childrenVisible, setChildrenVisible] = useState(false);
 
   return (
     <OuterBlock>
-      <Container to={to} end={end}>
+      <Container to={to} end={end} $isChild={isChild}>
         <Icon src={icon} />
         <CategoryName>{categoryName}</CategoryName>
-        {childrenCategories.length ? (
+        {childrenCategories?.length ? (
           <DropdownButton
             $isActive={childrenVisible}
             onClick={(e) => {
@@ -149,18 +157,23 @@ const Category = ({
               else setChildrenVisible(true);
             }}
           >
-            <DropdownButtonIcon alt='dropdown' src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/dropdown-btn-icon.png' />
+            <DropdownButtonIcon
+              alt='dropdown'
+              src='https://haesungsbucket.s3.ap-northeast-2.amazonaws.com/kkilog/dropdown-btn-icon.png'
+            />
           </DropdownButton>
         ) : null}
       </Container>
-      {childrenCategories.length ? (
+      {childrenCategories?.length ? (
         <ChildrenCategoryList $isActive={childrenVisible}>
           {childrenCategories.map((category) => (
-            <ChildrenCategory
+            <Category
               key={category.id}
               to={`/blog/category/${category.categoryName}`}
               categoryName={category.categoryName}
               icon={category.icon}
+              childrenCategories={[]}
+              isChild
             />
           ))}
         </ChildrenCategoryList>
