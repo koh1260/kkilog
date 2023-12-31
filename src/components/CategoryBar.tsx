@@ -42,6 +42,7 @@ const Content = styled.ul`
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 0.8rem;
 
   @media screen and (max-width: 1285px) {
     padding: 1rem 3rem;
@@ -60,6 +61,18 @@ const Content = styled.ul`
   }
 `;
 
+const Tag = styled.div`
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+`;
+
+const ElephantEmoji = styled.span`
+  font-size: 1.3rem;
+  font-family: 'Noto Color Emoji', sans-serif;
+`;
+
 const CategoryBar = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const isVisible = useAppSelector((state) => state.category.isVisible);
@@ -74,13 +87,15 @@ const CategoryBar = () => {
 
   return (
     <Container
-      onMouseEnter={() =>
-        isVisible && dispatch(showCategory())
-      }
+      onMouseEnter={() => isVisible && dispatch(showCategory())}
       onMouseLeave={() => dispatch(hideCategory())}
       $isActive={isVisible}
     >
       <Content>
+        <Tag>
+          <ElephantEmoji>🐘</ElephantEmoji>
+          Tags
+        </Tag>
         <Category
           key={0}
           to='/blog'

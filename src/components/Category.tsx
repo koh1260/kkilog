@@ -19,21 +19,24 @@ const OuterBlock = styled.div`
 `;
 
 const Container = styled(NavLink)`
-  padding: 0.5rem 0;
-  margin-bottom: 8px;
+  color: #848484;
+  font-size: 0.85rem;
+  font-weight: 500;
   width: 100%;
-  height: 3rem;
+  height: 2.2rem;
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  border-radius: 7px;
+  border-radius: 12px;
 
   &:hover {
     background-color: #f6f7f9;
   }
   &.active {
     background-color: #e6f7ff;
+    color: black;
+    font-weight: 600;
   }
 
   @media screen and (max-width: 1285px) {
@@ -48,6 +51,7 @@ const Container = styled(NavLink)`
     &.active {
       background-color: initial;
       color: #4976C6;
+      font-weight: 600;
     }
   }
 `;
@@ -67,8 +71,6 @@ const Icon = styled.img`
 `;
 
 const CategoryName = styled.p`
-  font-size: 1rem;
-  font-weight: bold;
   flex: 1;
 
   @media screen and (max-width: 768px) {
@@ -99,7 +101,7 @@ const DropdownButton = styled.button<DropdownButtonProps>`
 `;
 
   const DropdownButtonIcon = styled.img`
-    width: 1.7rem;
+    width: 1rem;
   `
 
 interface ChildCategoryListProps {
