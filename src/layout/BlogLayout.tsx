@@ -22,7 +22,9 @@ const Body = styled.div`
 
 const ContentBlock = styled.div`
   display: flex;
+  margin: 0 auto;
   width: 100%;
+  max-width: 1200px;
   height: 100%;
 
   @media screen and (max-width: 1285px) {

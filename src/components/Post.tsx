@@ -13,7 +13,7 @@ const Container = styled.div`
   margin: 8px;
   display: flex;
   flex-direction: column;
-  width: calc(25% - 16px);
+  width: calc(50% - 16px);
   height: 25rem;
   border-radius: 7px;
   overflow: hidden;
@@ -24,14 +24,6 @@ const Container = styled.div`
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 7px 10px 5px rgba(0, 0, 0, 0.09);
-  }
-
-  @media screen and (max-width: 1585px) {
-    width: calc(33.33% - 16px);
-  }
-
-  @media screen and (max-width: 1024px) {
-    width: calc(50% - 16px);
   }
 
   @media screen and (max-width: 768px) {
