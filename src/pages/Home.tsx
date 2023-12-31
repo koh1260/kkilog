@@ -11,22 +11,23 @@ const Home = () => {
   const { categoryName } = useParams<'categoryName'>();
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState<PreviewPost[]>([]);
-  const currentCategory: string = useParams().categoryName || '🦖All Posts';
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    const getPosts = async (name: string | undefined) => {
+    (async () => {
+      let response = null;
+
       try {
-        if (name) {
-          const response = await api.getPostListByCategoryName(name);
-          setPosts([...response.result!]);
+        if (categoryName) {
+          response = await api.getPostListByCategoryName(categoryName);
         } else {
-          const response = await api.getPostList();
-          setPosts([...response.result!]);
+          response = await api.getPostList();
         }
+        setPosts([...response.result!]);
+        setLoading(false);
       } catch (e) {
         if (e instanceof ClientExcepction) {
           console.error(e.stack);
@@ -34,17 +35,13 @@ const Home = () => {
           console.error(e.stack);
         }
       }
-    };
-    getPosts(categoryName);
-    setLoading(false);
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryName]);
 
-  if (loading) return <Loading />;
-
   return (
     <BlogLayout>
-      <PostList categoryName={currentCategory} posts={posts} />
+      {loading ? <Loading /> : <PostList categoryName={categoryName} posts={posts} />}
     </BlogLayout>
   );
 };
