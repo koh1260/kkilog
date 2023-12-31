@@ -35,12 +35,11 @@ const PostDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
-  if (loading) return <Loading />;
   if (error) return <div>Error...</div>;
 
   return (
     <BlogLayout>
-      <Detail post={post!} />
+      {loading ? <Loading /> : <Detail post={post!} />}
     </BlogLayout>
   );
 }
