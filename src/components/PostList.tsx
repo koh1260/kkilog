@@ -33,15 +33,7 @@ const PostCountText = styled.h3`
   }
 `;
 
-const PostCountNumber = styled.h3`
-  color: #fd889c;
-`;
-
-const PostContainer = styled.div`
-  /* display: flex;
-  justify-content: center;
-  width: 100%; */
-`;
+const PostContainer = styled.div``;
 
 const PostOuter = styled.div`
   display: flex;
@@ -66,7 +58,6 @@ const PostList = ({ categoryName, posts }: PostListProps) => (
   <Container>
     <PostCountBlock>
       <PostCountText>{categoryName || '🦖All Posts'}</PostCountText>
-      <PostCountNumber>{posts.length}</PostCountNumber>
     </PostCountBlock>
     <PostContainer>
       <PostOuter>
