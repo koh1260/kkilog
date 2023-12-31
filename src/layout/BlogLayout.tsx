@@ -21,7 +21,7 @@ const Body = styled.div`
 `;
 
 const ContentBlock = styled.div`
-  padding: 5rem 0;
+  padding: 5rem;
   display: flex;
   margin: 0 auto;
   width: 100%;
