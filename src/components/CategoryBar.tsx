@@ -15,11 +15,10 @@ const Container = styled.section<ContainerProps>`
   top: 4rem;
   display: flex;
   flex-direction: column;
-  min-width: 15rem;
-  height: 100vh;
+  min-width: 12rem;
+  height: fit-content;
   margin-left: 20px;
   padding-right: 20px;
-  box-shadow: 2px 0 2px 0px rgba(0, 0, 0, 0.08);
 
   @media screen and (max-width: 1285px) {
     position: fixed;
@@ -65,7 +64,6 @@ const CategoryBar = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const isVisible = useAppSelector((state) => state.category.isVisible);
   const dispatch = useAppDispatch();
-  // const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -87,7 +85,7 @@ const CategoryBar = () => {
           key={0}
           to='/blog'
           end
-          categoryName='전체 글'
+          categoryName='All Posts'
           icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
           childrenCategories={[]}
         />
