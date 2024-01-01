@@ -27,9 +27,9 @@ const Container = styled.section<ContainerProps>`
     z-index: 10;
     height: fit-content;
     width: 100%;
-    padding: 0 24px;
+    padding: 0 1.5rem;
     margin-left: 0px;
-    top: 4.3rem;
+    top: 4rem;
     pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
     opacity: ${(props) => (props.$isActive ? 1 : 0)};
     transform: ${(props) =>
@@ -42,7 +42,6 @@ const Content = styled.ul`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
 
   @media screen and (max-width: 1285px) {
     padding: 1rem 3rem;
@@ -53,11 +52,21 @@ const Content = styled.ul`
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     background-color: white;
     flex-direction: row;
-    justify-content: space-between;
   }
 
   @media screen and (max-width: 768px) {
     padding: 0 2rem;
+  }
+`;
+
+const CateogryBlock = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  @media screen and (max-width: 1285px) {
+    align-items: center;
   }
 `;
 
@@ -67,7 +76,7 @@ const Tag = styled.div`
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 1.4rem;
 `;
 
 const ElephantEmoji = styled.span`
@@ -98,24 +107,26 @@ const CategoryBar = () => {
           <ElephantEmoji>🐘</ElephantEmoji>
           Tags
         </Tag>
-        <Category
-          key={0}
-          to='/blog'
-          end
-          categoryName='🦖All Posts'
-          // icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
-          isChild={false}
-        />
-        {categories.map((category) => (
+        <CateogryBlock>
           <Category
-            key={category.id}
-            to={`/blog/category/${category.categoryName}`}
-            categoryName={category.categoryName}
-            // icon={category.icon}
-            childrenCategories={category.childCategories}
+            key={0}
+            to='/blog'
+            end
+            categoryName='🦖All Posts'
+            // icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
             isChild={false}
           />
-        ))}
+          {categories.map((category) => (
+            <Category
+              key={category.id}
+              to={`/blog/category/${category.categoryName}`}
+              categoryName={category.categoryName}
+              // icon={category.icon}
+              childrenCategories={category.childCategories}
+              isChild={false}
+            />
+          ))}
+        </CateogryBlock>
       </Content>
     </Container>
   );

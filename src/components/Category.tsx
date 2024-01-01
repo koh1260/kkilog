@@ -23,7 +23,7 @@ const OuterBlock = styled.div`
 `;
 
 const Container = styled(NavLink)<ContainerProps>`
-padding: 0 0.5rem;
+  padding: 0 0.5rem;
   color: #848484;
   font-size: 0.85rem;
   font-weight: 500;
@@ -46,9 +46,6 @@ padding: 0 0.5rem;
   }
 
   @media screen and (max-width: 1285px) {
-    flex: 1;
-    margin-bottom: 1rem;
-
     &:hover {
       background-color: initial;
       color: #84aaff;
