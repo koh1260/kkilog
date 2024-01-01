@@ -21,7 +21,7 @@ const Body = styled.div`
 `;
 
 const ContentBlock = styled.div`
-  padding: 5rem;
+  padding: 4rem 0;
   display: flex;
   margin: 0 auto;
   width: 100%;
@@ -34,8 +34,8 @@ const ContentBlock = styled.div`
 `;
 
 const Content = styled.div`
+  padding: 0 1.3rem;
   flex: 1;
-  padding: 0 4rem;
 `;
 
 const BlogLayout = ({ children }: BlogLayoutProps) => (

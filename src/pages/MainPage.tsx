@@ -13,6 +13,7 @@ const Container = styled.article`
 `;
 
 const Body = styled.div`
+  padding: 0 1.3rem;
   width: 100%;
   height: 100%;
 `;
@@ -47,8 +48,6 @@ const VannerTextBlock = styled.div`
     padding: 0 2rem;
   }
 `;
-
-
 
 const VannerTitle = styled.h1`
   font-family: 'Bagel Fat One', cursive;

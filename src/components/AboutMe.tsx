@@ -20,7 +20,7 @@ const Title = styled.h1`
 `;
 
 const Body = styled.div`
-  margin-top: 4.5rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -119,8 +119,9 @@ const AboutMe = () => (
       </TopBlock>
       <IntroductionBlock>
         <Introduction>
-          반갑습니다 백엔드 개발자 강해성입니다!
-          
+          반갑습니다
+          <br />
+          소프트웨어 개발자 강해성입니다!
         </Introduction>
       </IntroductionBlock>
       <BottomBlock>

@@ -29,7 +29,7 @@ const NavContent = styled.div`
   max-width: 1200px;
   display: flex;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 1.3rem;
 `;
 
 const ContactIconBlock = styled.div`
