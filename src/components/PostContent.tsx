@@ -8,15 +8,6 @@ import stringToDate from '../lib/transform-date';
 
 interface PostContentProps {
   post: Post;
-  // id: number;
-  // title: string;
-  // introduction: string;
-  // content: string;
-  // publicScope: 'PUBLIC' | 'PRIVATE';
-  // createAt: Date;
-  // writer: string;
-  // thumbnail: string;
-  // categoryName: string;
 }
 
 const Container = styled.div`
@@ -40,7 +31,7 @@ const Title = styled.h1`
 `;
 
 const Thumbnail = styled.img`
-width: 100%;
+  width: 100%;
   margin-top: 2rem;
   margin-bottom: 4rem;
 `;
@@ -80,15 +71,6 @@ const CustomMDEditor = styled(MDEditor.Markdown)`
 
 const PostContent = ({
   post
-  // id,
-  // title,
-  // introduction,
-  // content,
-  // writer,
-  // thumbnail,
-  // publicScope,
-  // categoryName,
-  // createAt
 }: PostContentProps) => {
   const navigate = useNavigate();
   const role = useAppSelector((state) => state.user.role);
