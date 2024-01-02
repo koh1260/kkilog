@@ -17,7 +17,6 @@ const Container = styled.section<ContainerProps>`
   flex-direction: column;
   min-width: 12rem;
   height: fit-content;
-  margin-left: 20px;
   padding-right: 20px;
 
   @media screen and (max-width: 1285px) {
@@ -25,10 +24,9 @@ const Container = styled.section<ContainerProps>`
     flex-direction: row;
     justify-content: center;
     z-index: 10;
-    height: fit-content;
+    height: 17rem;
     width: 100%;
     padding: 0 1.5rem;
-    margin-left: 0px;
     top: 4rem;
     pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
     opacity: ${(props) => (props.$isActive ? 1 : 0)};
@@ -64,6 +62,7 @@ const CateogryBlock = styled.div`
   flex: 1;
   flex-direction: column;
   gap: 0.8rem;
+  justify-content: center;
 
   @media screen and (max-width: 1285px) {
     align-items: center;

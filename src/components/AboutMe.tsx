@@ -94,7 +94,6 @@ const IconBlock = styled.div`
 
   @media screen and (max-width: 769px) {
     gap: 1rem;
-    padding-left: 1rem;
   }
 `;
 

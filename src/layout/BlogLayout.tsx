@@ -21,7 +21,7 @@ const Body = styled.div`
 `;
 
 const ContentBlock = styled.div`
-  padding: 4rem 0;
+  padding: 4rem 1.3rem;
   display: flex;
   margin: 0 auto;
   width: 100%;
@@ -30,6 +30,7 @@ const ContentBlock = styled.div`
 
   @media screen and (max-width: 1285px) {
     flex-direction: column;
+    padding: 4rem 0;
   }
 `;
 
