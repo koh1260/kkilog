@@ -21,19 +21,22 @@ const Title = styled.h1`
   font-size: 3rem;
   margin: 1.4rem 0;
 
-  @media screen and (max-width: 1024px){
+  @media screen and (max-width: 1024px) {
     font-size: 2.2rem;
   }
 
-  @media screen and (max-width: 769px){
+  @media screen and (max-width: 769px) {
     font-size: 1.4rem;
   }
 `;
 
 const Thumbnail = styled.img`
   width: 100%;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
+  object-fit: cover;
+`;
+
+const ThumbnailBlock = styled.div`
+  width: 100%;
 `;
 
 const Utils = styled.div`
@@ -69,9 +72,7 @@ const CustomMDEditor = styled(MDEditor.Markdown)`
   color: black;
 `;
 
-const PostContent = ({
-  post
-}: PostContentProps) => {
+const PostContent = ({ post }: PostContentProps) => {
   const navigate = useNavigate();
   const role = useAppSelector((state) => state.user.role);
 
@@ -101,9 +102,14 @@ const PostContent = ({
           </EditBlock>
         )}
       </Utils>
-      <Thumbnail src={post.thumbnail} />
+      <ThumbnailBlock>
+        <Thumbnail src={post.thumbnail} />
+      </ThumbnailBlock>
       {/* <Content>{post.content}</Content> */}
-      <CustomMDEditor source={post.content} style={{ whiteSpace: 'pre-wrap' }} />
+      <CustomMDEditor
+        source={post.content}
+        style={{ whiteSpace: 'pre-wrap' }}
+      />
     </Container>
   );
 };
