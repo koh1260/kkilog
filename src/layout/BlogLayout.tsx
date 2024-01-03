@@ -36,7 +36,7 @@ const ContentBlock = styled.div`
 
 const Content = styled.div`
   padding: 0 1.3rem;
-  flex: 1;
+  width: calc(100% - 12rem);
 `;
 
 const BlogLayout = ({ children }: BlogLayoutProps) => (
