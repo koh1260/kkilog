@@ -31,12 +31,17 @@ const ContentBlock = styled.div`
   @media screen and (max-width: 1285px) {
     flex-direction: column;
     padding: 4rem 0;
+    align-items: center;
   }
 `;
 
 const Content = styled.div`
   padding: 0 1.3rem;
   width: calc(100% - 12rem);
+
+  @media screen and (max-width: 1285px) {
+    width: 100%;
+  }
 `;
 
 const BlogLayout = ({ children }: BlogLayoutProps) => (
