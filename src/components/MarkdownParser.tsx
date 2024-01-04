@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import * as theme from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { HTMLProps, ReactNode } from 'react';
+import rehypeRaw from 'rehype-raw';
 
 interface MarkdownParserProps {
   markdownText: string;
@@ -28,7 +29,7 @@ const StyledMarkdownComponenet = styled(Markdown)`
     font-weight: 600;
   }
 
-  p{
+  p {
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
@@ -47,6 +48,10 @@ const StyledMarkdownComponenet = styled(Markdown)`
     font-style: italic;
     color: #666;
   }
+
+  @media screen and (max-width: 769px) {
+    font-size: 1rem;
+  }
 `;
 
 interface CodeBlockProps extends HTMLProps<HTMLElement> {
@@ -57,11 +62,9 @@ const renderCodeBlock = (props: CodeBlockProps) => {
   const { children, className } = props;
   const match = /language-(\w+)/.exec(className || '');
   return match ? (
-    <SyntaxHighlighter
-      PreTag="div"
-      language={match[1]}
-      style={theme.atomDark}
-    >{String(children).replace(/\n$/, '')}</SyntaxHighlighter>
+    <SyntaxHighlighter PreTag='div' language={match[1]} style={theme.atomDark}>
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
   ) : (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <code {...props} className={className}>
@@ -73,10 +76,13 @@ const renderCodeBlock = (props: CodeBlockProps) => {
 const MarkdownParser = ({ markdownText }: MarkdownParserProps) => (
   <Container>
     <StyledMarkdownComponenet
+      rehypePlugins={[rehypeRaw]}
       components={{
-        code:renderCodeBlock
+        code: renderCodeBlock
       }}
-    >{markdownText}</StyledMarkdownComponenet>
+    >
+      {markdownText}
+    </StyledMarkdownComponenet>
   </Container>
 );
 
