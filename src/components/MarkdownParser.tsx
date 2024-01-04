@@ -12,7 +12,6 @@ interface MarkdownParserProps {
 const Container = styled.div`
   flex: 1;
   height: 100%;
-  padding: 1.4rem;
 `;
 
 const StyledMarkdownComponenet = styled(Markdown)`
