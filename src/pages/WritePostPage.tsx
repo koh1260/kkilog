@@ -1,62 +1,20 @@
-import MDEditor, { ContextStore } from '@uiw/react-md-editor';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import UploadPostPage from './UploadPostPage';
 import api from '../api/api';
 import { SimpleCategory } from '../type';
-
-type MDEditorOnChange = (
-  value?: string,
-  event?: React.ChangeEvent<HTMLTextAreaElement>,
-  state?: ContextStore
-) => void;
+import MarkdownEditor from '../components/MarkdownEditor';
+import MarkdownPreview from '../components/MarkdownPreview';
 
 const Container = styled.div`
   position: relative;
-  z-index: 1;
+  display: flex;
   height: 100vh;
-  .editor {
-    position: relative;
-  }
-`;
-
-const EdittorBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
-
-const ButtonBlock = styled.div`
-  display: flex;
-  justify-content: end;
-  padding: 1rem;
-  justify-content: space-between;
-`;
-
-const BackButton = styled.button`
-  padding: 1rem;
-  border: 0.5px solid lightgray;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: white;
-  background-color: powderblue;
-  border-radius: 12px;
-`;
-
-const PostingButton = styled.button`
-  padding: 1rem 2rem;
-  border: 0.5px solid lightgray;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: white;
-  background-color: powderblue;
-  border-radius: 12px;
 `;
 
 const WritePostPage = () => {
-  const navigate = useNavigate();
-  const [text, setText] = useState('**Hello world!!!**');
+  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
   const [uploadModalVisible, setUploadModalVisible] = useState(false);
   const [categoryList, setCategoryList] = useState<SimpleCategory[]>([]);
 
@@ -78,47 +36,28 @@ const WritePostPage = () => {
     })();
   }, []);
 
-  const onClick: MDEditorOnChange = (
-    value?: string,
-    event?: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    console.log(text);
-    setText(event!.target.value);
-  };
+  const handleOpenUploadPage = () => {
+    setUploadModalVisible(true);
+  }
 
   return (
     <Container>
       {uploadModalVisible && (
         <UploadPostPage
           content={text}
+          title={title}
           categoryList={categoryList}
           setModalVisible={setUploadModalVisible}
         />
       )}
-      <EdittorBlock>
-        <MDEditor
-          className='editor'
-          value={text}
-          onChange={onClick}
-          preview='live'
-          fullscreen
-          height={500}
-        />
-        <ButtonBlock>
-          <BackButton
-            onClick={() => {
-              navigate(-1);
-              document.body.style.overflow = 'auto';
-            }}
-          >
-            뒤로 가기
-          </BackButton>
-          <PostingButton onClick={() => setUploadModalVisible(true)}>
-            포스팅
-          </PostingButton>
-        </ButtonBlock>
-      </EdittorBlock>
-      {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}
+      <MarkdownEditor
+        title={title}
+        text={text}
+        setTitle={setTitle}
+        setText={setText}
+        onClickPost={handleOpenUploadPage}
+      />
+      <MarkdownPreview markdownText={text} title={title} />
     </Container>
   );
 };
