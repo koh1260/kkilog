@@ -16,7 +16,6 @@ const Container = styled.div`
 `;
 
 const StyledMarkdownComponenet = styled(Markdown)`
-  overflow: scroll;
   height: 100%;
   font-size: 1.125rem;
   line-height: 1.7;
