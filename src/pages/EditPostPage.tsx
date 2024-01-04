@@ -63,7 +63,7 @@ const EditPostPage = () => {
     publicScope,
     thumbnail,
     categoryName
-  } = location.state as PostForUpdate;
+  } = location.state.post as PostForUpdate;
   console.log(location);
   const [text, setText] = useState(content);
   const [uploadModalVisible, setUploadModalVisible] = useState(false);
