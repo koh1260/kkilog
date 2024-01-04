@@ -28,6 +28,7 @@ const Container = styled.section<ContainerProps>`
     height: 17rem;
     width: 100%;
     padding: 0 1.5rem;
+    margin-right: 0;
     top: 4rem;
     pointer-events: ${(props) => (props.$isActive ? 'auto' : 'none')};
     opacity: ${(props) => (props.$isActive ? 1 : 0)};
