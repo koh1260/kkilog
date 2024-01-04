@@ -18,6 +18,7 @@ const Container = styled.section<ContainerProps>`
   min-width: 12rem;
   height: fit-content;
   padding-right: 20px;
+  margin-right: 2.2rem;
 
   @media screen and (max-width: 1285px) {
     position: fixed;
