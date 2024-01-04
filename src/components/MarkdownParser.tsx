@@ -22,6 +22,10 @@ const StyledMarkdownComponenet = styled(Markdown)`
   word-break: keep-all;
   overflow-wrap: break-word;
 
+  ul {
+    list-style: inside;
+  }
+
   a {
     color: #84aaff;
     font-weight: 600;
