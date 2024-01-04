@@ -1,10 +1,10 @@
-import MDEditor from '@uiw/react-md-editor';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import formatDate from '../lib/format-date';
 import { useAppSelector } from '../redux/hook';
 import { Post } from '../type';
 import stringToDate from '../lib/transform-date';
+import MarkdownParser from './MarkdownParser';
 
 interface PostContentProps {
   post: Post;
@@ -37,6 +37,8 @@ const Thumbnail = styled.img`
 
 const ThumbnailBlock = styled.div`
   width: 100%;
+  margin-top: 3rem;
+  margin-bottom: 6rem;
 `;
 
 const Utils = styled.div`
@@ -65,11 +67,6 @@ const StyledButton = styled.button`
   color: gray;
   background-color: transparent;
   border: none;
-`;
-
-const CustomMDEditor = styled(MDEditor.Markdown)`
-  background-color: white;
-  color: black;
 `;
 
 const PostContent = ({ post }: PostContentProps) => {
@@ -105,11 +102,7 @@ const PostContent = ({ post }: PostContentProps) => {
       <ThumbnailBlock>
         <Thumbnail src={post.thumbnail} />
       </ThumbnailBlock>
-      {/* <Content>{post.content}</Content> */}
-      <CustomMDEditor
-        source={post.content}
-        style={{ whiteSpace: 'pre-wrap' }}
-      />
+      <MarkdownParser markdownText={post.content} />
     </Container>
   );
 };
