@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { ToastContainer } from 'react-toastify';
 import LoginForm from '../components/form/LoginForm';
 import SignupForm from '../components/form/SignupForm';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   display: flex;
@@ -121,6 +123,10 @@ const LoginPage = () => {
             </NavigationButton>
           </SignBlock>
         )}
+        <ToastContainer
+          position='top-center'
+          autoClose={3000}
+        />
       </LoginBloack>
     </Container>
   );

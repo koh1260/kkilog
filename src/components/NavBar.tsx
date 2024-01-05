@@ -117,9 +117,9 @@ const NavBar = () => {
       navigate('/');
     } catch (e) {
       if (e instanceof ClientExcepction) {
-        console.error(`Client Error: ${e.stack}`);
+        console.error(`${e.stack}`);
       } else if (e instanceof Error) {
-        console.error(`Error: ${e.stack}`);
+        console.error(`${e.stack}`);
       }
     }
   };

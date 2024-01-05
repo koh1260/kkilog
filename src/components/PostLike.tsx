@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { ToastContainer, toast } from 'react-toastify';
 import api from '../api/api';
 import { useAppSelector } from '../redux/hook';
 import ClientExcepction from '../common/exceptions/client-exception';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface PostLikeProps {
   postId: number;
@@ -102,7 +104,7 @@ const PostLike = ({postId}: PostLikeProps) => {
 
   const handleOnClick = async () => {
     if (!isLogined) {
-      alert('로그인을 해주세요!');
+      toast.error('로그인을 해주세요!');
       return;
     }
     try {
@@ -128,6 +130,7 @@ const PostLike = ({postId}: PostLikeProps) => {
         <LikeCount>{likeCount}</LikeCount>
       </LikeBlock>
       <DoLikeText>🐘 코끼리를 눌러보세요! 🐘</DoLikeText>
+      <ToastContainer position='top-center' autoClose={3000} />
     </Container>
   );
 };

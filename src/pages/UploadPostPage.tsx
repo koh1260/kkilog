@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { styled } from 'styled-components';
 // import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { SimpleCategory } from '../type';
 
 interface UploadPostPageProps {
   content: string;
+  title: string;
   categoryList: SimpleCategory[];
   setModalVisible(visible: boolean): void;
 }
@@ -49,10 +50,6 @@ const LeftBlock = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 32px;
-`;
-
-const TitleInput = styled.input`
-  font-size: 2rem;
 `;
 
 const ThumbnailImageBlock = styled.div`
@@ -136,8 +133,8 @@ interface CategoryButtonProp {
 }
 
 const CategoryButton = styled.button<CategoryButtonProp>`
-  background-color: ${(props) => props.$isActive ? '#529edc' : 'white'};
-  color: ${(props) => props.$isActive ? 'white' : 'black'};
+  background-color: ${(props) => (props.$isActive ? '#529edc' : 'white')};
+  color: ${(props) => (props.$isActive ? 'white' : 'black')};
   width: calc(50% - 3px);
   height: 2.2rem;
   font-size: 1.1rem;
@@ -169,24 +166,22 @@ const PostingButton = styled.button`
   border-radius: 4px;
 `;
 
-const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPageProps) => {
+const UploadPostPage = ({
+  content,
+  title,
+  categoryList,
+  setModalVisible
+}: UploadPostPageProps) => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [postIntroduction, setPostIntroduction] = useState('');
   const [previewImage, setPreviewImage] = useState('');
-  const [postTitle, setPostTitle] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [category, setCategory] = useState('');
 
-  useEffect(() => {
-    console.log(categoryList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleFormData = async (file: File) => {
     const formData = new FormData();
-    console.log(file);
     formData.append('file', file);
     const response = await api.uploadImage(formData);
     const fileUrl = response.result?.filePath;
@@ -215,26 +210,25 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
       reader.readAsDataURL(file);
     } catch (error: unknown) {
       if (error instanceof ClientExcepction) {
-        console.error(`Client Error: ${error.stack}`);
+        console.error(`${error.stack}`);
       } else if (error instanceof Error) {
         alert(error.message);
-        console.error(`Error: ${error.stack}`);
+        console.error(`${error.stack}`);
       }
     }
   };
 
   const handleOnClickPosting = async () => {
     const payload: WritePostData = {
-      title: postTitle,
+      title,
       content,
       introduction: postIntroduction,
       thumbnail,
       categoryName: category
     };
-    console.log(payload);
     const response = await api.writerPost(payload);
     if (response.ok) {
-      navigate(-1);
+      navigate('/blog');
     }
   };
 
@@ -243,11 +237,6 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
       <ContentBlock>
         <Content>
           <LeftBlock>
-            <TitleInput
-              placeholder='제목'
-              value={postTitle}
-              onChange={(e) => setPostTitle(e.target.value)}
-            />
             <ThumbnailImageBlock>
               <SelectImageButton
                 ref={fileInputRef}
@@ -277,7 +266,15 @@ const UploadPostPage = ({ content, categoryList, setModalVisible }: UploadPostPa
             <CategoryBlock>
               <CategoryText>카테고리</CategoryText>
               <CategoryButtonBlock>
-                {categoryList.map(c => <CategoryButton key={c.id} $isActive={category === c.categoryName} onClick={() => setCategory(c.categoryName)}>{c.categoryName}</CategoryButton>)}
+                {categoryList.map((c) => (
+                  <CategoryButton
+                    key={c.id}
+                    $isActive={category === c.categoryName}
+                    onClick={() => setCategory(c.categoryName)}
+                  >
+                    {c.categoryName}
+                  </CategoryButton>
+                ))}
               </CategoryButtonBlock>
             </CategoryBlock>
             <PostingButtonBlock>

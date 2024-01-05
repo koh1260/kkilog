@@ -38,7 +38,7 @@ export interface PostForUpdate {
   introduction: string;
   publicScope: 'PUBLIC' | 'PRIVATE';
   thumbnail: string;
-  categoryName: string;
+  category: { categoryName: string };
 }
 
 interface Writer {
