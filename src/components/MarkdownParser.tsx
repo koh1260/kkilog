@@ -78,6 +78,7 @@ const renderCodeBlock = (props: CodeBlockProps) => {
 const MarkdownParser = ({ markdownText }: MarkdownParserProps) => (
   <Container>
     <StyledMarkdownComponenet
+      // eslint-disable-next-line
       rehypePlugins={[rehypeRaw]}
       components={{
         code: renderCodeBlock

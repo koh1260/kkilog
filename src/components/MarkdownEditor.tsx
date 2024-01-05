@@ -29,7 +29,6 @@ const TitleInput = styled.textarea`
   padding: 0.4rem;
   margin-bottom: 2rem;
   border: none;
-  height: fit-content;
 `;
 
 const MarkdownTextarea = styled.textarea`
