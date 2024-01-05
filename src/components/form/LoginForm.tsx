@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import api from '../../api/api';
 import { useAppDispatch } from '../../redux/hook';
 import { UserState, setUser } from '../../redux/slice/user-slice';
@@ -75,6 +76,8 @@ const LoginForm = () => {
         dispatch(closeLoginModal())
         document.body.classList.remove('open-modal');
         navigate('/');
+      } else {
+        toast.error('이메일과 비밀번호를 확인해주세요!');
       }
     } catch (e: any) {
       if (e instanceof ClientExcepction) console.error(e.stack);

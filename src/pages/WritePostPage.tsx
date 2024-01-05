@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { styled } from 'styled-components';
 import UploadPostPage from './UploadPostPage';
 import api from '../api/api';
 import { SimpleCategory } from '../type';
 import MarkdownEditor from '../components/MarkdownEditor';
 import MarkdownPreview from '../components/MarkdownPreview';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   position: relative;
@@ -37,8 +39,16 @@ const WritePostPage = () => {
   }, []);
 
   const handleOpenUploadPage = () => {
+    if (title.length < 1) {
+      toast.error('🐘 제목이 비어있어요!');
+      return;
+    }
+    if (text.length < 1) {
+      toast.error('🐘 내용이 비어있어요!');
+      return;
+    }
     setUploadModalVisible(true);
-  }
+  };
 
   return (
     <Container>
@@ -58,6 +68,7 @@ const WritePostPage = () => {
         onClickPost={handleOpenUploadPage}
       />
       <MarkdownPreview markdownText={text} title={title} />
+      <ToastContainer />
     </Container>
   );
 };
