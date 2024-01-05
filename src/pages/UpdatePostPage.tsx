@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -220,14 +220,8 @@ const UpdatePostPage = ({
   const [postThumbnail, setPostThumbnail] = useState(thumbnail);
   const [category, setCategory] = useState(categoryName);
 
-  useEffect(() => {
-    console.log(categoryList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleFormData = async (file: File) => {
     const formData = new FormData();
-    console.log(file);
     formData.append('file', file);
     const response = await api.uploadImage(formData);
     const fileUrl = response.result?.filePath;
@@ -254,9 +248,9 @@ const UpdatePostPage = ({
       reader.readAsDataURL(file);
     } catch (error: unknown) {
       if (error instanceof ClientExcepction) {
-        console.error(`Client Error: ${error.stack}`);
+        console.error(`${error.stack}`);
       } else if (error instanceof Error) {
-        console.error(`Error: ${error.stack}`);
+        console.error(`${error.stack}`);
       }
     }
   };
@@ -270,7 +264,6 @@ const UpdatePostPage = ({
       categoryName: category,
       publicScope: postPublicScope
     };
-    console.log(payload);
     const response = await api.updatePost(id, payload);
     if (response.ok) {
       navigate(-1);

@@ -210,10 +210,10 @@ const UploadPostPage = ({
       reader.readAsDataURL(file);
     } catch (error: unknown) {
       if (error instanceof ClientExcepction) {
-        console.error(`Client Error: ${error.stack}`);
+        console.error(`${error.stack}`);
       } else if (error instanceof Error) {
         alert(error.message);
-        console.error(`Error: ${error.stack}`);
+        console.error(`${error.stack}`);
       }
     }
   };
@@ -226,7 +226,6 @@ const UploadPostPage = ({
       thumbnail,
       categoryName: category
     };
-    console.log(payload);
     const response = await api.writerPost(payload);
     if (response.ok) {
       navigate('/blog');

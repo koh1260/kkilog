@@ -22,10 +22,10 @@ const PostDetail = () => {
           setPost(response.result!);
       } catch (e) {
         if (e instanceof ClientExcepction) {
-          console.error(`Client Error: ${e.stack}`);
+          console.error(`${e.stack}`);
         }
         else if (e instanceof Error) {
-          console.error(`Error: ${e.stack}`);
+          console.error(`${e.stack}`);
         }
         setError(true);
       }
