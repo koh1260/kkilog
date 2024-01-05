@@ -68,7 +68,10 @@ const WritePostPage = () => {
         onClickPost={handleOpenUploadPage}
       />
       <MarkdownPreview markdownText={text} title={title} />
-      <ToastContainer />
+      <ToastContainer
+        position='top-center'
+        autoClose={3000}
+      />
     </Container>
   );
 };
