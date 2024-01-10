@@ -23,7 +23,7 @@ const App = () => {
         };
         dispatch(setUser(userInfo));
       } catch(e) {
-        if (e instanceof Error) console.log(`Error Stack: ${e.stack}`);
+        if (e instanceof Error) console.log(`${e.stack}`);
       }
     })();
   }, []);
