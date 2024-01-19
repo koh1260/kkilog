@@ -224,7 +224,8 @@ const UploadPostPage = ({
       content,
       introduction: postIntroduction,
       thumbnail,
-      categoryName: category
+      categoryName: category,
+      categoryId: 1
     };
     const response = await api.writerPost(payload);
     if (response.ok) {

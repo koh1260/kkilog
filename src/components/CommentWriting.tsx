@@ -66,9 +66,9 @@ const CommentWriting = ({
   const handleOnClickPost = async () => {
     try {
       const commentData = {
-        postId,
+        postId: parseInt(postId, 10),
+        userId: writerId!,
         content,
-        userId: String(writerId!)
       };
 
       const response = await api.writeComment(commentData);

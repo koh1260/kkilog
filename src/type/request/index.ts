@@ -15,6 +15,7 @@ export interface WritePostData {
   introduction: string;
   thumbnail: string | null;
   categoryName: string;
+  categoryId: number
 }
 
 export interface UpdatePostData extends Partial<WritePostData> {
@@ -22,9 +23,9 @@ export interface UpdatePostData extends Partial<WritePostData> {
 }
 
 export interface WriteCommentData {
-  postId: string;
+  postId: number;
   content: string;
-  userId?: string;
+  userId?: number;
   parentId?: number;
   nickname?: string;
   password?: string;

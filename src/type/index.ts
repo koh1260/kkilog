@@ -28,7 +28,7 @@ export interface Post {
   thumbnail: string;
   likes: number;
   comments: Comment[];
-  category: { categoryName: string };
+  categorie: { id: number, categoryName: string };
 }
 
 export interface PostForUpdate {
@@ -38,7 +38,7 @@ export interface PostForUpdate {
   introduction: string;
   publicScope: 'PUBLIC' | 'PRIVATE';
   thumbnail: string;
-  category: { categoryName: string };
+  categorie: { id: number, categoryName: string };
 }
 
 interface Writer {

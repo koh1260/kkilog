@@ -14,8 +14,8 @@ interface UpdatePostPageProps {
   introduction: string;
   publicScope: 'PUBLIC' | 'PRIVATE';
   thumbnail: string;
-  categoryList: SimpleCategory[];
-  categoryName: string;
+  categoryList: SimpleCategory[]
+  category: {id: number, categoryName: string}
   setModalVisible(visible: boolean): void;
 }
 
@@ -207,7 +207,7 @@ const UpdatePostPage = ({
   publicScope,
   thumbnail,
   categoryList,
-  categoryName,
+  category,
   setModalVisible
 }: UpdatePostPageProps) => {
   const navigate = useNavigate();
@@ -218,7 +218,7 @@ const UpdatePostPage = ({
   const [postTitle, setPostTitle] = useState(title);
   const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>(publicScope);
   const [postThumbnail, setPostThumbnail] = useState(thumbnail);
-  const [category, setCategory] = useState(categoryName);
+  const [currentCategoryId, setCurrentCategoyId] = useState(category.id);
 
   const handleFormData = async (file: File) => {
     const formData = new FormData();
@@ -261,7 +261,7 @@ const UpdatePostPage = ({
       content,
       introduction: postIntroduction,
       thumbnail: postThumbnail,
-      categoryName: category,
+      categoryId: currentCategoryId,
       publicScope: postPublicScope
     };
     const response = await api.updatePost(id, payload);
@@ -328,8 +328,8 @@ const UpdatePostPage = ({
                 {categoryList.map((c) => (
                   <CategoryButton
                     key={c.id}
-                    $isActive={category === c.categoryName}
-                    onClick={() => setCategory(c.categoryName)}
+                    $isActive={category.id === c.id}
+                    onClick={() => setCurrentCategoyId(c.id)}
                   >
                     {c.categoryName}
                   </CategoryButton>
