@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
 import Post from './Post';
-import { PreviewPost } from '../type';
+import { PreviewPostData } from '../type';
 
 interface PostListProps {
   categoryName: string | undefined;
-  posts: PreviewPost[];
+  posts: PreviewPostData[];
 }
 
 const Container = styled.section`

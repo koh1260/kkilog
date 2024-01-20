@@ -12,17 +12,22 @@ import {
   Post,
   PostLike,
   PostLikeCheck,
-  PreviewPost,
+  PreviewPostData,
   RefreshAccessToken,
   UploadedImage,
   ValidateLogin
 } from '../type';
 import ClientExcepction from '../common/exceptions/client-exception';
 
-interface Result<T = any> {
+interface ResponseGet<T> {
   statusCode: number;
   message: string;
-  result?: T;
+  result: T;
+}
+
+export interface ResponsePost {
+  statusCode: number;
+  message: string;
 }
 
 class Api {
@@ -30,7 +35,7 @@ class Api {
 
   apiUrl: string = process.env.REACT_APP_API_URL || '';
 
-  async fetchDate(
+  async fetchData(
     input: RequestInfo | URL,
     init?: RequestInit | undefined
   ): Promise<Response> {
@@ -64,14 +69,14 @@ class Api {
   async fetchJson<T>(
     input: RequestInfo | URL,
     init?: RequestInit | undefined
-  ): Promise<Result<T>> {
-    const response = this.fetchDate(input, init);
-    const result: Promise<Result<T>> = (await response).json();
-    return result;
+  ): Promise<T> {
+    const response = this.fetchData(input, init);
+    const data: Promise<T> = (await response).json();
+    return data;
   }
 
   writerPost(payload: WritePostData) {
-    return this.fetchDate('/posts', {
+    return this.fetchData('/posts', {
       method: 'POST',
       body: JSON.stringify(payload),
       credentials: 'include',
@@ -81,26 +86,33 @@ class Api {
     });
   }
 
-  getPostList() {
-    return this.fetchJson<PreviewPost[]>('/posts');
+  async getPostList() {
+    return (await this.fetchJson<ResponseGet<PreviewPostData[]>>('/posts'))
+      .result;
   }
 
-  getPostListByCategoryId(categoryId: number) {
-    return this.fetchJson<PreviewPost[]>(`/posts/category/${categoryId}`);
+  async getPostListByCategoryId(categoryId: number) {
+    return (
+      await this.fetchJson<ResponseGet<PreviewPostData[]>>(
+        `/posts/category/${categoryId}`
+      )
+    ).result;
   }
 
-  getPostListByCategoryName(categoryName: string) {
-    return this.fetchJson<PreviewPost[]>(
-      `/posts/category?categoryName=${categoryName}`
-    );
+  async getPostListByCategoryName(categoryName: string) {
+    return (
+      await this.fetchJson<ResponseGet<PreviewPostData[]>>(
+        `/posts/category?categoryName=${categoryName}`
+      )
+    ).result;
   }
 
   getPost(postId: number) {
-    return this.fetchJson<Post>(`/posts/${postId}`);
+    return this.fetchJson<ResponseGet<Post>>(`/posts/${postId}`);
   }
 
   updatePost(postId: number, payload: UpdatePostData) {
-    return this.fetchDate(`/posts/${postId}`, {
+    return this.fetchData(`/posts/${postId}`, {
       method: 'PATCH',
       body: JSON.stringify(payload),
       headers: {
@@ -111,38 +123,43 @@ class Api {
   }
 
   deletePost(postId: number) {
-    return this.fetchDate(`/posts/${postId}`, {
+    return this.fetchData(`/posts/${postId}`, {
       method: 'DELETE',
       credentials: 'include'
     });
   }
 
   postLike(postId: number) {
-    return this.fetchJson<PostLike>(`/posts/like/${postId}`, {
+    return this.fetchJson<ResponseGet<PostLike>>(`/posts/like/${postId}`, {
       credentials: 'include'
     });
   }
 
   postLikeCheck(postId: number) {
-    return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`, {
-      credentials: 'include'
-    });
+    return this.fetchJson<ResponseGet<PostLikeCheck>>(
+      `/posts/like-check/${postId}`,
+      {
+        credentials: 'include'
+      }
+    );
   }
 
   postLikeCount(postId: number) {
-    return this.fetchJson<PostLike>(`/posts/like-count?post=${postId}`);
+    return this.fetchJson<ResponseGet<PostLike>>(
+      `/posts/like-count?post=${postId}`
+    );
   }
 
   getPreviousAndNextPost(postId: number) {
-    return this.fetchJson<OtherPost[]>(`/posts/other/${postId}`);
+    return this.fetchJson<ResponseGet<OtherPost[]>>(`/posts/other/${postId}`);
   }
 
   getCategoryList() {
-    return this.fetchJson<Category[]>('/categorys');
+    return this.fetchJson<ResponseGet<Category[]>>('/categorys');
   }
 
   writeComment(payload: WriteCommentData) {
-    return this.fetchJson<void>('/comments', {
+    return this.fetchData('/comments', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -152,11 +169,11 @@ class Api {
   }
 
   getCommentList(postId: number) {
-    return this.fetchJson<Comment[]>(`/comments?post=${postId}`);
+    return this.fetchJson<ResponseGet<Comment[]>>(`/comments?post=${postId}`);
   }
 
   signup(payload: SignupData) {
-    return this.fetchDate('/users', {
+    return this.fetchData('/users', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -166,7 +183,7 @@ class Api {
   }
 
   login(payload: LoginData) {
-    return this.fetchDate('/users/login', {
+    return this.fetchData('/users/login', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(payload),
@@ -183,7 +200,7 @@ class Api {
   }
 
   loginValidate() {
-    return this.fetchJson<ValidateLogin>('/auth/login-validate', {
+    return this.fetchJson<ResponseGet<ValidateLogin>>('/auth/login-validate', {
       credentials: 'include'
     });
   }

@@ -72,7 +72,7 @@ const CommentWriting = ({
       };
 
       const response = await api.writeComment(commentData);
-      if (response.statusCode === 201) {
+      if (response.status === 201) {
         refreshCommentList();
         setContent('');
       }

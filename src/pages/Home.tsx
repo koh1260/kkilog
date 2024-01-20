@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import PostList from '../components/PostList';
-import { PreviewPost } from '../type';
+import { PreviewPostData } from '../type';
 import api from '../api/api';
 import Loading from '../components/Loading';
 import ClientExcepction from '../common/exceptions/client-exception';
@@ -10,7 +10,7 @@ import BlogLayout from '../layout/BlogLayout';
 const Home = () => {
   const { categoryName } = useParams<'categoryName'>();
   const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState<PreviewPost[]>([]);
+  const [posts, setPosts] = useState<PreviewPostData[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,7 +26,7 @@ const Home = () => {
         } else {
           response = await api.getPostList();
         }
-        setPosts([...response.result!]);
+        setPosts([...response]);
         setLoading(false);
       } catch (e) {
         if (e instanceof ClientExcepction) {

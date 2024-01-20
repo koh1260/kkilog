@@ -1,4 +1,4 @@
-export interface PreviewPost {
+export interface PreviewPostData {
   id: number;
   title: string;
   introduction: string;
