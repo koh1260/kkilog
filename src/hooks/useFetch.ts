@@ -16,7 +16,7 @@ function useFetch<TData>(
         setError(e);
       })
       .finally(() => setIsLoading(false));
-  }, [callback]);
+  }, []);
 
   if (!data) return { isLoading, isError, error };
   return { data, isLoading, isError, error };
