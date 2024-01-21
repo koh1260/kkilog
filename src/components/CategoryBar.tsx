@@ -4,7 +4,7 @@ import api from '../api/api';
 import { Category as ICategory } from '../type';
 import Category from './Category';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
-import { hideCategory, showCategory } from '../redux/slice/category-slice';
+import { hideCategory, showCategory } from '../redux/slice/category-bar-slice';
 
 interface ContainerProps {
   $isActive: boolean;
@@ -87,13 +87,13 @@ const ElephantEmoji = styled.span`
 
 const CategoryBar = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const isVisible = useAppSelector((state) => state.category.isVisible);
+  const isVisible = useAppSelector((state) => state.categoryBar.isVisible);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
       const response = await api.getCategoryList();
-      setCategories([...response.result!]);
+      setCategories([...response]);
     })();
   }, []);
 
