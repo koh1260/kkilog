@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function useFetch<TData>(
   callback: () => Promise<TData>,
-  dependencyList: any[],
+  dependencyList: React.DependencyList,
 ) {
   const [data, setData] = useState<TData>();
   const [isLoading, setIsLoading] = useState(true);
