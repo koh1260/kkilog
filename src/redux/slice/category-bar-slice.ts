@@ -8,7 +8,7 @@ const initialState: CategoryState = {
   isVisible: false
 };
 
-const categorySlice = createSlice({
+const categoryBarSlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
@@ -21,5 +21,5 @@ const categorySlice = createSlice({
   }
 });
 
-export const { showCategory, hideCategory } = categorySlice.actions;
-export default categorySlice.reducer;
+export const { showCategory, hideCategory } = categoryBarSlice.actions;
+export default categoryBarSlice.reducer;
