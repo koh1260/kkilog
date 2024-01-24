@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useAppDispatch } from '../redux/hook';
 import api from '../api/api';
 import { UserState, setUser } from '../redux/slice/user-slice';
+import Loading from '../components/Loading';
 
 const Root = () => {
   const dispatch = useAppDispatch();
@@ -27,11 +28,9 @@ const Root = () => {
   }, []);
 
   return (
-    <div>
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <Outlet />
       </Suspense>
-    </div>
   );
 };
 

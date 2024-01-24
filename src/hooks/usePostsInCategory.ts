@@ -1,7 +1,15 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import api from '../api/api';
-import useFetch from './useFetch';
 
-const usePostsInCategory = (category: string) =>
-  useFetch(() => api.getPostListByCategoryName(category), [category]);
+const QUERY_KEY = 'cposts';
+
+const usePostsInCategory = (category: string) => {
+  const fetcher = () => api.getPostListByCategoryName(category);
+
+  return useSuspenseQuery({
+    queryKey: [QUERY_KEY, category],
+    queryFn: fetcher,
+  });
+};
 
 export default usePostsInCategory;

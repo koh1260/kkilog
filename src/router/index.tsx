@@ -1,14 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { Suspense } from 'react';
 import WritePostPage from '../pages/WritePostPage';
 import EditPostPage from '../pages/EditPostPage';
 import Root from '../pages/Root';
-import ErrorPage from '../pages/ErrorPage';
+// import ErrorPage from '../pages/ErrorPage';
 import BlogLayout from '../layout/BlogLayout';
 import PostsPage from '../pages/PostsPage';
 import PostDetailPage from '../pages/PostDetailPage';
 import MainPage from '../pages/MainPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import QueryErrorBoundary from '../components/error/QueryErrorBoundary';
+import Loading from '../components/Loading';
+import CategoryPostsPage from '../pages/CategoryPostsPage';
 
 const router = createBrowserRouter([
   {
@@ -17,28 +19,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: '*',
-        errorElement: <ErrorPage />,
+        // errorElement: <ErrorPage />,
         children: [
           { index: true, element: <MainPage /> },
           {
             path: 'blog/',
             element: <BlogLayout />,
-            errorElement: <ErrorPage />,
             children: [
               {
                 index: true,
-                element: <PostsPage />
+                element: (
+                  <Suspense fallback={<Loading />}>
+                    <PostsPage />
+                  </Suspense>
+                )
               },
               {
                 path: 'category/:categoryName',
-                element: <PostsPage />
+                element: (
+                  <Suspense fallback={<Loading />}>
+                    <CategoryPostsPage />
+                  </Suspense>
+                )
               },
               {
                 path: ':postId',
                 element: (
-                  <QueryErrorBoundary>
+                  <Suspense fallback={<Loading />}>
                     <PostDetailPage />
-                  </QueryErrorBoundary>
+                  </Suspense>
                 )
               }
             ]
@@ -56,7 +65,7 @@ const router = createBrowserRouter([
             element: <NotFoundPage />
           }
         ]
-      },
+      }
     ]
   }
 ]);
