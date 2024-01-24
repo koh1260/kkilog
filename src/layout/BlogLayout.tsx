@@ -1,23 +1,20 @@
 import styled from 'styled-components';
+import { Outlet } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import CategoryBar from '../components/CategoryBar';
 import Footer from '../components/Footer';
 
-interface BlogLayoutProps {
-  children: JSX.Element;
-}
-
 const Container = styled.article`
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100vw;
-  flex: 1;
+  min-height: 100vh;
 `;
 
 const Body = styled.div`
   width: 100%;
   height: 100%;
+  flex-grow: 1;
 `;
 
 const ContentBlock = styled.div`
@@ -38,19 +35,22 @@ const ContentBlock = styled.div`
 const Content = styled.div`
   padding: 0 1.3rem;
   width: calc(100% - 12rem);
+  height: 100%;
 
   @media screen and (max-width: 1285px) {
     width: 100%;
   }
 `;
 
-const BlogLayout = ({ children }: BlogLayoutProps) => (
+const BlogLayout = () => (
   <Container>
     <NavBar />
     <Body>
       <ContentBlock>
         <CategoryBar />
-        <Content>{children}</Content>
+        <Content>
+          <Outlet />
+        </Content>
       </ContentBlock>
     </Body>
     <Footer />
