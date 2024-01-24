@@ -4,7 +4,7 @@ import Logo from './Logo';
 import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
-import { hideCategory, showCategory } from '../redux/slice/category-slice';
+import { hideCategory, showCategory } from '../redux/slice/category-bar-slice';
 import ClientExcepction from '../common/exceptions/client-exception';
 import api from '../api/api';
 import { setUser } from '../redux/slice/user-slice';
