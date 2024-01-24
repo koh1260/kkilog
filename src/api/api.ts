@@ -154,8 +154,8 @@ class Api {
     return this.fetchJson<ResponseGet<OtherPost[]>>(`/posts/other/${postId}`);
   }
 
-  getCategoryList() {
-    return this.fetchJson<ResponseGet<Category[]>>('/categorys');
+  async getCategoryList() {
+    return (await this.fetchJson<ResponseGet<Category[]>>('/categorys')).result;
   }
 
   writeComment(payload: WriteCommentData) {

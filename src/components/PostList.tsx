@@ -3,7 +3,7 @@ import Post from './Post';
 import { PreviewPostData } from '../type';
 
 interface PostListProps {
-  categoryName: string | undefined;
+  categoryName?: string;
   posts: PreviewPostData[];
 }
 
