@@ -22,7 +22,7 @@ const WritePostPage = () => {
 
   useEffect(() => {
     (async () => {
-      const categories = (await api.getCategoryList()).result!;
+      const categories = (await api.getCategoryList());
       const tmpList: SimpleCategory[] = [];
       // depth가 있는 카테고리 평탄화
       categories.forEach((c) => {
