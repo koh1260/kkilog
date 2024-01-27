@@ -3,7 +3,6 @@ import { Suspense } from 'react';
 import WritePostPage from '../pages/WritePostPage';
 import EditPostPage from '../pages/EditPostPage';
 import Root from '../pages/Root';
-// import ErrorPage from '../pages/ErrorPage';
 import BlogLayout from '../layout/BlogLayout';
 import PostsPage from '../pages/PostsPage';
 import PostDetailPage from '../pages/PostDetailPage';
@@ -11,15 +10,16 @@ import MainPage from '../pages/MainPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Loading from '../components/Loading';
 import CategoryPostsPage from '../pages/CategoryPostsPage';
+import ErrorPage from '../pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '*',
-        // errorElement: <ErrorPage />,
         children: [
           { index: true, element: <MainPage /> },
           {
