@@ -15,20 +15,11 @@ import {
   PreviewPostData,
   RefreshAccessToken,
   UploadedImage,
+  UserProfile,
   ValidateLogin
 } from '../type';
-import ClientExcepction from '../common/exceptions/client-exception';
-
-interface ResponseGet<T> {
-  statusCode: number;
-  message: string;
-  result: T;
-}
-
-export interface ResponsePost {
-  statusCode: number;
-  message: string;
-}
+import { ResponseGet } from '../type/response';
+import ApiError from '../errors/ApiError';
 
 class Api {
   isAccessTokenRefresh = false;
@@ -39,8 +30,8 @@ class Api {
     input: RequestInfo | URL,
     init?: RequestInit | undefined
   ): Promise<Response> {
-    try {
-      const fetchFn = () => {
+    const fetchFn = () => {
+      try {
         const config: RequestInit = {
           ...init,
           headers: {
@@ -48,30 +39,35 @@ class Api {
           }
         };
         return fetch(`${this.apiUrl}${input}`, config);
-      };
-      let response = await fetchFn();
-
-      if (response.status === 401 && !this.isAccessTokenRefresh) {
-        this.isAccessTokenRefresh = true;
-        await this.refreshAccessToken();
-        this.isAccessTokenRefresh = false;
-
-        response = await fetchFn();
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+      } catch (e) {
+        throw Error('Network Error');
       }
+    };
 
-      return response;
-    } catch (e) {
-      throw new ClientExcepction();
+    let response = await fetchFn();
+
+    if (response.status === 401 && !this.isAccessTokenRefresh) {
+      this.isAccessTokenRefresh = true;
+      await this.refreshAccessToken();
+      this.isAccessTokenRefresh = false;
+
+      response = await fetchFn();
     }
+
+    if (!response.ok) {
+      const body = await response.json();
+      throw new ApiError(body);
+    }
+
+    return response;
   }
 
   async fetchJson<T>(
     input: RequestInfo | URL,
     init?: RequestInit | undefined
   ): Promise<T> {
-    const response = this.fetchData(input, init);
-    const data: Promise<T> = (await response).json();
+    const response = await this.fetchData(input, init);
+    const data: Promise<T> = response.json();
     return data;
   }
 
@@ -107,8 +103,8 @@ class Api {
     ).result;
   }
 
-  getPost(postId: number) {
-    return this.fetchJson<ResponseGet<Post>>(`/posts/${postId}`);
+  async getPost(postId: number) {
+    return (await this.fetchJson<ResponseGet<Post>>(`/posts/${postId}`)).result;
   }
 
   updatePost(postId: number, payload: UpdatePostData) {
@@ -183,7 +179,7 @@ class Api {
   }
 
   login(payload: LoginData) {
-    return this.fetchData('/users/login', {
+    return this.fetchJson<ResponseGet<UserProfile>>('/users/login', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(payload),
@@ -199,10 +195,11 @@ class Api {
     });
   }
 
+  // eslint-disable-next-line consistent-return
   loginValidate() {
-    return this.fetchJson<ResponseGet<ValidateLogin>>('/auth/login-validate', {
-      credentials: 'include'
-    });
+      return this.fetchJson<ResponseGet<ValidateLogin>>('/auth/login-validate', {
+        credentials: 'include'
+      });
   }
 
   uploadImage(form: FormData) {
@@ -212,10 +209,16 @@ class Api {
     });
   }
 
+  // eslint-disable-next-line consistent-return
   async refreshAccessToken() {
-    return this.fetchJson<RefreshAccessToken>('/auth/refresh', {
-      credentials: 'include'
-    });
+    try {
+      return await this.fetchJson<RefreshAccessToken>('/auth/refresh', {
+        credentials: 'include'
+      });
+    } catch(e) {
+      console.log('refresh fail');
+    }
+    
   }
 
   googleLogin() {
