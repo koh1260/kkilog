@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import api from '../api/api';
-import { Category as ICategory } from '../type';
 import Category from './Category';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import { hideCategory, showCategory } from '../redux/slice/category-bar-slice';
+import useCategories from '../hooks/useCategories';
 
 interface ContainerProps {
   $isActive: boolean;
@@ -86,16 +84,9 @@ const ElephantEmoji = styled.span`
 `;
 
 const CategoryBar = () => {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const { data } = useCategories();
   const isVisible = useAppSelector((state) => state.categoryBar.isVisible);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    (async () => {
-      const response = await api.getCategoryList();
-      setCategories([...response]);
-    })();
-  }, []);
 
   return (
     <Container
@@ -117,7 +108,7 @@ const CategoryBar = () => {
             // icon='https://cdn-icons-png.flaticon.com/128/1950/1950715.png'
             isChild={false}
           />
-          {categories.map((category) => (
+          {data.map((category) => (
             <Category
               key={category.id}
               to={`/blog/category/${category.categoryName}`}
