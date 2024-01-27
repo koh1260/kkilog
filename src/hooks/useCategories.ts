@@ -1,26 +1,14 @@
-import { useEffect } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import api from '../api/api';
-import { useAppDispatch, useAppSelector } from '../redux/hook';
-import useFetch from './useFetch';
-import { setCategoryList, setError, setIsError, setIsLoading } from '../redux/slice/categories.slice';
 
-const useCategories = () => {
-  const dispatch = useAppDispatch();
-  const categories = useAppSelector((state) => state.categories);
-  const {data, isLoading, isError, error} = useFetch(() => api.getCategoryList(), []);
+const QUERY_KEY = 'categories';
 
-  useEffect(() => {
-    dispatch(setIsLoading(isLoading));
+const fetcher = () => api.getCategoryList();
 
-    if (data) dispatch(setCategoryList([...data]))
-
-    if (isError && error) {
-      dispatch(setIsError(isError))
-      dispatch(setError(error));
-    }
-  }, [data, isLoading, isError, error])
-
-  return categories;
-}
+const useCategories = () =>
+  useSuspenseQuery({
+    queryKey: [QUERY_KEY],
+    queryFn: fetcher
+  });
 
 export default useCategories;
