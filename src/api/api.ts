@@ -71,7 +71,7 @@ class Api {
     return data;
   }
 
-  writerPost(payload: WritePostData) {
+  writePost(payload: WritePostData) {
     return this.fetchData('/posts', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -202,11 +202,11 @@ class Api {
       });
   }
 
-  uploadImage(form: FormData) {
-    return this.fetchJson<UploadedImage>('/file/upload', {
+  async uploadImage(form: FormData) {
+    return (await this.fetchJson<ResponseGet<UploadedImage>>('/file/upload', {
       method: 'POST',
       body: form
-    });
+    })).result;
   }
 
   // eslint-disable-next-line consistent-return
