@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import api from '../api/api';
 
-const QUERY_KEY = 'posts';
+export const QUERY_KEY = 'posts';
 
 const fetcher = () => api.getPostList();
 

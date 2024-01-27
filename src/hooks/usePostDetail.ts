@@ -8,7 +8,7 @@ const usePostDetail = (id: number) => {
 
   return useSuspenseQuery({
     queryKey: [QUERY_KEY],
-    queryFn: fetcher
+    queryFn: fetcher,
   });
 };
 
