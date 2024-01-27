@@ -99,3 +99,12 @@ export interface ErrorResponse {
   message: string;
   statusCode: number;
 }
+
+export interface UserProfile {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImage: string;
+  role: 'USER' | 'ADMIN';
+  createAt: Date;
+}
