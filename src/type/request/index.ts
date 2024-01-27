@@ -15,10 +15,10 @@ export interface WritePostData {
   introduction: string;
   thumbnail: string | null;
   categoryName: string;
-  categoryId: number
 }
 
 export interface UpdatePostData extends Partial<WritePostData> {
+  categoryId: number;
   publicScope: 'PUBLIC' | 'PRIVATE';
 }
 
