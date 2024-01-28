@@ -7,10 +7,10 @@ import BlogLayout from '../layout/BlogLayout';
 import PostsPage from '../pages/PostsPage';
 import PostDetailPage from '../pages/PostDetailPage';
 import MainPage from '../pages/MainPage';
-import NotFoundPage from '../pages/NotFoundPage';
+import NotFoundPage from '../pages/error/NotFoundPage';
 import Loading from '../components/Loading';
 import CategoryPostsPage from '../pages/CategoryPostsPage';
-import ErrorPage from '../pages/ErrorPage';
+import ErrorPage from '../pages/error/ErrorPage';
 
 const router = createBrowserRouter([
   {
