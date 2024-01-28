@@ -20,8 +20,10 @@ const Container = styled.article`
 const PostDetailPage = () => {
   const { postId } = useParams();
   const { data, error } = usePostDetail(Number(postId));
+  const scrollToTop = () => document.querySelector('body')?.scrollTo(0, 0);
 
   useEffect(() => {
+    scrollToTop();
     if (error) throw error;
   })
 
