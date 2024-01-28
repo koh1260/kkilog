@@ -9,9 +9,7 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const ErrorMessage = styled.h1`
-  margin-bottom: 5rem;
-`;
+const ErrorMessage = styled.h1``;
 
 const Icon = styled.img`
   width: 20rem;
