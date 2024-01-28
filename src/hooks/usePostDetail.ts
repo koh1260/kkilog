@@ -7,7 +7,7 @@ const usePostDetail = (id: number) => {
   const fetcher = () => api.getPost(id);
 
   return useSuspenseQuery({
-    queryKey: [QUERY_KEY],
+    queryKey: [QUERY_KEY, id],
     queryFn: fetcher,
   });
 };
