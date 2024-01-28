@@ -182,8 +182,8 @@ const UploadPostPage = ({
     const payload: WritePostData = {
       title,
       content,
-      introduction: postIntroduction,
       thumbnail,
+      introduction: postIntroduction,
       categoryName: category,
     };
 
@@ -202,9 +202,7 @@ const UploadPostPage = ({
   const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     try {
-      if (!file) {
-        throw new Error('이미지가 없습니다.');
-      }
+      if (!file) throw new Error('이미지가 없습니다.');
 
       setThumbnail(await uploadImage(file));
     } catch (error: unknown) {
