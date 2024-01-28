@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import formatDate from '../lib/format-date';
-import { PreviewPost } from '../type';
+import { PreviewPostData } from '../type';
 import stringToDate from '../lib/transform-date';
 
 interface PostProps {
-  post: PreviewPost;
+  post: PreviewPostData;
 }
 
 const Container = styled.div`

@@ -1,4 +1,4 @@
-export interface PreviewPost {
+export interface PreviewPostData {
   id: number;
   title: string;
   introduction: string;
@@ -28,7 +28,7 @@ export interface Post {
   thumbnail: string;
   likes: number;
   comments: Comment[];
-  category: { categoryName: string };
+  categorie: { id: number, categoryName: string };
 }
 
 export interface PostForUpdate {
@@ -38,7 +38,7 @@ export interface PostForUpdate {
   introduction: string;
   publicScope: 'PUBLIC' | 'PRIVATE';
   thumbnail: string;
-  category: { categoryName: string };
+  categorie: { id: number, categoryName: string };
 }
 
 interface Writer {
@@ -98,4 +98,13 @@ export interface ErrorResponse {
   error: string;
   message: string;
   statusCode: number;
+}
+
+export interface UserProfile {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImage: string;
+  role: 'USER' | 'ADMIN';
+  createAt: Date;
 }

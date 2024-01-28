@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
 import { UpdatePostData } from '../type/request';
-import ClientExcepction from '../common/exceptions/client-exception';
 import { SimpleCategory } from '../type';
+import useUpdatePost from '../hooks/useUpdatePost';
 
 interface UpdatePostPageProps {
   id: number;
@@ -14,8 +13,8 @@ interface UpdatePostPageProps {
   introduction: string;
   publicScope: 'PUBLIC' | 'PRIVATE';
   thumbnail: string;
-  categoryList: SimpleCategory[];
-  categoryName: string;
+  categoryList: SimpleCategory[]
+  category: {id: number, categoryName: string}
   setModalVisible(visible: boolean): void;
 }
 
@@ -207,53 +206,18 @@ const UpdatePostPage = ({
   publicScope,
   thumbnail,
   categoryList,
-  categoryName,
+  category,
   setModalVisible
 }: UpdatePostPageProps) => {
-  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const { mutate } = useUpdatePost();
+
   const [postIntroduction, setPostIntroduction] = useState(introduction);
-  const [previewImage, setPreviewImage] = useState(thumbnail);
   const [postTitle, setPostTitle] = useState(title);
   const [postPublicScope, setPostPublicScope] = useState<'PUBLIC' | 'PRIVATE'>(publicScope);
   const [postThumbnail, setPostThumbnail] = useState(thumbnail);
-  const [category, setCategory] = useState(categoryName);
-
-  const handleFormData = async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    const response = await api.uploadImage(formData);
-    const fileUrl = response.result?.filePath;
-
-    if (fileUrl) {
-      return fileUrl;
-    }
-    throw new Error('이미지 경로가 없습니다.');
-  };
-
-  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    try {
-      if (!file) throw new Error('이미지가 없습니다.');
-
-      // 이미지 업로드 안 되면 예외 발생해서 preview 안 됨
-      setPostThumbnail(await handleFormData(file));
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (typeof event.target?.result === 'string') {
-          setPreviewImage(event.target.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    } catch (error: unknown) {
-      if (error instanceof ClientExcepction) {
-        console.error(`${error.stack}`);
-      } else if (error instanceof Error) {
-        console.error(`${error.stack}`);
-      }
-    }
-  };
+  const [currentCategoryId, setCurrentCategoyId] = useState(category.id);
 
   const handleOnClickPosting = async () => {
     const payload: UpdatePostData = {
@@ -261,12 +225,30 @@ const UpdatePostPage = ({
       content,
       introduction: postIntroduction,
       thumbnail: postThumbnail,
-      categoryName: category,
+      categoryId: currentCategoryId,
       publicScope: postPublicScope
     };
-    const response = await api.updatePost(id, payload);
-    if (response.ok) {
-      navigate(-1);
+
+    mutate({ postId: id, payload })
+  };
+
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const { filePath } = await api.uploadImage(formData);
+    if (!filePath) throw new Error('이미지 경로가 없습니다.');
+
+    return filePath;
+  };
+
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    try {
+      if (!file) throw new Error('이미지가 없습니다.');
+
+      setPostThumbnail(await uploadImage(file));
+    } catch (error: unknown) {
+      if (error instanceof Error) console.log(error.message);
     }
   };
 
@@ -292,7 +274,7 @@ const UpdatePostPage = ({
               </UploadImageButton>
               <ImageBlock>
                 {thumbnail ? (
-                  <ThumbnailImage src={previewImage} />
+                  <ThumbnailImage src={thumbnail} />
                 ) : (
                   <EmptyImage>이미지를 등록하세요!</EmptyImage>
                 )}
@@ -328,8 +310,8 @@ const UpdatePostPage = ({
                 {categoryList.map((c) => (
                   <CategoryButton
                     key={c.id}
-                    $isActive={category === c.categoryName}
-                    onClick={() => setCategory(c.categoryName)}
+                    $isActive={c.id === currentCategoryId}
+                    onClick={() => setCurrentCategoyId(c.id)}
                   >
                     {c.categoryName}
                   </CategoryButton>

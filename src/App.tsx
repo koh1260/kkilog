@@ -1,38 +1,27 @@
-import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'styled-components';
 import router from './router';
 import GlobalStyle from './styles/GlobalStyle';
-import { useAppDispatch } from './redux/hook';
-import { UserState, setUser } from './redux/slice/user-slice';
-import api from './api/api';
+import theme from './styles/theme';
 
 const App = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await api.loginValidate();
-        if (!response.result) throw new Error('회원 정보가 없습니다.');
-        const {result} = response;
-        const userInfo: UserState = {
-          id: result.id,
-          username: result.email,
-          role: result.role,
-          logined: true,
-        };
-        dispatch(setUser(userInfo));
-      } catch(e) {
-        if (e instanceof Error) console.log(`Error Stack: ${e.stack}`);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        throwOnError: true,
+        retry: 0
       }
-    })();
-  }, []);
+    }
+  });
 
   return (
-    <>
-      <GlobalStyle />
-      <RouterProvider router={router} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 

@@ -66,13 +66,13 @@ const CommentWriting = ({
   const handleOnClickPost = async () => {
     try {
       const commentData = {
-        postId,
+        postId: parseInt(postId, 10),
+        userId: writerId!,
         content,
-        userId: String(writerId!)
       };
 
       const response = await api.writeComment(commentData);
-      if (response.statusCode === 201) {
+      if (response.status === 201) {
         refreshCommentList();
         setContent('');
       }

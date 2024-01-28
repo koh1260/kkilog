@@ -1,11 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { styled } from 'styled-components';
-// import { FaEarthAmericas, FaLock } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
 import { WritePostData } from '../type/request';
-import ClientExcepction from '../common/exceptions/client-exception';
 import { SimpleCategory } from '../type';
+import usePostMutation from '../hooks/usePostMutation';
 
 interface UploadPostPageProps {
   content: string;
@@ -172,63 +170,43 @@ const UploadPostPage = ({
   categoryList,
   setModalVisible
 }: UploadPostPageProps) => {
-  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const { mutate } = usePostMutation();
+
   const [postIntroduction, setPostIntroduction] = useState('');
-  const [previewImage, setPreviewImage] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [category, setCategory] = useState('');
-
-  const handleFormData = async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    const response = await api.uploadImage(formData);
-    const fileUrl = response.result?.filePath;
-
-    if (fileUrl) {
-      return fileUrl;
-    }
-    throw new Error('이미지 경로가 없습니다.');
-  };
-
-  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    try {
-      if (!file) {
-        throw new Error('이미지가 없습니다.');
-      }
-
-      // 이미지 업로드 안 되면 예외 발생해서 preview 안 됨
-      setThumbnail(await handleFormData(file));
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (typeof event.target?.result === 'string') {
-          setPreviewImage(event.target.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    } catch (error: unknown) {
-      if (error instanceof ClientExcepction) {
-        console.error(`${error.stack}`);
-      } else if (error instanceof Error) {
-        alert(error.message);
-        console.error(`${error.stack}`);
-      }
-    }
-  };
 
   const handleOnClickPosting = async () => {
     const payload: WritePostData = {
       title,
       content,
-      introduction: postIntroduction,
       thumbnail,
-      categoryName: category
+      introduction: postIntroduction,
+      categoryName: category,
     };
-    const response = await api.writerPost(payload);
-    if (response.ok) {
-      navigate('/blog');
+
+    mutate(payload);
+  };
+
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const { filePath } = await api.uploadImage(formData);
+    if (!filePath) throw new Error('이미지 경로가 없습니다.');
+
+    return filePath;
+  };
+
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    try {
+      if (!file) throw new Error('이미지가 없습니다.');
+
+      setThumbnail(await uploadImage(file));
+    } catch (error: unknown) {
+      if (error instanceof Error) console.log(error.message);
     }
   };
 
@@ -249,7 +227,7 @@ const UploadPostPage = ({
               </UploadImageButton>
               <ImageBlock>
                 {thumbnail ? (
-                  <ThumbnailImage src={previewImage} />
+                  <ThumbnailImage src={thumbnail} />
                 ) : (
                   <EmptyImage>이미지를 등록하세요!</EmptyImage>
                 )}
@@ -257,6 +235,7 @@ const UploadPostPage = ({
             </ThumbnailImageBlock>
             <IntroductionTextArea
               placeholder='소개글'
+              name='introduction'
               value={postIntroduction}
               onChange={(e) => setPostIntroduction(e.target.value)}
             />

@@ -12,30 +12,26 @@ import {
   Post,
   PostLike,
   PostLikeCheck,
-  PreviewPost,
+  PreviewPostData,
   RefreshAccessToken,
   UploadedImage,
+  UserProfile,
   ValidateLogin
 } from '../type';
-import ClientExcepction from '../common/exceptions/client-exception';
-
-interface Result<T = any> {
-  statusCode: number;
-  message: string;
-  result?: T;
-}
+import { ResponseGet } from '../type/response';
+import ApiError from '../errors/ApiError';
 
 class Api {
   isAccessTokenRefresh = false;
 
   apiUrl: string = process.env.REACT_APP_API_URL || '';
 
-  async fetchDate(
+  async fetchData(
     input: RequestInfo | URL,
     init?: RequestInit | undefined
   ): Promise<Response> {
-    try {
-      const fetchFn = () => {
+    const fetchFn = () => {
+      try {
         const config: RequestInit = {
           ...init,
           headers: {
@@ -43,35 +39,40 @@ class Api {
           }
         };
         return fetch(`${this.apiUrl}${input}`, config);
-      };
-      let response = await fetchFn();
-
-      if (response.status === 401 && !this.isAccessTokenRefresh) {
-        this.isAccessTokenRefresh = true;
-        await this.refreshAccessToken();
-        this.isAccessTokenRefresh = false;
-
-        response = await fetchFn();
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+      } catch (e) {
+        throw Error('Network Error');
       }
+    };
 
-      return response;
-    } catch (e) {
-      throw new ClientExcepction();
+    let response = await fetchFn();
+
+    if (response.status === 401 && !this.isAccessTokenRefresh) {
+      this.isAccessTokenRefresh = true;
+      await this.refreshAccessToken();
+      this.isAccessTokenRefresh = false;
+
+      response = await fetchFn();
     }
+
+    if (!response.ok) {
+      const body = await response.json();
+      throw new ApiError(body);
+    }
+
+    return response;
   }
 
   async fetchJson<T>(
     input: RequestInfo | URL,
     init?: RequestInit | undefined
-  ): Promise<Result<T>> {
-    const response = this.fetchDate(input, init);
-    const result: Promise<Result<T>> = (await response).json();
-    return result;
+  ): Promise<T> {
+    const response = await this.fetchData(input, init);
+    const data: Promise<T> = response.json();
+    return data;
   }
 
-  writerPost(payload: WritePostData) {
-    return this.fetchDate('/posts', {
+  writePost(payload: WritePostData) {
+    return this.fetchData('/posts', {
       method: 'POST',
       body: JSON.stringify(payload),
       credentials: 'include',
@@ -81,26 +82,33 @@ class Api {
     });
   }
 
-  getPostList() {
-    return this.fetchJson<PreviewPost[]>('/posts');
+  async getPostList() {
+    return (await this.fetchJson<ResponseGet<PreviewPostData[]>>('/posts'))
+      .result;
   }
 
-  getPostListByCategoryId(categoryId: number) {
-    return this.fetchJson<PreviewPost[]>(`/posts/category/${categoryId}`);
+  async getPostListByCategoryId(categoryId: number) {
+    return (
+      await this.fetchJson<ResponseGet<PreviewPostData[]>>(
+        `/posts/category/${categoryId}`
+      )
+    ).result;
   }
 
-  getPostListByCategoryName(categoryName: string) {
-    return this.fetchJson<PreviewPost[]>(
-      `/posts/category?categoryName=${categoryName}`
-    );
+  async getPostListByCategoryName(categoryName: string) {
+    return (
+      await this.fetchJson<ResponseGet<PreviewPostData[]>>(
+        `/posts/category?categoryName=${categoryName}`
+      )
+    ).result;
   }
 
-  getPost(postId: number) {
-    return this.fetchJson<Post>(`/posts/${postId}`);
+  async getPost(postId: number) {
+    return (await this.fetchJson<ResponseGet<Post>>(`/posts/${postId}`)).result;
   }
 
   updatePost(postId: number, payload: UpdatePostData) {
-    return this.fetchDate(`/posts/${postId}`, {
+    return this.fetchData(`/posts/${postId}`, {
       method: 'PATCH',
       body: JSON.stringify(payload),
       headers: {
@@ -111,38 +119,43 @@ class Api {
   }
 
   deletePost(postId: number) {
-    return this.fetchDate(`/posts/${postId}`, {
+    return this.fetchData(`/posts/${postId}`, {
       method: 'DELETE',
       credentials: 'include'
     });
   }
 
   postLike(postId: number) {
-    return this.fetchJson<PostLike>(`/posts/like/${postId}`, {
+    return this.fetchJson<ResponseGet<PostLike>>(`/posts/like/${postId}`, {
       credentials: 'include'
     });
   }
 
   postLikeCheck(postId: number) {
-    return this.fetchJson<PostLikeCheck>(`/posts/like-check/${postId}`, {
-      credentials: 'include'
-    });
+    return this.fetchJson<ResponseGet<PostLikeCheck>>(
+      `/posts/like-check/${postId}`,
+      {
+        credentials: 'include'
+      }
+    );
   }
 
   postLikeCount(postId: number) {
-    return this.fetchJson<PostLike>(`/posts/like-count?post=${postId}`);
+    return this.fetchJson<ResponseGet<PostLike>>(
+      `/posts/like-count?post=${postId}`
+    );
   }
 
   getPreviousAndNextPost(postId: number) {
-    return this.fetchJson<OtherPost[]>(`/posts/other/${postId}`);
+    return this.fetchJson<ResponseGet<OtherPost[]>>(`/posts/other/${postId}`);
   }
 
-  getCategoryList() {
-    return this.fetchJson<Category[]>('/categorys');
+  async getCategoryList() {
+    return (await this.fetchJson<ResponseGet<Category[]>>('/categorys')).result;
   }
 
   writeComment(payload: WriteCommentData) {
-    return this.fetchJson<void>('/comments', {
+    return this.fetchData('/comments', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -152,11 +165,11 @@ class Api {
   }
 
   getCommentList(postId: number) {
-    return this.fetchJson<Comment[]>(`/comments?post=${postId}`);
+    return this.fetchJson<ResponseGet<Comment[]>>(`/comments?post=${postId}`);
   }
 
   signup(payload: SignupData) {
-    return this.fetchDate('/users', {
+    return this.fetchData('/users', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -166,7 +179,7 @@ class Api {
   }
 
   login(payload: LoginData) {
-    return this.fetchDate('/users/login', {
+    return this.fetchJson<ResponseGet<UserProfile>>('/users/login', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(payload),
@@ -182,23 +195,30 @@ class Api {
     });
   }
 
+  // eslint-disable-next-line consistent-return
   loginValidate() {
-    return this.fetchJson<ValidateLogin>('/auth/login-validate', {
-      credentials: 'include'
-    });
+      return this.fetchJson<ResponseGet<ValidateLogin>>('/auth/login-validate', {
+        credentials: 'include'
+      });
   }
 
-  uploadImage(form: FormData) {
-    return this.fetchJson<UploadedImage>('/file/upload', {
+  async uploadImage(form: FormData) {
+    return (await this.fetchJson<ResponseGet<UploadedImage>>('/file/upload', {
       method: 'POST',
       body: form
-    });
+    })).result;
   }
 
+  // eslint-disable-next-line consistent-return
   async refreshAccessToken() {
-    return this.fetchJson<RefreshAccessToken>('/auth/refresh', {
-      credentials: 'include'
-    });
+    try {
+      return await this.fetchJson<RefreshAccessToken>('/auth/refresh', {
+        credentials: 'include'
+      });
+    } catch(e) {
+      console.log('refresh fail');
+    }
+    
   }
 
   googleLogin() {

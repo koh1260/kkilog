@@ -21,7 +21,7 @@ const EditPostPage = () => {
     introduction,
     publicScope,
     thumbnail,
-    category,
+    categorie,
   } = location.state.post as PostForUpdate;
   const [newText, setNewText] = useState(content);
   const [newTitle, setNewTitle] = useState(title);
@@ -30,7 +30,7 @@ const EditPostPage = () => {
 
   useEffect(() => {
     (async () => {
-      const categories = (await api.getCategoryList()).result!;
+      const categories = (await api.getCategoryList());
       const tmpList: SimpleCategory[] = [];
       // depth가 있는 카테고리 평탄화
       categories.forEach((c) => {
@@ -61,7 +61,7 @@ const EditPostPage = () => {
           publicScope={publicScope}
           thumbnail={thumbnail}
           categoryList={categoryList}
-          categoryName={category.categoryName}
+          category={categorie}
           setModalVisible={setUploadModalVisible}
         />
       )}

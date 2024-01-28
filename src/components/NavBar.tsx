@@ -4,12 +4,12 @@ import Logo from './Logo';
 import Modal from '../pages/Modal';
 import LoginPage from '../pages/LoginPage';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
-import { hideCategory, showCategory } from '../redux/slice/category-slice';
+import { hideCategory, showCategory } from '../redux/slice/category-bar-slice';
 import ClientExcepction from '../common/exceptions/client-exception';
 import api from '../api/api';
 import { setUser } from '../redux/slice/user-slice';
-import storage from '../lib/storage';
 import { closeLoginModal, openLoginModal } from '../redux/slice/login-modal-slice';
+import { removeItem } from '../lib/storage';
 
 const Container = styled.header`
   z-index: 1;
@@ -112,8 +112,7 @@ const NavBar = () => {
           logined: false
         })
       );
-      storage.remove('access_token');
-      storage.remove('user');
+      removeItem('user');
       navigate('/');
     } catch (e) {
       if (e instanceof ClientExcepction) {
@@ -154,7 +153,7 @@ const NavBar = () => {
               로그인
             </StyledButton>
           )}
-          {user.logined && user.role === 'ADMIN' && (
+          {user.role === 'ADMIN' && (
             <WriteButton onClick={() => navigate('/blog/write')}>
               새 글 작성
             </WriteButton>

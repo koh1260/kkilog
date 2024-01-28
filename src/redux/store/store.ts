@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userSlice from '../slice/user-slice';
-import categorySlice from '../slice/category-slice';
+import categoryBarSlice from '../slice/category-bar-slice';
 import modalSlice from '../slice/login-modal-slice';
 
 const store = configureStore({
   reducer: {
     user: userSlice,
-    category: categorySlice,
+    categoryBar: categoryBarSlice,
     modal: modalSlice,
   },
   devTools: true,

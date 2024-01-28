@@ -18,13 +18,14 @@ export interface WritePostData {
 }
 
 export interface UpdatePostData extends Partial<WritePostData> {
+  categoryId: number;
   publicScope: 'PUBLIC' | 'PRIVATE';
 }
 
 export interface WriteCommentData {
-  postId: string;
+  postId: number;
   content: string;
-  userId?: string;
+  userId?: number;
   parentId?: number;
   nickname?: string;
   password?: string;
